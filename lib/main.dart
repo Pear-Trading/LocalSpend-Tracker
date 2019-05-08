@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:local_spend/login_page.dart';
+import 'package:local_spend/pages/home_page.dart';
+import 'package:local_spend/pages/login_page.dart';
+import 'package:local_spend/pages/receipt_page.dart';
+import 'package:local_spend/pages/spash_screen.dart';
+import 'package:local_spend/config.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'LocalSpend Tracker',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: LoginPage(),
+    //var config = ConfigWrapper.of(context);
+    return new MaterialApp(
+      title: "Splash and Token Authentication",
+//      theme: new ThemeData(
+//        primarySwatch: config.production ? Colors.green : Colors.yellow,
+//      ),
+      routes: <String, WidgetBuilder>{
+        "/HomePage": (BuildContext context) => HomePage(),
+        "/LoginPage": (BuildContext context) => LoginPage(),
+        "/ReceiptPage": (BuildContext context) => ReceiptPage(),
+      },
+      home: SplashScreen(),
     );
   }
 }
