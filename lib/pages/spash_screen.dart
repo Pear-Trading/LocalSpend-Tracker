@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   startTime() async {
     return Timer(Duration(seconds: splashDuration), () {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-      Navigator.of(context).pushReplacementNamed('/HomePage');
+      Navigator.of(context).pushReplacementNamed('/LoginPage');
     });
   }
 

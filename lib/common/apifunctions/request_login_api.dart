@@ -23,7 +23,7 @@ Future<LoginModel> requestLoginAPI(
 
   final response = await http.post(
     url,
-    body: body,
+    body: json.encode(body),
   );
 
   debugPrint(response.body);
