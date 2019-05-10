@@ -24,3 +24,8 @@ flutter build apk -t lib/main_dev.dart
 
 https://github.com/putraxor/flutter-login-ui
 https://github.com/pbirdsall/medium_splash_tokenauth
+
+## How to debug code
+// debug
+import 'package:flutter/foundation.dart';
+debugPrint('$foo');

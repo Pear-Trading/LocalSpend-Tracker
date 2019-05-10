@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_spend/common/apifunctions/request_logout_api.dart';
+import 'package:local_spend/common/functions/get_token.dart';
+// debug
+import 'package:flutter/foundation.dart';
 
 class BasicDrawer extends StatefulWidget {
   @override
@@ -8,6 +11,9 @@ class BasicDrawer extends StatefulWidget {
 }
 
 class _BasicDrawerState extends State<BasicDrawer> {
+  var token;
+  // TODO: add getter with getToken to check logged in
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -21,9 +27,10 @@ class _BasicDrawerState extends State<BasicDrawer> {
                 style: TextStyle(color: Colors.black, fontSize: 20.0),
               ),
               onTap: () {
-                requestLogoutAPI(context);
+                debugPrint('$token');
                 Navigator.of(context).pushNamed('/ReceiptPage');
               },
+              // enabled: token != null && token.isNotEmpty,
             ),
             ListTile(
               title: Text(

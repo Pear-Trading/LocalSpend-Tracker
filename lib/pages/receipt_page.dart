@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:local_spend/common/apifunctions/request_login_api.dart';
+import 'package:local_spend/common/apifunctions/submit_receipt_api.dart';
 import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:local_spend/common/widgets/basic_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 const URL = "https://flutter.io/";
 
@@ -19,9 +20,12 @@ class ReceiptPage extends StatefulWidget {
 }
 
 class ReceiptPageState extends State<ReceiptPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  String _welcomeString = "";
+  final TextEditingController _timeController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _essentialController = TextEditingController();
+  final TextEditingController _recurringController = TextEditingController();
+  final TextEditingController _typeController = TextEditingController();
+  final TextEditingController _orgController = TextEditingController();
 
   Future launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -38,7 +42,7 @@ class ReceiptPageState extends State<ReceiptPage> {
   @override
   void initState() {
     super.initState();
-    _saveCurrentRoute("/LoginPage");
+    _saveCurrentRoute("/ReceiptPageState");
   }
 
   _saveCurrentRoute(String lastRoute) async {
@@ -62,7 +66,7 @@ class ReceiptPageState extends State<ReceiptPage> {
         drawer: BasicDrawer(),
         appBar: AppBar(
           title: Text(
-            "LOGIN",
+            "Submit Receipt",
             style: TextStyle(
               fontSize: 30.0,
               color: Colors.black,
@@ -83,37 +87,12 @@ class ReceiptPageState extends State<ReceiptPage> {
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 15.0),
                       child: Text(
-                        "Local Loop",
-                        style: TextStyle(fontSize: 40.0, color: Colors.black),
+                        "Required Fields in bold",
+                        style: TextStyle(fontSize: 20.0, color: Colors.black),
                       ),
                     )),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 78.0),
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text:
-                              'This is the logon page.',
-                          style: new TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                              ' It is currently in development.',
-                          style: new TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 Text(
-                  "Email",
+                  "Time of Transaction",
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.black,
@@ -123,7 +102,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   child: TextField(
-                    controller: _emailController,
+                    controller: _timeController,
                     decoration: InputDecoration(
                       hintText: "Use your login email",
                     ),
@@ -137,7 +116,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
                   child: Text(
-                    "Password",
+                    "Amount",
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black,
@@ -148,7 +127,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   child: TextField(
-                    controller: _passwordController,
+                    controller: _amountController,
                     decoration: InputDecoration(
                       hintText: 'Your password, keep it secret, keep it safe.',
                     ),
@@ -167,8 +146,8 @@ class ReceiptPageState extends State<ReceiptPage> {
                     child: RaisedButton(
                       onPressed: () {
                         SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        requestLoginAPI(context, _emailController.text,
-                            _passwordController.text);
+                        submitReceiptAPI(context, _amountController.text,
+                            _timeController.text);
                       },
                       child: Text("LOGIN",
                           style:

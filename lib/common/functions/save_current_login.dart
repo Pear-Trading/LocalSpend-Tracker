@@ -1,7 +1,7 @@
 import 'package:local_spend/model/json/login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-saveCurrentLogin(Map responseJson) async {
+saveCurrentLogin(Map responseJson, loginEmail) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
   var user;
@@ -13,12 +13,9 @@ saveCurrentLogin(Map responseJson) async {
   var token = (responseJson != null && responseJson.isNotEmpty)
       ? LoginModel.fromJson(responseJson).token
       : "";
-  var email = (responseJson != null && responseJson.isNotEmpty)
-      ? LoginModel.fromJson(responseJson).email
+  var email = (loginEmail != null)
+      ? loginEmail
       : "";
-  var pk = (responseJson != null && responseJson.isNotEmpty)
-      ? LoginModel.fromJson(responseJson).userId
-      : 0;
 
   await preferences.setString(
       'LastUser', (user != null && user.length > 0) ? user : "");
@@ -26,5 +23,4 @@ saveCurrentLogin(Map responseJson) async {
       'LastToken', (token != null && token.length > 0) ? token : "");
   await preferences.setString(
       'LastEmail', (email != null && email.length > 0) ? email : "");
-  await preferences.setInt('LastUserId', (pk != null && pk > 0) ? pk : 0);
 }

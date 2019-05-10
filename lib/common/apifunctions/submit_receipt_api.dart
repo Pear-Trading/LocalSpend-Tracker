@@ -10,14 +10,14 @@ import 'package:local_spend/config.dart';
 // debug
 import 'package:flutter/foundation.dart';
 
-Future<LoginModel> requestLoginAPI(
-    BuildContext context, String email, String password) async {
+Future<LoginModel> submitReceiptAPI(
+    BuildContext context, String amount, String time) async {
   //var apiUrl = ConfigWrapper.of(context).apiKey;
   final url = "https://dev.peartrade.org/api/login";
 
   Map<String, String> body = {
-    'email': email,
-    'password': password,
+    'transaction_value': amount,
+    'purchase_time': time,
   };
 
   debugPrint('$body');
@@ -31,19 +31,15 @@ Future<LoginModel> requestLoginAPI(
 
   if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
-    var user = new LoginModel.fromJson(responseJson);
-
-    saveCurrentLogin(responseJson, body["email"]);
-    Navigator.of(context).pushReplacementNamed('/HomePage');
 
     return LoginModel.fromJson(responseJson);
   } else {
     final responseJson = json.decode(response.body);
 
-    saveCurrentLogin(responseJson, body["email"]);
+    
     showDialogSingleButton(
         context,
-        "Unable to Login",
+        "Unable to Submit Receipt",
         "You may have supplied an invalid 'Email' / 'Password' combination. Please try again or email an administrator.",
         "OK");
     return null;
