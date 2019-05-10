@@ -36,7 +36,7 @@ Future<LoginModel> submitReceiptAPI(
   } else {
     final responseJson = json.decode(response.body);
 
-    
+
     showDialogSingleButton(
         context,
         "Unable to Submit Receipt",

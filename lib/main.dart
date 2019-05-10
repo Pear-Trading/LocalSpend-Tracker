@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
     //var config = ConfigWrapper.of(context);
     return new MaterialApp(
       title: "Splash and Token Authentication",
-//      theme: new ThemeData(
-//        primarySwatch: config.production ? Colors.green : Colors.yellow,
-//      ),
+      theme: new ThemeData(
+        primarySwatch: Colors.blueGrey,
+      ),
       routes: <String, WidgetBuilder>{
         "/HomePage": (BuildContext context) => HomePage(),
         "/LoginPage": (BuildContext context) => LoginPage(),

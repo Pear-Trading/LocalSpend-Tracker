@@ -28,12 +28,10 @@ class _HomePageState extends State<HomePage> {
           "Home Page",
           style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 6.0,
       ),
       drawer: BasicDrawer(),
-      backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.all(32.0),
         child: Center(

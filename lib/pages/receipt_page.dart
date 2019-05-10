@@ -73,10 +73,8 @@ class ReceiptPageState extends State<ReceiptPage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
         body: Container(
           child: Padding(
             padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
