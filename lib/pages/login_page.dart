@@ -128,7 +128,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                     style: TextStyle(
                       fontSize: 18.0,
-                      color: Colors.grey,
+                      color: Colors.grey[800],
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -154,7 +154,7 @@ class LoginPageState extends State<LoginPage> {
                     obscureText: true,
                     style: TextStyle(
                       fontSize: 18.0,
-                      color: Colors.grey,
+                      color: Colors.grey[800],
                       fontWeight: FontWeight.bold,
                     ),
                   ),

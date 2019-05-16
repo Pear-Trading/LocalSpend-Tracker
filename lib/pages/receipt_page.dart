@@ -8,6 +8,7 @@ import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:local_spend/common/widgets/basic_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 const URL = "https://flutter.io/";
@@ -26,6 +27,8 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _recurringController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _orgController = TextEditingController();
+
+  DateTime date;
 
   Future launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -97,19 +100,13 @@ class ReceiptPageState extends State<ReceiptPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  child: TextField(
-                    controller: _timeController,
-                    decoration: InputDecoration(
-                      hintText: "Use your login email",
-                    ),
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                DateTimePickerFormField(
+                  inputType: InputType.both,
+                  format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
+                  editable: true,
+                  decoration: InputDecoration(
+                      labelText: 'Date/Time of Transaction', hasFloatingPlaceholder: false),
+                  onChanged: (dt) => setState(() => date = dt),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
@@ -127,12 +124,12 @@ class ReceiptPageState extends State<ReceiptPage> {
                   child: TextField(
                     controller: _amountController,
                     decoration: InputDecoration(
-                      hintText: 'Your password, keep it secret, keep it safe.',
+                      hintText: 'Value in £',
                     ),
                     obscureText: true,
                     style: TextStyle(
                       fontSize: 18.0,
-                      color: Colors.grey,
+                      color: Colors.grey[800],
                       fontWeight: FontWeight.bold,
                     ),
                   ),
