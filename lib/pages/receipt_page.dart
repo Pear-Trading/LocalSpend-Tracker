@@ -104,6 +104,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                   inputType: InputType.both,
                   format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
                   editable: true,
+                  controller: _timeController,
                   decoration: InputDecoration(
                       labelText: 'Date/Time of Transaction', hasFloatingPlaceholder: false),
                   onChanged: (dt) => setState(() => date = dt),
@@ -144,7 +145,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                         submitReceiptAPI(context, _amountController.text,
                             _timeController.text);
                       },
-                      child: Text("LOGIN",
+                      child: Text("SUBMIT",
                           style:
                               TextStyle(color: Colors.white, fontSize: 22.0)),
                       color: Colors.blue,

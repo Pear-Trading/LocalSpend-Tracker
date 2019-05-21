@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:local_spend/common/functions/save_current_login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/model/json/login_model.dart';
 import 'package:local_spend/config.dart';
@@ -13,11 +13,14 @@ import 'package:flutter/foundation.dart';
 Future<LoginModel> submitReceiptAPI(
     BuildContext context, String amount, String time) async {
   //var apiUrl = ConfigWrapper.of(context).apiKey;
-  final url = "https://dev.peartrade.org/api/login";
+  final url = "https://dev.peartrade.org/api/upload";
+
+  SharedPreferences preferences = await SharedPreferences.getInstance();
 
   Map<String, String> body = {
     'transaction_value': amount,
     'purchase_time': time,
+    'session_key': preferences.get('LastToken'),
   };
 
   debugPrint('$body');
