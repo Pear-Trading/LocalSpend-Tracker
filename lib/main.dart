@@ -3,6 +3,7 @@ import 'package:local_spend/pages/home_page.dart';
 import 'package:local_spend/pages/login_page.dart';
 import 'package:local_spend/pages/receipt_page.dart';
 import 'package:local_spend/pages/spash_screen.dart';
+import 'package:local_spend/pages/about_screen.dart';
 import 'package:local_spend/config.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         "/HomePage": (BuildContext context) => HomePage(),
         "/LoginPage": (BuildContext context) => LoginPage(),
         "/ReceiptPage": (BuildContext context) => ReceiptPage(),
+        "/AboutPage": (BuildContext context) => AboutPage(),
       },
       home: SplashScreen(),
     );

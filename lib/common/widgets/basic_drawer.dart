@@ -39,8 +39,7 @@ class _BasicDrawerState extends State<BasicDrawer> {
               ),
               onTap: () {
                 SystemChannels.textInput.invokeMethod('TextInput.hide');
-//              Here I have not implemented an actual about screen, but if you did you would navigate to it's route
-//              Navigator.of(context).pushReplacementNamed('/AboutScreen');
+                Navigator.of(context).pushReplacementNamed('/AboutPage');
               },
             ),
             ListTile(
