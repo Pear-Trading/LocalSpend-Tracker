@@ -141,7 +141,6 @@ class LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold,
                     ),
                     onSubmitted: (_) {
-                      //TODO: move focus to password field
                       FocusScope.of(context).requestFocus(focusNode);
                     },
                   ),
