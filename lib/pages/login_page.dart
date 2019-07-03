@@ -157,6 +157,11 @@ class LoginPageState extends State<LoginPage> {
                       color: Colors.grey[800],
                       fontWeight: FontWeight.bold,
                     ),
+                      onSubmitted: (_) {
+                        SystemChannels.textInput.invokeMethod('TextInput.hide');
+                        requestLoginAPI(context, _emailController.text,
+                            _passwordController.text);
+                      },
                   ),
                 ),
                 Padding(
@@ -168,6 +173,10 @@ class LoginPageState extends State<LoginPage> {
                         SystemChannels.textInput.invokeMethod('TextInput.hide');
                         requestLoginAPI(context, _emailController.text,
                             _passwordController.text);
+//                        showDialog(
+//                          barrierDismissible: false,
+//                        );
+//                        print("pressed");
                       },
                       child: Text("LOGIN",
                           style:
