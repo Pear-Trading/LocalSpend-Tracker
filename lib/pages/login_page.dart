@@ -23,6 +23,7 @@ class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _welcomeString = "";
+  FocusNode focusNode;  // added so focus can move automatically
 
   Future launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -40,6 +41,14 @@ class LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _saveCurrentRoute("/LoginPage");
+
+    focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose(); //disposes focus node when form disposed
+    super.dispose();
   }
 
   _saveCurrentRoute(String lastRoute) async {
@@ -131,6 +140,10 @@ class LoginPageState extends State<LoginPage> {
                       color: Colors.grey[800],
                       fontWeight: FontWeight.bold,
                     ),
+                    onSubmitted: (_) {
+                      //TODO: move focus to password field
+                      FocusScope.of(context).requestFocus(focusNode);
+                    },
                   ),
                 ),
                 Padding(
@@ -148,6 +161,7 @@ class LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   child: TextField(
                     controller: _passwordController,
+                    focusNode: focusNode,
                     decoration: InputDecoration(
                       hintText: 'Your password, keep it secret, keep it safe.',
                     ),
