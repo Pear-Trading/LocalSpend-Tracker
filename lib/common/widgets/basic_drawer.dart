@@ -22,6 +22,15 @@ class _BasicDrawerState extends State<BasicDrawer> {
         child: ListView(
           children: <Widget>[
             ListTile(
+              title: Text (
+                "Home",
+                style: TextStyle(color: Colors.black, fontSize: 20.0),
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed('/HomePage');
+    }
+            ),
+            ListTile(
               title: Text(
                 "Submit Receipt",
                 style: TextStyle(color: Colors.black, fontSize: 20.0),
