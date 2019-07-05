@@ -1,0 +1,22 @@
+TODO
+	⁃	Show username
+	⁃	add ‘confirm logout’
+
+		Splash Screen
+	⁃	Splash screen transition - fade
+
+	Login
+	⁃	Full page/ popover
+	⁃	Colours
+	⁃	save login details option (checkbox or something)
+
+	Navigation
+	⁃	Make it look good
+
+	Submit Receipt
+	⁃	Categories
+	⁃	Recurring
+	⁃	‘find’ button displays relevant dialog
+
+Done
+	⁃	submit receipt API implemented more fully so now all transaction options can be submitted
