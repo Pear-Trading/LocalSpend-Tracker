@@ -21,7 +21,7 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _welcomeString = "";
+
   FocusNode focusNode;  // added so focus can move automatically
 
   Future launchURL(String url) async {

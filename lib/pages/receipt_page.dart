@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 const URL = "https://flutter.io/";
-const demonstration = true;
+const demonstration = false;
 
 class ReceiptPage extends StatefulWidget {
   @override
@@ -28,6 +28,8 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _recurringController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _orgController = TextEditingController();
+
+  FocusNode focusNode;  // added so focus can move automatically
 
   DateTime date;
 
@@ -47,6 +49,15 @@ class ReceiptPageState extends State<ReceiptPage> {
   void initState() {
     super.initState();
     _saveCurrentRoute("/ReceiptPageState");
+
+    focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    focusNode.dispose(); //disposes focus node when form disposed
   }
 
   _saveCurrentRoute(String lastRoute) async {
@@ -54,7 +65,7 @@ class ReceiptPageState extends State<ReceiptPage> {
     await preferences.setString('LastPageRoute', lastRoute);
   }
 
-  void submitReceipt(String amount, String time) async {
+  void submitReceipt(String amount, String time, String orgName) async {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
 
     if (demonstration)
@@ -86,7 +97,10 @@ class ReceiptPageState extends State<ReceiptPage> {
 
       // setting up 'receipt'
       receipt.amount = amount;
-      receipt.time = time;
+      receipt.time = formatDate(time);
+      receipt.organisationName = orgName;
+
+//      receipt.essential = convertBoolToString(toConvert)
 
       //TODO: initialise receipt with correct values from form
 
@@ -95,6 +109,40 @@ class ReceiptPageState extends State<ReceiptPage> {
 
       submitReceiptAPI(context, receipt);
     }
+  }
+
+  String convertBoolToString(bool toConvert) {
+    if (toConvert)
+    {
+      return "true";
+    }
+
+    return "false";
+  }
+
+  String formatDate(String date) {
+//    return "";
+    // should be in format:
+    // yyyy-MM-ddThh:mm:00.000+01:00
+    // eg 2019-07-05T10:24:00.000+01.00 (real life example, works)
+
+    // current format = "dd/MM/yyyy 'at' hh:mm"
+
+    var components = new List(5);
+
+    components[0] = (date.substring(0,2));    // dd
+    components[1] = (date.substring(3,5));    // MM
+    components[2] = (date.substring(6,10));   // yyyy
+    components[3] = (date.substring(14,16));  // hh
+    components[4] = (date.substring(17,19));  // mm
+
+    //print(components);
+
+    return (components[2] + "-" + components[1] + "-" + components[0]
+        + "T" + components[3] + ":" + components[4] + ":00.000+01:00");
+
+    // Yes, there is probably a function to convert dates, but I didn't
+    // know that before writing this and it's done now so I'm keeping it.
   }
 
   @override
@@ -127,26 +175,29 @@ class ReceiptPageState extends State<ReceiptPage> {
             padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
             child: ListView(
               children: <Widget>[
-                Container(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 15.0),
-                      child: Text(
-                        "Required Fields in bold",
-                        style: TextStyle(fontSize: 20.0, color: Colors.black),
-                      ),
-                    )),
-                Text(
-                  "Time of Transaction",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+//                Container(
+//                    alignment: Alignment.topCenter,
+//                    child: Padding(
+//                      padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 15.0),
+//                      child: Text(
+//                        "Required fields are in bold",
+//                        style: TextStyle(fontSize: 20.0, color: Colors.black),
+//                      ),
+//                    )),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+                  child : Text(
+                    "Time of Transaction",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 DateTimePickerFormField(
                   inputType: InputType.both,
-                  format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
+                  format: DateFormat("dd/MM/yyyy 'at' hh:mm"),
                   editable: true,
                   controller: _timeController,
                   decoration: InputDecoration(
@@ -154,7 +205,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                   onChanged: (dt) => setState(() => date = dt),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
                   child: Text(
                     "Amount",
                     style: TextStyle(
@@ -180,13 +231,83 @@ class ReceiptPageState extends State<ReceiptPage> {
                       fontWeight: FontWeight.bold,
                     ),
                     onSubmitted: (_) {
-                      submitReceipt(_amountController.text, _timeController.text);
+                      FocusScope.of(context).requestFocus(focusNode);
+//                      submitReceipt(_amountController.text, _timeController.text);
                     },
                   ),
                 ),
 
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+
+                  child : Container (
+                    height: 22, // this should be the same height as text
+
+                    child : ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+
+                        Container(
+                          child: Text(
+                            "Organization Name",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        Container(
+                          child : Padding(
+                            padding: EdgeInsets.fromLTRB(5,0,0,4),
+                              child: FlatButton(
+                                onPressed: () {
+                                  debugPrint("TODO: 'find organisation' dialog");
+                                  // Writing this before I forget tomorrow morning:
+                                  // Steps to fetch list of organisations with similar name:
+                                  // 1) record network activity (requests) of FoodLoop-Web webapp on Firefox
+                                  // 2) look at JSON files returned by server when 'organisation name' field's text updates/changes
+                                  // 3) look at requests sent to server when web textfield updates and send those from app
+                                  // 4) I'm tired
+                                },
+                                  child: Text("Find",
+                                    style:
+                                    TextStyle(color: Colors.blue, fontSize: 18.0)),
+                              ),
+                          ),
+                        )
+
+                      ],
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  child: TextField(
+                    controller: _orgController,
+                    focusNode: focusNode,
+                    decoration: InputDecoration(
+                      hintText: 'Eg. Pear Trading',
+                    ),
+//                    obscureText: true,
+                    autocorrect: true,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                    ),
+                    onSubmitted: (_) {
+                      submitReceipt(_amountController.text,
+                          _timeController.text, _orgController.text);
+                      // TODO: Add 'find organisation' button which displays a dialog to, well, find the organisation's address or manual entry
+                    },
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
 
                   child : Container (
                     height: 18,
@@ -209,16 +330,12 @@ class ReceiptPageState extends State<ReceiptPage> {
                           child : Padding(
                             padding: EdgeInsets.fromLTRB(20.0, 0.0, 0, 0),
 
-                            child: Checkbox(value: _essentialController.text.toLowerCase() == 'true', onChanged: (bool newValue) {
+                            child: Checkbox(value:
+                            _essentialController.text.toLowerCase() == 'true',
+                                onChanged: (bool newValue) {
                               setState(() {
-                                var newValueString = "false";
-
-                                if (newValue)
-                                {
-                                  newValueString = "true";
-                                }
-
-                                _essentialController.text = newValueString;
+                                _essentialController.text =
+                                    convertBoolToString(newValue);
                               });
                             }),
                           ),
@@ -236,7 +353,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                     height: 65.0,
                     child: RaisedButton(
                       onPressed: () {
-                        submitReceipt(_amountController.text, _timeController.text);
+                        submitReceipt(_amountController.text, _timeController.text, _orgController.text);
                       },
                       child: Text("SUBMIT",
                           style:

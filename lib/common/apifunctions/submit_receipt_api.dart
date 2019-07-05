@@ -31,6 +31,7 @@ Future<LoginModel> submitReceiptAPI(
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
   Map<String, String> body = {
+    'transaction_type' : "3",
     'transaction_value': receipt.amount,
     'purchase_time': receipt.time,
     'category': receipt.category,
@@ -38,13 +39,15 @@ Future<LoginModel> submitReceiptAPI(
     'organisation_name': receipt.organisationName,
     'recurring': receipt.recurring,
     'street_name': receipt.street,
-    'town': receipt.town,
     'postcode': receipt.postcode,
+
+    'town': receipt.town,
 
     'session_key': preferences.get('LastToken'),
   };
 
   debugPrint('$body');
+  debugPrint(json.encode(body));
 
   final response = await http.post(
     url,
@@ -64,7 +67,8 @@ Future<LoginModel> submitReceiptAPI(
     showDialogSingleButton(
         context,
         "Unable to Submit Receipt",
-        "You may have supplied an invalid 'Email' / 'Password' combination. Please try again or email an administrator.",
+//      "You may have supplied an invalid 'Email' / 'Password' combination. Please try again or email an administrator.",
+        responseJson.toString(),
         "OK");
     return null;
   }
