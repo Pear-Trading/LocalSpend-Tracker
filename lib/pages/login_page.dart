@@ -55,6 +55,12 @@ class LoginPageState extends State<LoginPage> {
     await preferences.setString('LastPageRoute', lastRoute);
   }
 
+  void login(String username, String password) {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    requestLoginAPI(context, username,
+        password);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -169,8 +175,7 @@ class LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold,
                     ),
                       onSubmitted: (_) {
-                        SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        requestLoginAPI(context, _emailController.text,
+                        login( _emailController.text,
                             _passwordController.text);
                       },
                   ),
@@ -181,8 +186,7 @@ class LoginPageState extends State<LoginPage> {
                     height: 65.0,
                     child: RaisedButton(
                       onPressed: () {
-                        SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        requestLoginAPI(context, _emailController.text,
+                        login( _emailController.text,
                             _passwordController.text);
 //                        showDialog(
 //                          barrierDismissible: false,

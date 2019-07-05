@@ -10,16 +10,37 @@ import 'package:local_spend/config.dart';
 // debug
 import 'package:flutter/foundation.dart';
 
+class Receipt {
+  var amount = "";
+  var time = "";
+  var street = "";
+  var category = "";
+  var organisationName = "";
+  var postcode = "";
+  var recurring = "";
+  var town = "";
+
+  var essential = "false";
+}
+
 Future<LoginModel> submitReceiptAPI(
-    BuildContext context, String amount, String time) async {
+    BuildContext context, Receipt receipt) async {
   //var apiUrl = ConfigWrapper.of(context).apiKey;
   final url = "https://dev.peartrade.org/api/upload";
 
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
   Map<String, String> body = {
-    'transaction_value': amount,
-    'purchase_time': time,
+    'transaction_value': receipt.amount,
+    'purchase_time': receipt.time,
+    'category': receipt.category,
+    'essential': receipt.essential,
+    'organisation_name': receipt.organisationName,
+    'recurring': receipt.recurring,
+    'street_name': receipt.street,
+    'town': receipt.town,
+    'postcode': receipt.postcode,
+
     'session_key': preferences.get('LastToken'),
   };
 

@@ -54,6 +54,49 @@ class ReceiptPageState extends State<ReceiptPage> {
     await preferences.setString('LastPageRoute', lastRoute);
   }
 
+  void submitReceipt(String amount, String time) async {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+
+    if (demonstration)
+    {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Success"),
+            content: new Text("Recepit successfully submitted."),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      ).then((_) {
+      Navigator.of(context).pushNamed('/HomePage');
+    });
+    }
+    else {
+      Receipt receipt = new Receipt();
+
+      // setting up 'receipt'
+      receipt.amount = amount;
+      receipt.time = time;
+
+      //TODO: initialise receipt with correct values from form
+
+//      receipt.category = category;
+//      receipt.etc = etc;
+
+      submitReceiptAPI(context, receipt);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var drawer = Drawer();
@@ -137,43 +180,64 @@ class ReceiptPageState extends State<ReceiptPage> {
                       fontWeight: FontWeight.bold,
                     ),
                     onSubmitted: (_) {
-                      SystemChannels.textInput.invokeMethod('TextInput.hide');
-
-                      if (demonstration)
-                        {
-                          showDialogSingleButton(
-                              context,
-                              "Success",
-                              "Recepit successfully submitted.",
-                              "OK");
-                        }
-                      else {
-                        submitReceiptAPI(context, _amountController.text,
-                            _timeController.text);
-                      }
+                      submitReceipt(_amountController.text, _timeController.text);
                     },
                   ),
                 ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
+
+                  child : Container (
+                    height: 18,
+
+                    child : ListView(
+                      scrollDirection: Axis.horizontal,
+
+                      children: <Widget>[
+                        Container(
+                          child: Text(
+                            "Essential Purchase",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        Container(
+                          child : Padding(
+                            padding: EdgeInsets.fromLTRB(20.0, 0.0, 0, 0),
+
+                            child: Checkbox(value: _essentialController.text.toLowerCase() == 'true', onChanged: (bool newValue) {
+                              setState(() {
+                                var newValueString = "false";
+
+                                if (newValue)
+                                {
+                                  newValueString = "true";
+                                }
+
+                                _essentialController.text = newValueString;
+                              });
+                            }),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ),
+
+
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
                   child: Container(
                     height: 65.0,
                     child: RaisedButton(
                       onPressed: () {
-                        SystemChannels.textInput.invokeMethod('TextInput.hide');
-
-                        if (demonstration)
-                        {
-                          showDialogSingleButton(
-                              context,
-                              "Success",
-                              "Recepit successfully submitted.",
-                              "OK");
-                        }
-                        else {
-                          submitReceiptAPI(context, _amountController.text,
-                              _timeController.text);
-                        }
+                        submitReceipt(_amountController.text, _timeController.text);
                       },
                       child: Text("SUBMIT",
                           style:
