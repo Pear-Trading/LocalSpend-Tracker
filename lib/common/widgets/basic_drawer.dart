@@ -18,17 +18,17 @@ class _BasicDrawerState extends State<BasicDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        padding: new EdgeInsets.all(32.0),
+        padding: new EdgeInsets.all(32),
         child: ListView(
           children: <Widget>[
             ListTile(
-              title: Text (
-                "Home",
-                style: TextStyle(color: Colors.black, fontSize: 20.0),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed('/HomePage');
-    }
+                title: Text (
+                  "Home",
+                  style: TextStyle(color: Colors.black, fontSize: 20.0),
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/HomePage');
+                }
             ),
             ListTile(
               title: Text(

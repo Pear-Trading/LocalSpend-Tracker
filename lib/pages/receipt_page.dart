@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 const URL = "https://flutter.io/";
+const demonstration = true;
 
 class ReceiptPage extends StatefulWidget {
   @override
@@ -127,12 +128,30 @@ class ReceiptPageState extends State<ReceiptPage> {
                     decoration: InputDecoration(
                       hintText: 'Value in £',
                     ),
-                    obscureText: true,
+//                    obscureText: true,
+                    autocorrect: false,
+                    keyboardType: TextInputType.number,
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.grey[800],
                       fontWeight: FontWeight.bold,
                     ),
+                    onSubmitted: (_) {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+
+                      if (demonstration)
+                        {
+                          showDialogSingleButton(
+                              context,
+                              "Success",
+                              "Recepit successfully submitted.",
+                              "OK");
+                        }
+                      else {
+                        submitReceiptAPI(context, _amountController.text,
+                            _timeController.text);
+                      }
+                    },
                   ),
                 ),
                 Padding(
@@ -142,8 +161,19 @@ class ReceiptPageState extends State<ReceiptPage> {
                     child: RaisedButton(
                       onPressed: () {
                         SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        submitReceiptAPI(context, _amountController.text,
-                            _timeController.text);
+
+                        if (demonstration)
+                        {
+                          showDialogSingleButton(
+                              context,
+                              "Success",
+                              "Recepit successfully submitted.",
+                              "OK");
+                        }
+                        else {
+                          submitReceiptAPI(context, _amountController.text,
+                              _timeController.text);
+                        }
                       },
                       child: Text("SUBMIT",
                           style:

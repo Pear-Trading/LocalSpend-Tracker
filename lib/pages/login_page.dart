@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +57,6 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    var drawer = Drawer();
     return WillPopScope(
       onWillPop: () {
         if (Navigator.canPop(context)) {
@@ -69,7 +67,7 @@ class LoginPageState extends State<LoginPage> {
         }
       },
       child: PlatformScaffold(
-        drawer: BasicDrawer(),
+//        drawer: BasicDrawer(),
         appBar: AppBar(
           title: Text(
             "LOGIN",

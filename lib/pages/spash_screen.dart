@@ -32,16 +32,17 @@ class _SplashScreenState extends State<SplashScreen> {
     return PlatformScaffold(
         drawer: drawer,
         body: Container(
-            decoration: BoxDecoration(color: Colors.black),
+            decoration: BoxDecoration(color: Colors.white),
             child: Column(
               children: <Widget>[
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(color: Colors.black),
+                    margin: EdgeInsets.all(15),
                     alignment: FractionalOffset(0.5, 0.3),
-                    child: Text(
-                      "Local Loop",
-                      style: TextStyle(fontSize: 40.0, color: Colors.white),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/launch_image.png')
+                        ),
                     ),
                   ),
                 ),
@@ -51,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     "© Copyright Statement 2018",
                     style: TextStyle(
                       fontSize: 16.0,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),

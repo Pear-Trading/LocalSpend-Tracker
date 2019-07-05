@@ -5,6 +5,7 @@ import 'package:local_spend/pages/receipt_page.dart';
 import 'package:local_spend/pages/spash_screen.dart';
 import 'package:local_spend/pages/about_screen.dart';
 import 'package:local_spend/config.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //var config = ConfigWrapper.of(context);
     return new MaterialApp(
+
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("en")
+      ],
+
       title: "Splash and Token Authentication",
       theme: new ThemeData(
         primarySwatch: Colors.blueGrey,
