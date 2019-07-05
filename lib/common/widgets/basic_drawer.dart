@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_spend/common/apifunctions/request_logout_api.dart';
 import 'package:local_spend/common/functions/get_token.dart';
+import 'package:local_spend/common/functions/logout.dart';
 // debug
 import 'package:flutter/foundation.dart';
 
@@ -57,8 +58,7 @@ class _BasicDrawerState extends State<BasicDrawer> {
                 style: TextStyle(color: Colors.black, fontSize: 20.0),
               ),
               onTap: () {
-                requestLogoutAPI(context);
-                Navigator.of(context).pushReplacementNamed('/LoginPage');
+                logout(context);
               },
             ),
           ],

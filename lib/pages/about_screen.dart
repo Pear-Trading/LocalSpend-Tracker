@@ -43,7 +43,7 @@ class _HomePageState extends State<AboutPage> {
             children: <Widget>[
               InkWell(
                   child: const Center(child: Text
-                    ('Link to Pear trading website',
+                    ('Pear Trading',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.blue,
@@ -55,18 +55,7 @@ class _HomePageState extends State<AboutPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0,20,0,0),
                 child: Text(
-                  "Developed by Shadowcat Industries",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0,20,0,0),
-                child: Text(
-                  "Pear tradings a commerce company designed to register andmonitor money circulating in the local economy.",
+                  "Pear Trading is a commerce company designed to register and monitor money circulating in the local economy.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -86,7 +75,7 @@ class _HomePageState extends State<AboutPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0,0,0,20),
+                padding: EdgeInsets.fromLTRB(0,20,0,0),
                 child: Text(
                   "Phone: +44(0)1524 64544",
                   textAlign: TextAlign.center,
@@ -96,17 +85,30 @@ class _HomePageState extends State<AboutPage> {
                   ),
                 ),
               ),
-
-              InkWell(
-                  child: const Center(child: Text
-                    ('Link to Shadowcat website',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue,
+              Padding(
+                padding: EdgeInsets.fromLTRB(0,40,0,0),
+                child: Text(
+                  "Developed by Shadowcat Industries",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0,20,0,0),
+                child: InkWell(
+                    child: const Center(child: Text
+                      ('Shadowcat',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.blue,
+                        ),
                       ),
                     ),
-                  ),
-                  onTap: () => launch('https://shadow.cat/')
+                    onTap: () => launch('https://shadow.cat/')
+                ),
               ),
             ],
         ),

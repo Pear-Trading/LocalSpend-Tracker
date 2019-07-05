@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:local_spend/common/apifunctions/request_logout_api.dart';
 import 'package:local_spend/common/functions/get_token.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'package:local_spend/common/functions/logout.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -81,8 +82,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  requestLogoutAPI(context);
-                  Navigator.of(context).pushReplacementNamed('/LoginPage');
+                  logout(context);
                 },
 
               ),
