@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,8 @@ import 'package:local_spend/common/widgets/basic_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'package:local_spend/common/functions/get_token.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 const URL = "https://flutter.io/";
@@ -118,6 +121,39 @@ class ReceiptPageState extends State<ReceiptPage> {
     }
 
     return "false";
+  }
+
+  Future<String> findOrganisations(String search) async {
+    final url = "https://dev.peartrade.org/api/search";
+    var token;
+
+    await getToken().then((result) {
+      token = result;
+    });
+
+    Map<String, String> body = {
+      "search_name":search,
+      "session_key":token,
+    };
+
+    debugPrint(token.toString() + " " + json.encode(body).toString());
+
+    final response = await http.post (
+      url,
+      //{"search_name":"bo","session_key":"1C2AB5F0-A163-11E9-BE68-241789E69626"}
+      body: json.encode(body),
+    );
+
+    debugPrint(response.body);
+    debugPrint(response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      //request successful
+      return response.body;
+    } else {
+      return null;
+    }
+
   }
 
   String formatDate(String date) {
@@ -260,16 +296,13 @@ class ReceiptPageState extends State<ReceiptPage> {
 
                         Container(
                           child : Padding(
-                            padding: EdgeInsets.fromLTRB(5,0,0,4),
+                            padding: EdgeInsets.fromLTRB(5,0,0,4),  // sorry about hardcoded constraints
                               child: FlatButton(
                                 onPressed: () {
                                   debugPrint("TODO: 'find organisation' dialog");
-                                  // Writing this before I forget tomorrow morning:
-                                  // Steps to fetch list of organisations with similar name:
-                                  // 1) record network activity (requests) of FoodLoop-Web webapp on Firefox
-                                  // 2) look at JSON files returned by server when 'organisation name' field's text updates/changes
-                                  // 3) look at requests sent to server when web textfield updates and send those from app
-                                  // 4) I'm tired
+
+                                  findOrganisations(_orgController.text);
+                                  
                                 },
                                   child: Text("Find",
                                     style:
