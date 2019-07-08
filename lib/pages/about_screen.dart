@@ -67,6 +67,7 @@ class _HomePageState extends State<AboutPage> {
                 padding: EdgeInsets.fromLTRB(0,20,0,0),
                 child: Text(
                   "Email: Test@admin.com",
+                  // TODO: Make this an @email link
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18.0,
@@ -78,6 +79,7 @@ class _HomePageState extends State<AboutPage> {
                 padding: EdgeInsets.fromLTRB(0,20,0,0),
                 child: Text(
                   "Phone: +44(0)1524 64544",
+                  // TODO: Make this a @phone link
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18.0,

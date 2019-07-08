@@ -129,6 +129,7 @@ class ReceiptPageState extends State<ReceiptPage> {
     // eg 2019-07-05T10:24:00.000+01.00 (real life example, works)
 
     // current format = "dd/MM/yyyy 'at' hh:mm"
+    //                   0123456789ABCDEFGHIJK
 
     var components = new List(5);
 
@@ -155,8 +156,6 @@ class ReceiptPageState extends State<ReceiptPage> {
     }
 
     var popupListView = new PopupListView(context, optionsList, "Choose Organization");
-
-    popupListView.options = optionsList;
 
     var dialog = popupListView.dialog();
 

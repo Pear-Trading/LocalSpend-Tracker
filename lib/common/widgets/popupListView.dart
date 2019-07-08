@@ -33,6 +33,8 @@ class PopupListView {
     return dialogOptionsList;
   }
 
+
+
   Widget dialog() {
     return new SimpleDialog(
       title: Text(listTitle),
@@ -41,9 +43,7 @@ class PopupListView {
   }
 
   void optionChosen(String option) {
-    // this works at least...
-
-    
+    // now pass `option` to
   }
 }
 
