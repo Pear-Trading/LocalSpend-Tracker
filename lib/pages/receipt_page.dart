@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,9 +9,8 @@ import 'package:local_spend/common/widgets/basic_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
-import 'package:local_spend/common/functions/get_token.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:local_spend/common/apifunctions/find_organisations.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -121,39 +119,6 @@ class ReceiptPageState extends State<ReceiptPage> {
     }
 
     return "false";
-  }
-
-  Future<String> findOrganisations(String search) async {
-    final url = "https://dev.peartrade.org/api/search";
-    var token;
-
-    await getToken().then((result) {
-      token = result;
-    });
-
-    Map<String, String> body = {
-      "search_name":search,
-      "session_key":token,
-    };
-
-    debugPrint(token.toString() + " " + json.encode(body).toString());
-
-    final response = await http.post (
-      url,
-      //{"search_name":"bo","session_key":"1C2AB5F0-A163-11E9-BE68-241789E69626"}
-      body: json.encode(body),
-    );
-
-    debugPrint(response.body);
-    debugPrint(response.statusCode.toString());
-
-    if (response.statusCode == 200) {
-      //request successful
-      return response.body;
-    } else {
-      return null;
-    }
-
   }
 
   String formatDate(String date) {
@@ -302,7 +267,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                                   debugPrint("TODO: 'find organisation' dialog");
 
                                   findOrganisations(_orgController.text);
-                                  
+
                                 },
                                   child: Text("Find",
                                     style:
@@ -334,6 +299,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                     onSubmitted: (_) {
                       submitReceipt(_amountController.text,
                           _timeController.text, _orgController.text);
+                      // TODO: make sure organisation is valid
                       // TODO: Add 'find organisation' button which displays a dialog to, well, find the organisation's address or manual entry
                     },
                   ),
