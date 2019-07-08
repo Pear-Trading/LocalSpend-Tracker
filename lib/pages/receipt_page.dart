@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
+import 'package:local_spend/common/widgets/popupListView.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -146,6 +147,32 @@ class ReceiptPageState extends State<ReceiptPage> {
     // know that before writing this and it's done now so I'm keeping it.
   }
 
+  String listOrganisations(List<Organisation> organisations, context) {
+    var optionsList = new List<String>();
+
+    for (var i = 0; i < organisations.length; i++) {
+      optionsList.add(organisations[i].name);
+    }
+
+    var popupListView = new PopupListView(context, optionsList, "Choose Organization");
+
+    popupListView.options = optionsList;
+
+    var dialog = popupListView.dialog();
+
+//    print(dialog);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return dialog;
+      },
+    );
+
+    print(popupListView.result);
+    return popupListView.result;
+  }
+
   @override
   Widget build(BuildContext context) {
     var drawer = Drawer();
@@ -264,10 +291,12 @@ class ReceiptPageState extends State<ReceiptPage> {
                             padding: EdgeInsets.fromLTRB(5,0,0,4),  // sorry about hardcoded constraints
                               child: FlatButton(
                                 onPressed: () {
-                                  debugPrint("TODO: 'find organisation' dialog");
+                                  var organisations = findOrganisations(_orgController.text);
+                                  // some tasty async stuff here yum yum
+                                  // and a pretty little dialog too yay
+                                  var choice = organisations.then((data) => listOrganisations(data, context));
 
-                                  findOrganisations(_orgController.text);
-
+                                  // choice is a Future<String>
                                 },
                                   child: Text("Find",
                                     style:
