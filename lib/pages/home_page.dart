@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: BasicDrawer(),
       body: Container(
+        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
         child: FadeIn(
           duration: Duration(milliseconds: 500),
           curve: Curves.easeIn,
@@ -47,7 +48,6 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
 
               ListTile(
-                contentPadding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                 title: new Center(
                   child: new Text(
                     "Submit Receipt",

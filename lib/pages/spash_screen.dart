@@ -40,9 +40,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     margin: EdgeInsets.all(15),
                     alignment: FractionalOffset(0.5, 0.3),
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/launch_image.png')
-                        ),
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/launch_image.png')
+                      ),
                     ),
                   ),
                 ),

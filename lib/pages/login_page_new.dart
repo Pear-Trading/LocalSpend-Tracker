@@ -18,8 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController(/*text: 'test@example.com'*/); // remove
-  final TextEditingController _passwordController = TextEditingController(/*text: 'abc123'*/);        // remove
+  final TextEditingController _emailController = TextEditingController(text: 'test@example.com'); // remove
+  final TextEditingController _passwordController = TextEditingController(text: 'abc123');        // remove
 
   FocusNode focusNode;  // added so focus can move automatically
 
@@ -73,39 +73,70 @@ class LoginPageState extends State<LoginPage> {
       },
       child: PlatformScaffold(
 //        drawer: BasicDrawer(),
-//        body: Container(
-//          decoration: BoxDecoration(color: Colors.white),
-//          margin: const EdgeInsets.all(20),
-//          child: Padding(
-//            padding: EdgeInsets.fromLTRB(30.0, 170.0, 30.0, 0.0),
-//            child: ListView(
-//              children: <Widget>[
+        appBar: AppBar(
+          title: Text(
+            "LOGIN",
+            style: TextStyle(
+              fontSize: 30.0,
+              color: Colors.black,
+            ),
+          ),
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.black),
+        ),
         body: Container(
-          decoration: BoxDecoration(color: Colors.white),
-          child: Container(
-            margin: EdgeInsets.fromLTRB(60,0,60,0),
-            child: Column(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+            child: ListView(
               children: <Widget>[
-                Expanded(
-                  child: Container(
-                      margin: EdgeInsets.fromLTRB(15,0,15,0),
-//                    alignment: FractionalOffset(0.5, 0.3),  // not sure what this does ngl :/
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/launch_image.png')
+                Container(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 15.0),
+                      child: Text(
+                        "Local Loop",
+                        style: TextStyle(fontSize: 40.0, color: Colors.black),
                       ),
+                    )),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 78.0),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                          'This is the logon page.',
+                          style: new TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                          ' It is currently in development.',
+                          style: new TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
+                Text(
+                  "EMAIL",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   child: TextField(
-                    autocorrect: false,
-                    textAlign: TextAlign.center,
                     controller: _emailController,
                     decoration: InputDecoration(
-                      hintText: "EMAIL",
-                      hintStyle: TextStyle(fontSize: 15),
+                      hintText: "Use your login email",
                     ),
                     style: TextStyle(
                       fontSize: 18.0,
@@ -118,15 +149,23 @@ class LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
+                  child: Text(
+                    "PASSWORD",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   child: TextField(
-                    autocorrect: false,
-                    textAlign: TextAlign.center,
                     controller: _passwordController,
                     focusNode: focusNode,
                     decoration: InputDecoration(
-                      hintText: 'PASSWORD',
-                      hintStyle: TextStyle(fontSize: 15),
+                      hintText: 'Your password, keep it secret, keep it safe.',
                     ),
                     obscureText: true,
                     style: TextStyle(
@@ -140,48 +179,24 @@ class LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-//                Padding(
-//                  padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 100.0),
-//                  child: Container(
-//                    height: 45.0,
-//                    child: RaisedButton(
-//
-//                      onPressed: () {
-//                        login( _emailController.text,
-//                            _passwordController.text);
-//  //                        showDialog(
-//  //                          barrierDismissible: false,
-//  //                        );
-//  //                        print("pressed");
-//                      },
-//                      child: Text("GO",
-//                          style:
-//                          TextStyle(color: Colors.white, fontSize: 20.0)),
-//                      color: Colors.blue,
-//                    ),
-//                  ),
-//                ),
-              Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 100.0),
-
-              child : Material(
-                child : InkWell(
-                    onTap: () => login( _emailController.text, _passwordController.text),
-                    child: new Container(
-                      width: 100,
-                      height: 50,
-                      decoration: new BoxDecoration(
-//                        color: Colors.lightBlueAccent,
-                        borderRadius: new BorderRadius.circular(0.0),
-                      ),
-                      child: new Center(
-                        child: new Text(
-                            'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
-                        ),
-                      ),
-                    splashColor: Colors.lightBlueAccent,
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
+                  child: Container(
+                    height: 65.0,
+                    child: RaisedButton(
+                      onPressed: () {
+                        login( _emailController.text,
+                            _passwordController.text);
+//                        showDialog(
+//                          barrierDismissible: false,
+//                        );
+//                        print("pressed");
+                      },
+                      child: Text("LOGIN",
+                          style:
+                          TextStyle(color: Colors.white, fontSize: 22.0)),
+                      color: Colors.blue,
                     ),
-                color: Colors.blueAccent,
                   ),
                 ),
               ],
