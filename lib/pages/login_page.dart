@@ -86,7 +86,7 @@ class LoginPageState extends State<LoginPage> {
         body: Container(
           decoration: BoxDecoration(color: Colors.white),
           child: Container(
-            margin: EdgeInsets.fromLTRB(60,0,60,0),
+            margin: EdgeInsets.fromLTRB(60,30,60,0),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -165,7 +165,7 @@ class LoginPageState extends State<LoginPage> {
 //                  ),
 //                ),
               Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 15.0),
+              padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
 
               child : Material(
                 child : InkWell(
@@ -191,12 +191,9 @@ class LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
 
-                  child: LabeledCheckboxWithIcon(
+                  child: LabeledCheckbox(
                     label : "SAVE LOGIN",
                     textStyle: TextStyle(fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
-                    icon: Icons.account_box,
-//                    iconSize: 18,
-                    iconColor: Colors.black54,
                     padding: const EdgeInsets.fromLTRB(0,0,0,0),
                     value : _saveLoginDetails,
 
@@ -206,6 +203,22 @@ class LoginPageState extends State<LoginPage> {
                       });
                     },
                   ),
+
+                  /*child: LabeledCheckboxWithIcon(
+                    label : "SAVE LOGIN",
+                    textStyle: TextStyle(fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
+                    icon: Icons.account_box,  // need to remove icon padding!!
+                    iconSize: 18,
+                    iconColor: Colors.black54,
+                    padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                    value : _saveLoginDetails,
+
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _saveLoginDetails = newValue;
+                      });
+                    },
+                  ),*/
                 ),
               ],
             ),
