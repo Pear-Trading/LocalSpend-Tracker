@@ -7,6 +7,7 @@ import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:local_spend/common/widgets/labeled_checkbox.dart';
 
 const URL = "https://flutter.io/";
 
@@ -20,6 +21,8 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController(/*text: 'test@example.com'*/); // remove
   final TextEditingController _passwordController = TextEditingController(/*text: 'abc123'*/);        // remove
+  bool _saveLoginDetails = true;  // I am extremely sorry for the placement of this variable
+                                  // it will be fixed soon I promise
 
   FocusNode focusNode;  // added so focus can move automatically
 
@@ -162,7 +165,7 @@ class LoginPageState extends State<LoginPage> {
 //                  ),
 //                ),
               Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 100.0),
+              padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 15.0),
 
               child : Material(
                 child : InkWell(
@@ -182,6 +185,26 @@ class LoginPageState extends State<LoginPage> {
                     splashColor: Colors.lightBlueAccent,
                     ),
                 color: Colors.blueAccent,
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
+
+                  child: LabeledCheckboxWithIcon(
+                    label : "SAVE LOGIN",
+                    textStyle: TextStyle(fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
+                    icon: Icons.account_box,
+//                    iconSize: 18,
+                    iconColor: Colors.black54,
+                    padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                    value : _saveLoginDetails,
+
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _saveLoginDetails = newValue;
+                      });
+                    },
                   ),
                 ),
               ],
