@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Container(
                   margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
                   child: Text(
-                    "© Copyright Statement 2018",
+                    "© Copyright Statement 2019",
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.black,

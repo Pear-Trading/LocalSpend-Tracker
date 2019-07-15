@@ -16,7 +16,7 @@ import 'package:local_spend/common/widgets/popupListView.dart';
 import 'package:local_spend/common/widgets/labeled_checkbox.dart';
 
 const URL = "https://flutter.io/";
-const demonstration = false;
+const demonstration = true;
 
 class ReceiptPage extends StatefulWidget {
   @override
@@ -82,20 +82,21 @@ class ReceiptPageState extends State<ReceiptPage> {
           // return object of type Dialog
           return AlertDialog(
             title: new Text("Success"),
-            content: new Text("Recepit successfully submitted."),
+            content: new Text("Receipt successfully submitted."),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               new FlatButton(
                 child: new Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  //TODO: Reset form after dialog exit
                 },
               ),
             ],
           );
         },
       ).then((_) {
-      Navigator.of(context).pushNamed('/HomePage');
+      Navigator.of(context).pushReplacementNamed('/HomePage');
     });
     }
     else {
@@ -166,6 +167,15 @@ class ReceiptPageState extends State<ReceiptPage> {
   }
 
   String listOrganisations(List<Organisation> organisations, context) {
+    if (organisations.length == 0) {
+      showDialogSingleButton(
+          context,
+          "No matching organizations",
+          "We were unable to find any organizations matching this text.",
+          "OK"
+      );
+      return null;
+    }
     var optionsList = new List<String>();
 
     for (var i = 0; i < organisations.length; i++) {
