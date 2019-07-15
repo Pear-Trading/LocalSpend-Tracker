@@ -202,7 +202,7 @@ class ReceiptPageState extends State<ReceiptPage> {
             "Submit Receipt",
             style: TextStyle(
               fontSize: 20,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
 //          leading: BackButton(),
@@ -444,7 +444,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                     onPressed: () {
                       submitReceipt(_amountController.text, _timeController.text, _orgController.text);
                     },
-                    child: Text("SUBMIT",
+                    child: Text("GO",
                         style:
                             TextStyle(color: Colors.white, fontSize: 22.0)),
                     color: Colors.blue,
