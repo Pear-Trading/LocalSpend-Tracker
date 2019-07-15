@@ -9,9 +9,11 @@ import 'package:local_spend/common/widgets/basic_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+import 'package:local_spend/pages/settings.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/popupListView.dart';
+import 'package:local_spend/common/widgets/labeled_checkbox.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -30,6 +32,7 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _recurringController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _orgController = TextEditingController();
+  bool _recurringCheckbox = false;   // have mercy, this will be removed. sorry for this variable's placement...
 
   FocusNode focusNode;  // added so focus can move automatically
 
@@ -174,223 +177,310 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   @override
   Widget build(BuildContext context) {
-    var drawer = Drawer();
     return WillPopScope(
       onWillPop: () {
         if (Navigator.canPop(context)) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-              '/HomePage', (Route<dynamic> route) => false);
+              '/LoginPage', (Route<dynamic> route) => false);
         } else {
-          Navigator.of(context).pushReplacementNamed('/HomePage');
+          Navigator.of(context).pushReplacementNamed('/LoginPage');
         }
       },
       child: PlatformScaffold(
-        drawer: BasicDrawer(),
+
         appBar: AppBar(
+          backgroundColor: Colors.blue[400],
           title: Text(
             "Submit Receipt",
             style: TextStyle(
-              fontSize: 30.0,
+              fontSize: 20,
               color: Colors.black,
             ),
           ),
+//          leading: BackButton(),
           centerTitle: true,
           iconTheme: IconThemeData(color: Colors.black),
         ),
+
         body: Container(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
-            child: ListView(
-              children: <Widget>[
-//                Container(
-//                    alignment: Alignment.topCenter,
-//                    child: Padding(
-//                      padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 15.0),
-//                      child: Text(
-//                        "Required fields are in bold",
-//                        style: TextStyle(fontSize: 20.0, color: Colors.black),
-//                      ),
-//                    )),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
-                  child : Text(
-                    "Time of Transaction",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+          child: ListView(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+                child : Text(
+                  "Time of Transaction",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                DateTimePickerFormField(
-                  inputType: InputType.both,
-                  format: DateFormat("dd/MM/yyyy 'at' hh:mm"),
-                  editable: true,
-                  controller: _timeController,
+              ),
+              DateTimePickerFormField(
+                inputType: InputType.both,
+                format: DateFormat("dd/MM/yyyy 'at' hh:mm"),
+                editable: true,
+                controller: _timeController,
+                decoration: InputDecoration(
+                    labelText: 'Date/Time of Transaction', hasFloatingPlaceholder: false),
+                onChanged: (dt) => setState(() => date = dt),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+                child: Text(
+                  "Amount",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                child: TextField(
+                  controller: _amountController,
                   decoration: InputDecoration(
-                      labelText: 'Date/Time of Transaction', hasFloatingPlaceholder: false),
-                  onChanged: (dt) => setState(() => date = dt),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
-                  child: Text(
-                    "Amount",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    hintText: 'Value in £',
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  child: TextField(
-                    controller: _amountController,
-                    decoration: InputDecoration(
-                      hintText: 'Value in £',
-                    ),
 //                    obscureText: true,
-                    autocorrect: false,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(focusNode);
+                  autocorrect: false,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.bold,
+                  ),
+                  onSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(focusNode);
 //                      submitReceipt(_amountController.text, _timeController.text);
-                    },
-                  ),
+                  },
                 ),
+              ),
 
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
 
-                  child : Container (
-                    height: 22, // this should be the same height as text
+                child : Container (
+                  height: 22, // this should be the same height as text
 
-                    child : ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
+                  child : ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
 
-                        Container(
-                          child: Text(
-                            "Organization Name",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      Container(
+                        child: Text(
+                          "Organization Name",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
+                      ),
 
-                        Container(
-                          child : Padding(
-                            padding: EdgeInsets.fromLTRB(5,0,0,4),  // sorry about hardcoded constraints
-                              child: FlatButton(
-                                onPressed: () {
-                                  var organisations = findOrganisations(_orgController.text);
-                                  // some tasty async stuff here yum yum
-                                  // and a pretty little dialog too yay
-                                  var choice = organisations.then((data) => listOrganisations(data, context));
+                      Container(
+                        child : Padding(
+                          padding: EdgeInsets.fromLTRB(5,0,0,4),  // sorry about hardcoded constraints
+                            child: FlatButton(
+                              onPressed: () {
+                                var organisations = findOrganisations(_orgController.text);
+                                // some tasty async stuff here yum yum
+                                // and a pretty little dialog too yay (doesn't work)
+                                var choice = organisations.then((data) => listOrganisations(data, context));
 
-                                  // choice is a Future<String>
-                                },
-                                  child: Text("Find",
-                                    style:
-                                    TextStyle(color: Colors.blue, fontSize: 18.0)),
-                              ),
-                          ),
-                        )
+                                // choice is a Future<String>
+                              },
+                                child: Text("Find",
+                                  style:
+                                  TextStyle(color: Colors.blue, fontSize: 18.0)),
+                            ),
+                        ),
+                      )
 
-                      ],
-                    ),
+                    ],
                   ),
                 ),
+              ),
 
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  child: TextField(
-                    controller: _orgController,
-                    focusNode: focusNode,
-                    decoration: InputDecoration(
-                      hintText: 'Eg. Pear Trading',
-                    ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                child: TextField(
+                  controller: _orgController,
+                  focusNode: focusNode,
+                  decoration: InputDecoration(
+                    hintText: 'Eg. Pear Trading',
+                  ),
 //                    obscureText: true,
-                    autocorrect: true,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onSubmitted: (_) {
-                      submitReceipt(_amountController.text,
-                          _timeController.text, _orgController.text);
-                      // TODO: make sure organisation is valid
-                      // TODO: Add 'find organisation' button which displays a dialog to, well, find the organisation's address or manual entry
+                  autocorrect: true,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.bold,
+                  ),
+                  onSubmitted: (_) {
+                    submitReceipt(_amountController.text,
+                        _timeController.text, _orgController.text);
+                    // TODO: make sure organisation is valid
+                    // TODO: Add 'find organisation' button which displays a dialog to, well, find the organisation's address or manual entry
+                  },
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+
+                child : Container (
+                  height: 18,
+
+                  child : ListView(
+                    scrollDirection: Axis.horizontal,
+
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                          "Essential",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        child : Padding(
+                          padding: EdgeInsets.fromLTRB(20.0, 0.0, 0, 0),
+
+                          child: Checkbox(value:
+                          _essentialController.text.toLowerCase() == 'true',
+                              onChanged: (bool newValue) {
+                            setState(() {
+                              _essentialController.text =
+                                  convertBoolToString(newValue);
+                            });
+                          }),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+
+                child : Container (
+                  height: 27,
+//                  width: 400,
+
+                  child : ListView(
+                    scrollDirection: Axis.horizontal,
+
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                          "Recurring",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        child : Padding(
+                          padding: EdgeInsets.fromLTRB(15.0, 0.0, 0, 4),
+
+                          child: Checkbox(value:
+                          _essentialController.text.toLowerCase() != "none" ||
+                              _essentialController.text.toLowerCase() != 'false',
+                              onChanged: (bool newValue) {
+                                setState(() {
+                                  var options = new List<String>(7);
+                                  options[0] = "Daily";
+                                  options[1] = "Weekly";
+                                  options[2] = "Fortnightly";
+                                  options[3] = "Monthly";
+                                  options[5] = "Quarterly";
+                                  options[6] = "Yearly";
+
+                                  var popupListView = new PopupListView(
+                                      context, options, "Recurring...");
+
+                                  var dialog = popupListView.dialog();
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return dialog;
+                                    },
+                                  );
+
+                                  print(popupListView.result);
+//                                  _recurringController.text =
+//                                      popupListView.result;
+                                });
+                              }),
+                        ),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
+                        child: Text(
+                          convertBoolToString(_essentialController.text.toLowerCase() != "none" ||
+                              _essentialController.text.toLowerCase() != 'false'),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+
+//                            var options = new List<String>(1);
+//                            options[0] = "Weekly";
+//
+//                            var popupListView = new PopupListView(context, options, "Recurring...");
+//
+//                            var dialog = popupListView.dialog();
+//
+//                            showDialog(
+//                              context: context,
+//                              builder: (BuildContext context) {
+//                                return dialog;
+//                              },
+//                            );
+//
+//                            print(popupListView.result);
+//                            _recurringController.text =  popupListView.result;
+//
+//                                setState(() {
+//                                  _recurringController.text =
+//                                      convertBoolToString(newValue);
+
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
+                child: Container(
+                  height: 65.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      submitReceipt(_amountController.text, _timeController.text, _orgController.text);
                     },
+                    child: Text("SUBMIT",
+                        style:
+                            TextStyle(color: Colors.white, fontSize: 22.0)),
+                    color: Colors.blue,
                   ),
                 ),
-
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
-
-                  child : Container (
-                    height: 18,
-
-                    child : ListView(
-                      scrollDirection: Axis.horizontal,
-
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            "Essential Purchase",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-
-                        Container(
-                          child : Padding(
-                            padding: EdgeInsets.fromLTRB(20.0, 0.0, 0, 0),
-
-                            child: Checkbox(value:
-                            _essentialController.text.toLowerCase() == 'true',
-                                onChanged: (bool newValue) {
-                              setState(() {
-                                _essentialController.text =
-                                    convertBoolToString(newValue);
-                              });
-                            }),
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ),
-
-
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
-                  child: Container(
-                    height: 65.0,
-                    child: RaisedButton(
-                      onPressed: () {
-                        submitReceipt(_amountController.text, _timeController.text, _orgController.text);
-                      },
-                      child: Text("SUBMIT",
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 22.0)),
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

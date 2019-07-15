@@ -20,6 +20,7 @@ class PopupListView {
     for (var i = 0; i < options.length; i++) {
       dialogOptionsList.add(
         new SimpleDialogOption(
+          // print each iteration to see if any are null
           child: Text(options[i]),
           onPressed: () {
             Navigator.of(this.context).pop();
@@ -32,8 +33,6 @@ class PopupListView {
 
     return dialogOptionsList;
   }
-
-
 
   Widget dialog() {
     return new SimpleDialog(

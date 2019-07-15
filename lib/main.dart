@@ -4,6 +4,7 @@ import 'package:local_spend/pages/login_page.dart';
 import 'package:local_spend/pages/receipt_page.dart';
 import 'package:local_spend/pages/spash_screen.dart';
 import 'package:local_spend/pages/about_screen.dart';
+import 'package:local_spend/pages/settings.dart';
 import 'package:local_spend/config.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         Locale("en")
       ],
 
-      title: "Splash and Token Authentication",
+      title: "Local Spend Tracker",
       theme: new ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         "/LoginPage": (BuildContext context) => LoginPage(),
         "/ReceiptPage": (BuildContext context) => ReceiptPage(),
         "/AboutPage": (BuildContext context) => AboutPage(),
+        "/SettingsPage": (BuildContext context) => SettingsPage(),
       },
       home: SplashScreen(),
     );

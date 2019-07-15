@@ -19,8 +19,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController(/*text: 'test@example.com'*/); // remove
-  final TextEditingController _passwordController = TextEditingController(/*text: 'abc123'*/);        // remove
+  final TextEditingController _emailController = TextEditingController(text: 'test@example.com'); // remove
+  final TextEditingController _passwordController = TextEditingController(text: 'abc123');        // remove
   bool _saveLoginDetails = true;  // I am extremely sorry for the placement of this variable
                                   // it will be fixed soon I promise
 

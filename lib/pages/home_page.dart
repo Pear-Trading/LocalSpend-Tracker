@@ -1,94 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:local_spend/common/platform/platform_scaffold.dart';
-import 'package:local_spend/common/widgets/basic_drawer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart';
-import 'package:local_spend/common/apifunctions/request_logout_api.dart';
-import 'package:local_spend/common/functions/get_token.dart';
-import 'package:flutter_fadein/flutter_fadein.dart';
-import 'package:local_spend/common/functions/logout.dart';
+import 'package:local_spend/pages/receipt_page.dart';
+import 'package:local_spend/pages/settings.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
+  static String _title = 'Text here';
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: _title,
+      home: HomePageWidget(),
+    );
+  }
+}
+
+class HomePageWidget extends StatefulWidget {
+  HomePageWidget({Key key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  @override
+class _HomePageState extends State<HomePageWidget> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static List<Widget> _widgetOptions = <Widget>[
+    ReceiptPage(),
+    SettingsPage()
+  ];
 
-  void initState() {
-    super.initState();
-    _saveCurrentRoute("/HomePage");
-  }
-
-  _saveCurrentRoute(String lastRoute) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.setString('LastScreenRoute', lastRoute);
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      appBar: AppBar(
-        title: Text(
-          "Navigation",
-          style: TextStyle(color: Colors.black),
-        ),
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 6.0,
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      drawer: BasicDrawer(),
-      body: Container(
-        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-        child: FadeIn(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.easeIn,
-
-          child: Column(
-            children: <Widget>[
-
-              ListTile(
-                title: new Center(
-                  child: new Text(
-                    "Submit Receipt",
-                    style: TextStyle(color: Colors.black, fontSize: 20.0),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                onTap: () {
-  //                debugPrint('$token');
-                  Navigator.of(context).pushNamed('/ReceiptPage');
-                },
-              ),
-
-              ListTile(
-                title: new Center(
-                  child: new Text(
-                    "About",
-                    style: TextStyle(color: Colors.black, fontSize: 20.0),
-                  ),
-                ),
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  Navigator.of(context).pushReplacementNamed('/AboutPage');
-                },
-              ),
-
-              ListTile(
-                title: new Center(
-                  child: new Text(
-                    "Logout",
-                    style: TextStyle(color: Colors.black, fontSize: 20.0),
-                  ),
-                ),
-                onTap: () {
-                  logout(context);
-                },
-
-              ),
-            ],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt),
+            title: Text('Submit Receipt'),
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text('Settings'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue[400],
+        onTap: _onItemTapped,
       ),
     );
   }

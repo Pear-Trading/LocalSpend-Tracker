@@ -38,6 +38,9 @@ Future<LoginModel> requestLoginAPI(
 
     return LoginModel.fromJson(responseJson);
   } else {
+    debugPrint("Invalid, either creds are wrong or server is down");
+    Navigator.of(context).pushReplacementNamed('/HomePage'); // just here temporarily while server is down
+
     final responseJson = json.decode(response.body);
 
     saveCurrentLogin(responseJson, body["email"]);

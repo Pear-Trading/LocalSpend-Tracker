@@ -7,7 +7,10 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 
 class AboutPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+//  _HomePageState createState() => _HomePageState();
+  State<StatefulWidget> createState() {
+    return new _HomePageState();
+  }
 }
 
 class _HomePageState extends State<AboutPage> {
@@ -17,6 +20,11 @@ class _HomePageState extends State<AboutPage> {
     _saveCurrentRoute("/AboutPage");
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   _saveCurrentRoute(String lastRoute) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setString('LastScreenRoute', lastRoute);
@@ -24,27 +32,36 @@ class _HomePageState extends State<AboutPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      appBar: AppBar(
-        title: Text(
-          "About Page",
-          style: TextStyle(
-              fontSize: 30,
-              color: Colors.black),
+    return WillPopScope(
+      onWillPop: () {
+        if (Navigator.canPop(context)) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/HomePage', (Route<dynamic> route) => true);
+        } else {
+          Navigator.of(context).pushReplacementNamed('/HomePage');
+        }
+      },
+      child: PlatformScaffold(
+        appBar: AppBar(
+          title: Text(
+            "About Page",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          leading: BackButton(),
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.black),
         ),
-        centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 6.0,
-      ),
-      drawer: BasicDrawer(),
-      body: Container(
-        padding: EdgeInsets.all(32.0),
-        child: ListView(
+        body: Container(
+          padding: EdgeInsets.all(32.0),
+          child: ListView(
             children: <Widget>[
               InkWell(
                   child: const Center(child: Text
                     ('Pear Trading',
-                  style: TextStyle(
+                    style: TextStyle(
                     fontSize: 20,
                     color: Colors.blue,
                       ),
@@ -113,6 +130,7 @@ class _HomePageState extends State<AboutPage> {
                 ),
               ),
             ],
+          ),
         ),
       ),
     );
