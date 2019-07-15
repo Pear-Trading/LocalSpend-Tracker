@@ -29,10 +29,9 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _essentialController = TextEditingController();
-  final TextEditingController _recurringController = TextEditingController();
+  final TextEditingController _recurringController = TextEditingController(text: "None");
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _orgController = TextEditingController();
-  bool _recurringCheckbox = false;   // have mercy, this will be removed. sorry for this variable's placement...
 
   FocusNode focusNode;  // added so focus can move automatically
 
@@ -69,6 +68,8 @@ class ReceiptPageState extends State<ReceiptPage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setString('LastPageRoute', lastRoute);
   }
+
+  // this file is getting really messy sorry everyone
 
   void submitReceipt(String amount, String time, String orgName) async {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -125,6 +126,19 @@ class ReceiptPageState extends State<ReceiptPage> {
     return "false";
   }
 
+  List<String> getOptions() {
+    var options = new List<String>(7);
+    options[0] = "None";
+    options[1] = "Daily";
+    options[2] = "Weekly";
+    options[3] = "Fortnightly";
+    options[4] = "Monthly";
+    options[5] = "Quarterly";
+    options[6] = "Yearly";
+
+    return options;
+  }
+
   String formatDate(String date) {
 //    return "";
     // should be in format:
@@ -158,21 +172,15 @@ class ReceiptPageState extends State<ReceiptPage> {
       optionsList.add(organisations[i].name);
     }
 
-    var popupListView = new PopupListView(context, optionsList, "Choose Organization");
+//    var popupListView = new PopupListView(context, optionsList, "Choose Organization");
 
-    var dialog = popupListView.dialog();
+    var popupListView = new PopupListView();
+    var dialog = popupListView.dialog(context, optionsList, "Choose Organization");
 
-//    print(dialog);
+//    dialog.then((value) => debugPrint(value));
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return dialog;
-      },
-    );
-
-    print(popupListView.result);
-    return popupListView.result;
+    dialog.then((value) => _orgController.text = value);
+    //can't return value as it is <future> and thus would block
   }
 
   @override
@@ -285,16 +293,31 @@ class ReceiptPageState extends State<ReceiptPage> {
                           padding: EdgeInsets.fromLTRB(5,0,0,4),  // sorry about hardcoded constraints
                             child: FlatButton(
                               onPressed: () {
-                                var organisations = findOrganisations(_orgController.text);
-                                // some tasty async stuff here yum yum
-                                // and a pretty little dialog too yay (doesn't work)
-                                var choice = organisations.then((data) => listOrganisations(data, context));
+                                if (_orgController.text != "") {
+                                  var organisations = findOrganisations(
+                                      _orgController.text);
 
-                                // choice is a Future<String>
+                                  var choice = organisations.then((data) =>
+                                      listOrganisations(data, context));
+
+                                  choice.then((value) => _orgController.text = value);
+                                  setState(() {
+
+                                  });
+                                } else {
+                                  // no data entered
+
+                                  showDialogSingleButton(
+                                      context,
+                                      "No data",
+                                      "We were unable to service your request because no data was entered.",
+                                      "OK"
+                                  );
+                                }
                               },
                                 child: Text("Find",
-                                  style:
-                                  TextStyle(color: Colors.blue, fontSize: 18.0)),
+                                  style: TextStyle(color: Colors.blue, fontSize: 18.0)
+                                ),
                             ),
                         ),
                       )
@@ -369,10 +392,10 @@ class ReceiptPageState extends State<ReceiptPage> {
               ),
 
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+                padding: EdgeInsets.fromLTRB(0.0,18,0.0,0.0),
 
                 child : Container (
-                  height: 27,
+                  height: 35,
 //                  width: 400,
 
                   child : ListView(
@@ -380,6 +403,7 @@ class ReceiptPageState extends State<ReceiptPage> {
 
                     children: <Widget>[
                       Container(
+                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 8),
                         child: Text(
                           "Recurring",
                           style: TextStyle(
@@ -390,80 +414,27 @@ class ReceiptPageState extends State<ReceiptPage> {
                       ),
 
                       Container(
-                        child : Padding(
-                          padding: EdgeInsets.fromLTRB(15.0, 0.0, 0, 4),
-
-                          child: Checkbox(value:
-                          _essentialController.text.toLowerCase() != "none" ||
-                              _essentialController.text.toLowerCase() != 'false',
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  var options = new List<String>(7);
-                                  options[0] = "Daily";
-                                  options[1] = "Weekly";
-                                  options[2] = "Fortnightly";
-                                  options[3] = "Monthly";
-                                  options[5] = "Quarterly";
-                                  options[6] = "Yearly";
-
-                                  var popupListView = new PopupListView(
-                                      context, options, "Recurring...");
-
-                                  var dialog = popupListView.dialog();
-
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return dialog;
-                                    },
-                                  );
-
-                                  print(popupListView.result);
-//                                  _recurringController.text =
-//                                      popupListView.result;
-                                });
-                              }),
-                        ),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
-                        child: Text(
-                          convertBoolToString(_essentialController.text.toLowerCase() != "none" ||
-                              _essentialController.text.toLowerCase() != 'false'),
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
+                        child: DropdownButton<String>(
+                          value: _recurringController.text,
+                          onChanged: (String newValue) {
+                            setState(() {
+                              _recurringController.text = newValue;
+                            });
+                          },
+                          items: getOptions().map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          })
+                              .toList(),
+                        )
                       ),
                     ],
                   ),
                 ),
               ),
-
-
-//                            var options = new List<String>(1);
-//                            options[0] = "Weekly";
-//
-//                            var popupListView = new PopupListView(context, options, "Recurring...");
-//
-//                            var dialog = popupListView.dialog();
-//
-//                            showDialog(
-//                              context: context,
-//                              builder: (BuildContext context) {
-//                                return dialog;
-//                              },
-//                            );
-//
-//                            print(popupListView.result);
-//                            _recurringController.text =  popupListView.result;
-//
-//                                setState(() {
-//                                  _recurringController.text =
-//                                      convertBoolToString(newValue);
-
 
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),

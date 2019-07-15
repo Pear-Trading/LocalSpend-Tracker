@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class PopupListView {
-  List<String> options = new List<String>();
-  var context;
-  String listTitle;
-  List<SimpleDialogOption> simpleDialogOptions = new List<SimpleDialogOption>();
-  String result;
+  Future<dynamic> dialog(context, List<String> options, String title) {
+    return showDialog<dynamic>(
+      context: context,
+      barrierDismissible: false,
 
-  PopupListView(context, List<String> options, String title) {
-    this.context = context;
-    this.options = options;
-    this.listTitle = title;
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(title),
+          children: getDialogOptions(context, options),
+        );
+      },
+    );
   }
 
-
-  List<SimpleDialogOption> getDialogOptions() {
+  List<Widget> getDialogOptions(context, List<String> options /*, Function onPressed*/) {
     var dialogOptionsList = new List<SimpleDialogOption>();
 
     for (var i = 0; i < options.length; i++) {
@@ -23,9 +25,7 @@ class PopupListView {
           // print each iteration to see if any are null
           child: Text(options[i]),
           onPressed: () {
-            Navigator.of(this.context).pop();
-//            print("Chosen organisation is " + options[i]);
-            optionChosen(options[i]);
+            Navigator.of(context).pop(options[i]);
           },
         ),
       );
@@ -33,19 +33,4 @@ class PopupListView {
 
     return dialogOptionsList;
   }
-
-  Widget dialog() {
-    return new SimpleDialog(
-      title: Text(listTitle),
-      children : getDialogOptions(),
-    );
-  }
-
-  void optionChosen(String option) {
-    // now pass `option` to
-  }
 }
-
-
-
-

@@ -26,12 +26,12 @@ List<Organisation> jsonToOrganisations(String json) {
 
   List<dynamic> validated = decoded['unvalidated'];
 //  Map organisation = validated[0];
-
-  print("");
-  print("Response:");
-  for (var i = 0; i < validated.length; i++) {
-    print(validated[i]);
-  }
+//
+//  print("");
+//  print("Response:");
+//  for (var i = 0; i < validated.length; i++) {
+//    print(validated[i]);
+//  }
 
   List<Map> organisationsMaps = new List<Map>();
 
@@ -61,14 +61,14 @@ List<Organisation> jsonToOrganisations(String json) {
 
   // the reason some organizations do not show up is because they are not all validated
   // option to 'show unvalidated' should be added along with maybe a settings section
-
-  print("");
-  print("Local:");
-  for (var i = 0; i < organisations.length; i++)
-    {
-      print(organisations[i].name);
-    }
-  print("");
+//
+//  print("");
+//  print("Local:");
+//  for (var i = 0; i < organisations.length; i++)
+//    {
+//      print(organisations[i].name);
+//    }
+//  print("");
 
   return organisations;
 }
