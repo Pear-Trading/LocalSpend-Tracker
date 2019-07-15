@@ -60,10 +60,10 @@ class SettingsPageState extends State<SettingsPage> {
         appBar: AppBar(
           backgroundColor: Colors.blue[400],
           title: Text(
-            "Settings",
+            "More",
             style: TextStyle(
               fontSize: 20,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
 //          leading: BackButton(),

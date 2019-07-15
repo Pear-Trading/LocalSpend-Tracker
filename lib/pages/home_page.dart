@@ -49,8 +49,8 @@ class _HomePageState extends State<HomePageWidget> {
             title: Text('Submit Receipt'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
+            icon: Icon(Icons.more_horiz),
+            title: Text('More'),
           ),
         ],
         currentIndex: _selectedIndex,
