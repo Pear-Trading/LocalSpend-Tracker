@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -16,12 +16,18 @@ Future<LoginModel> requestLogoutAPI(BuildContext context) async {
     token = result;
   });
 
+  Map<String, String> body = {
+    "Token":token,
+  };
+
   final response = await http.post(
     url,
-    headers: {HttpHeaders.authorizationHeader: "Token $token"},
+    body: json.encode(body),
   );
 
   if (response.statusCode == 200) {
+    debugPrint("Logout successful: " + response.body);
+
     saveLogout();
     return null;
   } else {

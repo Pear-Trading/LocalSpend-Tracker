@@ -62,10 +62,10 @@ Future<LoginModel> submitReceiptAPI(
     print(responseJson[0]);
 
     showDialogSingleButton(
-      context,
-      responseJson[0] == "" ? responseJson[0] : "Upload Successful",
-      "Transaction successfully submitted to server",
-      "OK"
+        context,
+        responseJson[0] == "" ? responseJson[0] : "Upload Successful",
+        "Transaction successfully submitted to server",
+        "OK"
     );
     return LoginModel.fromJson(responseJson);
   } else {
