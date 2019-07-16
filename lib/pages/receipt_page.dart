@@ -75,42 +75,62 @@ class ReceiptPageState extends State<ReceiptPage> {
   void submitReceipt(String amount, String time, Organisation organisation) async {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
 
-    if (demonstration)
-    {
+    if (amount == "" || time == "" || organisation == null) {
       await showDialog(
         context: context,
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Success"),
-            content: new Text("Receipt successfully submitted."),
+            title: new Text("Invalid data"),
+            content: new Text(
+                "We couldn't process your request because one or more required fields are missing."),
             actions: <Widget>[
-              // usually buttons at the bottom of the dialog
               new FlatButton(
                 child: new Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).pushReplacementNamed('/HomePage');
-                  //TODO: Reset form after dialog exit
                 },
               ),
             ],
           );
         },
-      ).then((_) {
-    });
+      );
     }
     else {
-      Receipt receipt = new Receipt();
+      if (demonstration) {
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return AlertDialog(
+              title: new Text("Success"),
+              content: new Text("Receipt successfully submitted."),
+              actions: <Widget>[
+                // usually buttons at the bottom of the dialog
+                new FlatButton(
+                  child: new Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacementNamed('/HomePage');
+                  },
+                ),
+              ],
+            );
+          },
+        ).then((_) {});
+      }
 
-      // setting up 'receipt'
-      receipt.amount = amount;
-      receipt.time = formatDate(time);
+      else {
+        Receipt receipt = new Receipt();
+
+        // setting up 'receipt'
+        receipt.amount = amount;
+        receipt.time = formatDate(time);
 //      debugPrint(organisation.name + ", " + organisation.streetName + ", " + organisation.town + ", " + organisation.postcode);
-      receipt.organisationName = organisation.name;
-      receipt.street = organisation.streetName;
-      receipt.town = organisation.town;
-      receipt.postcode = organisation.postcode;
+        receipt.organisationName = organisation.name;
+        receipt.street = organisation.streetName;
+        receipt.town = organisation.town;
+        receipt.postcode = organisation.postcode;
 
 //      receipt.essential = convertBoolToString(toConvert)
 
@@ -119,8 +139,9 @@ class ReceiptPageState extends State<ReceiptPage> {
 //      receipt.category = category;
 //      receipt.etc = etc;
 
-      submitReceiptAPI(context, receipt);
-      Navigator.of(context).pushReplacementNamed('/HomePage');
+        submitReceiptAPI(context, receipt);
+        Navigator.of(context).pushReplacementNamed('/HomePage');
+      }
     }
   }
 
