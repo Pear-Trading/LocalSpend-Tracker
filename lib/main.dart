@@ -3,7 +3,7 @@ import 'package:local_spend/pages/home_page.dart';
 import 'package:local_spend/pages/login_page.dart';
 import 'package:local_spend/pages/receipt_page.dart';
 import 'package:local_spend/pages/spash_screen.dart';
-import 'package:local_spend/pages/settings.dart';
+import 'package:local_spend/pages/more_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         "/HomePage": (BuildContext context) => HomePage(),
         "/LoginPage": (BuildContext context) => LoginPage(),
         "/ReceiptPage": (BuildContext context) => ReceiptPage(),
-        "/SettingsPage": (BuildContext context) => SettingsPage(),
+        "/MorePage": (BuildContext context) => MorePage(),
       },
       home: SplashScreen(),
     );

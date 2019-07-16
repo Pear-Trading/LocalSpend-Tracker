@@ -31,7 +31,7 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _orgController = TextEditingController();
   final OrganizationController _organizationController = OrganizationController();
 
-  FocusNode focusNode;  // added so focus can move automatically
+  FocusNode focusNode;
 
   DateTime date;
 
@@ -55,6 +55,7 @@ class ReceiptPageState extends State<ReceiptPage> {
     focusNode = FocusNode();
 
     _recurringController.text = "None";
+    _categoryController.text = "";
   }
 
   @override
@@ -71,7 +72,7 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   // this file is getting really messy sorry everyone
 
-  void submitReceipt(String amount, String time, Organisation organisation, String recurring) async {
+  void submitReceipt(String amount, String time, Organisation organisation, String recurring, String category) async {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
 
     if (organisation == null) {
@@ -154,6 +155,7 @@ class ReceiptPageState extends State<ReceiptPage> {
           receipt.town = organisation.town;
           receipt.postcode = organisation.postcode;
           receipt.recurring = recurring;
+          receipt.category = category;
 
   //      receipt.essential = convertBoolToString(toConvert)
 
@@ -414,7 +416,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                   ),
                   onSubmitted: (_) {
                     submitReceipt(_amountController.text,
-                        _timeController.text, _organizationController.organisation, _recurringController.text);
+                        _timeController.text, _organizationController.organisation, _recurringController.text, _categoryController.text);
                     // TODO: make sure organisation is valid
                     // TODO: Add 'find organisation' button which displays a dialog to, well, find the organisation's address or manual entry
                   },
@@ -515,7 +517,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                       try {
                         submitReceipt(
                             _amountController.text, _timeController.text,
-                            _organizationController.organisation, _recurringController.text);
+                            _organizationController.organisation, _recurringController.text, _categoryController.text);
                       }
                       catch (_) {
                         showDialog(

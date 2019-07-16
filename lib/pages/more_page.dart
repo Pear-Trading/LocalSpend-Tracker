@@ -10,14 +10,14 @@ import 'package:local_spend/common/functions/showDialogTwoButtons.dart';
 const URL = "https://flutter.io/";
 const demonstration = false;
 
-class SettingsPage extends StatefulWidget {
+class MorePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new SettingsPageState();
+    return new MorePageState();
   }
 }
 
-class SettingsPageState extends State<SettingsPage> {
+class MorePageState extends State<MorePage> {
   FocusNode focusNode;  // added so focus can move automatically
 
   DateTime date;
@@ -25,7 +25,7 @@ class SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-    _saveCurrentRoute("/SettingsPageState");
+    _saveCurrentRoute("/MorePageState");
 
     focusNode = FocusNode();
   }

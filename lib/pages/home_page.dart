@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_spend/pages/receipt_page.dart';
-import 'package:local_spend/pages/settings.dart';
+import 'package:local_spend/pages/more_page.dart';
+import 'package:local_spend/pages/stats_page.dart';
 
 class HomePage extends StatelessWidget {
   static String _title = 'Text here';
@@ -27,7 +28,8 @@ class _HomePageState extends State<HomePageWidget> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     ReceiptPage(),
-    SettingsPage()
+    StatsPage(),
+    MorePage()
   ];
 
   void _onItemTapped(int index) {
@@ -47,6 +49,10 @@ class _HomePageState extends State<HomePageWidget> {
           BottomNavigationBarItem(
             icon: Icon(Icons.receipt),
             title: Text('Submit Receipt'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.show_chart),
+            title: Text('Statistics'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
