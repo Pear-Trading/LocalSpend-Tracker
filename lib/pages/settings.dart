@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
@@ -7,7 +6,6 @@ import 'package:local_spend/common/functions/logout.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:local_spend/common/functions/customAbout.dart' as custom;
 import 'package:local_spend/common/functions/showDialogTwoButtons.dart';
-import 'package:local_spend/common/functions/feedback.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;

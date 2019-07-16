@@ -6,9 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/model/json/login_model.dart';
-import 'package:local_spend/config.dart';
-// debug
-import 'package:flutter/foundation.dart';
 
 class Receipt {
   var amount = "";

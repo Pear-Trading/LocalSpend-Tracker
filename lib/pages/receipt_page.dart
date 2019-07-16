@@ -5,15 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:local_spend/common/apifunctions/submit_receipt_api.dart';
 import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
-import 'package:local_spend/common/widgets/basic_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
-import 'package:local_spend/pages/settings.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/popupListView.dart';
-import 'package:local_spend/common/widgets/labeled_checkbox.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -29,8 +26,8 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _essentialController = TextEditingController();
-  final TextEditingController _recurringController = TextEditingController(text: "None");
-  final TextEditingController _typeController = TextEditingController();
+  final TextEditingController _recurringController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _orgController = TextEditingController();
   final OrganizationController _organizationController = OrganizationController();
 
@@ -56,6 +53,8 @@ class ReceiptPageState extends State<ReceiptPage> {
     _saveCurrentRoute("/ReceiptPageState");
 
     focusNode = FocusNode();
+
+    _recurringController.text = "None";
   }
 
   @override
@@ -72,18 +71,19 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   // this file is getting really messy sorry everyone
 
-  void submitReceipt(String amount, String time, Organisation organisation) async {
+  void submitReceipt(String amount, String time, Organisation organisation, String recurring) async {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
 
-    if (amount == "" || time == "" || organisation == null) {
-      await showDialog(
+    if (organisation == null) {
+      _findOrganizationsDialog(context);
+/*      await showDialog(
         context: context,
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("Invalid data"),
+            title: new Text("Missing organisation"),
             content: new Text(
-                "We couldn't process your request because one or more required fields are missing."),
+                "Please press 'Find' to select your desired organization."),
             actions: <Widget>[
               new FlatButton(
                 child: new Text("OK"),
@@ -94,53 +94,77 @@ class ReceiptPageState extends State<ReceiptPage> {
             ],
           );
         },
-      );
+      );*/
     }
     else {
-      if (demonstration) {
+      if (amount == "" || time == "") {
         await showDialog(
           context: context,
           builder: (BuildContext context) {
             // return object of type Dialog
             return AlertDialog(
-              title: new Text("Success"),
-              content: new Text("Receipt successfully submitted."),
+              title: new Text("Missing required data"),
+              content: new Text(
+                  "We couldn't process your request because one or more required fields are missing."),
               actions: <Widget>[
-                // usually buttons at the bottom of the dialog
                 new FlatButton(
                   child: new Text("OK"),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context).pushReplacementNamed('/HomePage');
                   },
                 ),
               ],
             );
           },
-        ).then((_) {});
+        );
       }
-
       else {
-        Receipt receipt = new Receipt();
+        if (demonstration) {
+          await showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              // return object of type Dialog
+              return AlertDialog(
+                title: new Text("Success"),
+                content: new Text("Receipt successfully submitted."),
+                actions: <Widget>[
+                  // usually buttons at the bottom of the dialog
+                  new FlatButton(
+                    child: new Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacementNamed("/HomePage");
+                    },
+                  ),
+                ],
+              );
+            },
+          ).then((_) {});
+        }
 
-        // setting up 'receipt'
-        receipt.amount = amount;
-        receipt.time = formatDate(time);
-//      debugPrint(organisation.name + ", " + organisation.streetName + ", " + organisation.town + ", " + organisation.postcode);
-        receipt.organisationName = organisation.name;
-        receipt.street = organisation.streetName;
-        receipt.town = organisation.town;
-        receipt.postcode = organisation.postcode;
+        else {
+          Receipt receipt = new Receipt();
 
-//      receipt.essential = convertBoolToString(toConvert)
+          // setting up 'receipt'
+          receipt.amount = amount;
+          receipt.time = formatDate(time);
+  //      debugPrint(organisation.name + ", " + organisation.streetName + ", " + organisation.town + ", " + organisation.postcode);
+          receipt.organisationName = organisation.name;
+          receipt.street = organisation.streetName;
+          receipt.town = organisation.town;
+          receipt.postcode = organisation.postcode;
+          receipt.recurring = recurring;
 
-//      TODO: Categories
+  //      receipt.essential = convertBoolToString(toConvert)
 
-//      receipt.category = category;
-//      receipt.etc = etc;
+  //      TODO: Categories
 
-        submitReceiptAPI(context, receipt);
-        Navigator.of(context).pushReplacementNamed('/HomePage');
+  //      receipt.category = category;
+  //      receipt.etc = etc;
+
+          submitReceiptAPI(context, receipt);
+          Navigator.of(context).pushReplacementNamed("/HomePage");
+        }
       }
     }
   }
@@ -224,6 +248,29 @@ class ReceiptPageState extends State<ReceiptPage> {
       // then again the popupListView can't display two of the same names properly either
     });
     //can't return value as it is <future> and thus would block
+  }
+
+  _findOrganizationsDialog(context) {
+    if (_orgController.text != "") {
+      var organisations = findOrganisations(
+          _orgController.text); // returns Future<List<Organisation>>
+
+      var choice = organisations.then((data) =>
+          listOrganisations(data, context));
+
+      choice.then((value) => _orgController.text = value.name);
+      choice.then((value) => _organizationController.organisation = value);
+
+    } else {
+      // no data entered
+
+      showDialogSingleButton(
+          context,
+          "No data",
+          "We were unable to service your request because no data was entered.",
+          "OK"
+      );
+    }
   }
 
   @override
@@ -336,26 +383,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                           padding: EdgeInsets.fromLTRB(5,0,0,4),  // sorry about hardcoded constraints
                             child: FlatButton(
                               onPressed: () {
-                                if (_orgController.text != "") {
-                                  var organisations = findOrganisations(
-                                      _orgController.text); // returns Future<List<Organisation>>
-
-                                  var choice = organisations.then((data) =>
-                                      listOrganisations(data, context));
-
-                                  choice.then((value) => _orgController.text = value.name);
-                                  choice.then((value) => _organizationController.organisation = value);
-
-                                } else {
-                                  // no data entered
-
-                                  showDialogSingleButton(
-                                      context,
-                                      "No data",
-                                      "We were unable to service your request because no data was entered.",
-                                      "OK"
-                                  );
-                                }
+                                _findOrganizationsDialog(context);
                               },
                                 child: Text("Find",
                                   style: TextStyle(color: Colors.blue, fontSize: 18.0)
@@ -386,7 +414,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                   ),
                   onSubmitted: (_) {
                     submitReceipt(_amountController.text,
-                        _timeController.text, _organizationController.organisation);
+                        _timeController.text, _organizationController.organisation, _recurringController.text);
                     // TODO: make sure organisation is valid
                     // TODO: Add 'find organisation' button which displays a dialog to, well, find the organisation's address or manual entry
                   },
@@ -484,7 +512,32 @@ class ReceiptPageState extends State<ReceiptPage> {
                   height: 65.0,
                   child: RaisedButton(
                     onPressed: () {
-                      submitReceipt(_amountController.text, _timeController.text, _organizationController.organisation);
+                      try {
+                        submitReceipt(
+                            _amountController.text, _timeController.text,
+                            _organizationController.organisation, _recurringController.text);
+                      }
+                      catch (_) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            title: new Text("Invalid data"),
+                            content: new Text(
+                                "We couldn't process your request because some of the data entered is invalid."),
+                            actions: <Widget>[
+                              new FlatButton(
+                                child: new Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      }
                     },
                     child: Text("GO",
                         style:
