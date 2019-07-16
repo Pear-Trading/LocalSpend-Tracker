@@ -19,8 +19,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController(text: 'test@example.com'); // remove
-  final TextEditingController _passwordController = TextEditingController(text: 'abc123');        // remove
+  final TextEditingController _emailController = TextEditingController(/*text: 'test@example.com'*/); // remove
+  final TextEditingController _passwordController = TextEditingController(/*text: 'abc123'*/);        // remove
   bool _saveLoginDetails = true;  // I am extremely sorry for the placement of this variable
                                   // it will be fixed soon I promise
 
@@ -44,6 +44,8 @@ class LoginPageState extends State<LoginPage> {
     _saveCurrentRoute("/LoginPage");
 
     focusNode = FocusNode();
+
+    _fillLoginDetails();
   }
 
   @override
@@ -52,13 +54,35 @@ class LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  _fillLoginDetails() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    var username = await preferences.get('username');
+    var password = await preferences.get('password');
+
+    _emailController.text = await username;
+    _passwordController.text = await password;
+  }
+
   _saveCurrentRoute(String lastRoute) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setString('LastPageRoute', lastRoute);
   }
 
-  void login(String username, String password) {
+  login(String username, String password) async {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    if (_saveLoginDetails) {
+      await preferences.setString('username', username);
+      await preferences.setString('password', password);
+      print("details saved");
+    } else {
+      await preferences.setString('username', "");
+      await preferences.setString('password', "");
+      print("details cleared");
+    }
+
     requestLoginAPI(context, username,
         password);
   }
@@ -174,7 +198,7 @@ class LoginPageState extends State<LoginPage> {
                     gradient: new LinearGradient(
                       colors: [
                         Colors.blue[300],
-                        Colors.blue[600],
+                        Colors.blue[500],
                       ],
                       stops: [0,1],
                       begin: Alignment.topLeft,

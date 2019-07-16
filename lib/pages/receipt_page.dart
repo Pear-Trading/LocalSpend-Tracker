@@ -106,7 +106,7 @@ class ReceiptPageState extends State<ReceiptPage> {
       // setting up 'receipt'
       receipt.amount = amount;
       receipt.time = formatDate(time);
-      debugPrint(organisation.name + ", " + organisation.streetName + ", " + organisation.town + ", " + organisation.postcode);
+//      debugPrint(organisation.name + ", " + organisation.streetName + ", " + organisation.town + ", " + organisation.postcode);
       receipt.organisationName = organisation.name;
       receipt.street = organisation.streetName;
       receipt.town = organisation.town;

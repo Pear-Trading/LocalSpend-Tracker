@@ -26,12 +26,12 @@ Future<LoginModel> requestLogoutAPI(BuildContext context) async {
   );
 
   if (response.statusCode == 200) {
-    debugPrint("Logout successful: " + response.body);
+//    debugPrint("Logout successful: " + response.body);
 
     saveLogout();
     return null;
   } else {
-    debugPrint("Logout unsuccessful: " + response.body);
+//    debugPrint("Logout unsuccessful: " + response.body);
 
     saveLogout();
     return null;

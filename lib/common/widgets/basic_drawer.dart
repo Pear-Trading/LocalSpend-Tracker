@@ -37,7 +37,7 @@ class _BasicDrawerState extends State<BasicDrawer> {
                 style: TextStyle(color: Colors.black, fontSize: 20.0),
               ),
               onTap: () {
-                debugPrint('$token');
+//                debugPrint('$token');
                 Navigator.of(context).pushNamed('/ReceiptPage');
               },
               // enabled: token != null && token.isNotEmpty,

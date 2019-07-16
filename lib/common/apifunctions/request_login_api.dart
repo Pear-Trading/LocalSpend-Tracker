@@ -20,14 +20,14 @@ Future<LoginModel> requestLoginAPI(
     'password': password,
   };
 
-  debugPrint('$body');
+//  debugPrint('$body');
 
   final response = await http.post(
     url,
     body: json.encode(body),
   );
 
-  debugPrint(response.body);
+//  debugPrint(response.body);
 
   if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
@@ -38,17 +38,18 @@ Future<LoginModel> requestLoginAPI(
 
     return LoginModel.fromJson(responseJson);
   } else {
-    debugPrint("Invalid, either creds are wrong or server is down");
-    Navigator.of(context).pushReplacementNamed('/HomePage'); // just here temporarily while server is down
+//    debugPrint("Invalid, either credentials are wrong or server is down");
 
     final responseJson = json.decode(response.body);
 
     saveCurrentLogin(responseJson, body["email"]);
+
     showDialogSingleButton(
         context,
         "Unable to Login",
         "You may have supplied an invalid 'Email' / 'Password' combination. Please try again or email an administrator.",
         "OK");
+
     return null;
   }
 }
