@@ -84,8 +84,14 @@ class LoginPageState extends State<LoginPage> {
 //            child: ListView(
 //              children: <Widget>[
         body: Container(
-          decoration: BoxDecoration(color: Colors.white),
-          child: Container(
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+              colors: [Colors.white, Colors.blue[50]],
+              stops: [0,1],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),          child: Container(
             margin: EdgeInsets.fromLTRB(60,30,60,0),
             child: Column(
               children: <Widget>[
@@ -143,50 +149,41 @@ class LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-//                Padding(
-//                  padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 100.0),
-//                  child: Container(
-//                    height: 45.0,
-//                    child: RaisedButton(
-//
-//                      onPressed: () {
-//                        login( _emailController.text,
-//                            _passwordController.text);
-//  //                        showDialog(
-//  //                          barrierDismissible: false,
-//  //                        );
-//  //                        print("pressed");
-//                      },
-//                      child: Text("GO",
-//                          style:
-//                          TextStyle(color: Colors.white, fontSize: 20.0)),
-//                      color: Colors.blue,
-//                    ),
-//                  ),
-//                ),
+
               Padding(
               padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
 
               child : Material(
-                child : InkWell(
+                child: new Container(
+                  child : InkWell(
                     onTap: () => login( _emailController.text, _passwordController.text),
                     child: new Container(
                       width: 100,
                       height: 50,
-                      decoration: new BoxDecoration(
-//                        color: Colors.lightBlueAccent,
-                        borderRadius: new BorderRadius.circular(0.0),
-                      ),
                       child: new Center(
                         child: new Text(
                             'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
                         ),
                       ),
-                    splashColor: Colors.lightBlueAccent,
+                      splashColor: Colors.lightBlueAccent,
                     ),
-                color: Colors.blueAccent,
+
+                  decoration: new BoxDecoration(
+                    border: new Border.all(color : Colors.transparent, width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                    gradient: new LinearGradient(
+                      colors: [
+                        Colors.blue[300],
+                        Colors.blue[600],
+                      ],
+                      stops: [0,1],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
                   ),
                 ),
+              ),
 
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 50),

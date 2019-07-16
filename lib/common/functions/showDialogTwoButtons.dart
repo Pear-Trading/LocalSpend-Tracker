@@ -23,8 +23,8 @@ void showDialogTwoButtons(
           new FlatButton(
             child: new Text(buttonLabel2),
             onPressed: () {
-              action(context);
               Navigator.of(context).pop();
+              action(context);
             },
           ),
         ],

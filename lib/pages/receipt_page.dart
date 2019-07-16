@@ -16,7 +16,7 @@ import 'package:local_spend/common/widgets/popupListView.dart';
 import 'package:local_spend/common/widgets/labeled_checkbox.dart';
 
 const URL = "https://flutter.io/";
-const demonstration = true;
+const demonstration = false;
 
 class ReceiptPage extends StatefulWidget {
   @override
@@ -32,6 +32,7 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _recurringController = TextEditingController(text: "None");
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _orgController = TextEditingController();
+  final OrganizationController _organizationController = OrganizationController();
 
   FocusNode focusNode;  // added so focus can move automatically
 
@@ -71,7 +72,7 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   // this file is getting really messy sorry everyone
 
-  void submitReceipt(String amount, String time, String orgName) async {
+  void submitReceipt(String amount, String time, Organisation organisation) async {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
 
     if (demonstration)
@@ -89,6 +90,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                 child: new Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/HomePage');
                   //TODO: Reset form after dialog exit
                 },
               ),
@@ -96,7 +98,6 @@ class ReceiptPageState extends State<ReceiptPage> {
           );
         },
       ).then((_) {
-      Navigator.of(context).pushReplacementNamed('/HomePage');
     });
     }
     else {
@@ -105,16 +106,21 @@ class ReceiptPageState extends State<ReceiptPage> {
       // setting up 'receipt'
       receipt.amount = amount;
       receipt.time = formatDate(time);
-      receipt.organisationName = orgName;
+      debugPrint(organisation.name + ", " + organisation.streetName + ", " + organisation.town + ", " + organisation.postcode);
+      receipt.organisationName = organisation.name;
+      receipt.street = organisation.streetName;
+      receipt.town = organisation.town;
+      receipt.postcode = organisation.postcode;
 
 //      receipt.essential = convertBoolToString(toConvert)
 
-      //TODO: initialise receipt with correct values from form
+//      TODO: Categories
 
 //      receipt.category = category;
 //      receipt.etc = etc;
 
       submitReceiptAPI(context, receipt);
+      Navigator.of(context).pushReplacementNamed('/HomePage');
     }
   }
 
@@ -166,7 +172,7 @@ class ReceiptPageState extends State<ReceiptPage> {
     // know that before writing this and it's done now so I'm keeping it.
   }
 
-  String listOrganisations(List<Organisation> organisations, context) {
+  Organisation listOrganisations(List<Organisation> organisations, context) {
     if (organisations.length == 0) {
       showDialogSingleButton(
           context,
@@ -189,7 +195,13 @@ class ReceiptPageState extends State<ReceiptPage> {
 
 //    dialog.then((value) => debugPrint(value));
 
-    dialog.then((value) => _orgController.text = value);
+
+    dialog.then((value) {
+      _orgController.text = value;
+      _organizationController.organisation = organisations.where((thisOrg) => thisOrg.name == value).elementAt(0);
+      // this may not work when two organisations have the same name,
+      // then again the popupListView can't display two of the same names properly either
+    });
     //can't return value as it is <future> and thus would block
   }
 
@@ -305,15 +317,14 @@ class ReceiptPageState extends State<ReceiptPage> {
                               onPressed: () {
                                 if (_orgController.text != "") {
                                   var organisations = findOrganisations(
-                                      _orgController.text);
+                                      _orgController.text); // returns Future<List<Organisation>>
 
                                   var choice = organisations.then((data) =>
                                       listOrganisations(data, context));
 
-                                  choice.then((value) => _orgController.text = value);
-                                  setState(() {
+                                  choice.then((value) => _orgController.text = value.name);
+                                  choice.then((value) => _organizationController.organisation = value);
 
-                                  });
                                 } else {
                                   // no data entered
 
@@ -354,7 +365,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                   ),
                   onSubmitted: (_) {
                     submitReceipt(_amountController.text,
-                        _timeController.text, _orgController.text);
+                        _timeController.text, _organizationController.organisation);
                     // TODO: make sure organisation is valid
                     // TODO: Add 'find organisation' button which displays a dialog to, well, find the organisation's address or manual entry
                   },
@@ -452,7 +463,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                   height: 65.0,
                   child: RaisedButton(
                     onPressed: () {
-                      submitReceipt(_amountController.text, _timeController.text, _orgController.text);
+                      submitReceipt(_amountController.text, _timeController.text, _organizationController.organisation);
                     },
                     child: Text("GO",
                         style:

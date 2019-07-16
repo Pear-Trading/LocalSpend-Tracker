@@ -59,6 +59,14 @@ Future<LoginModel> submitReceiptAPI(
   if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
 
+    print(responseJson[0]);
+
+    showDialogSingleButton(
+      context,
+      responseJson[0] == "" ? responseJson[0] : "Upload Successful",
+      "Transaction successfully submitted to server",
+      "OK"
+    );
     return LoginModel.fromJson(responseJson);
   } else {
     final responseJson = json.decode(response.body);
@@ -68,7 +76,7 @@ Future<LoginModel> submitReceiptAPI(
         context,
         "Unable to Submit Receipt",
 //      "You may have supplied an invalid 'Email' / 'Password' combination. Please try again or email an administrator.",
-        responseJson.toString(),
+        "Message from server: " + responseJson[1],
         "OK");
     return null;
   }

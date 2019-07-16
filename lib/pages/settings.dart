@@ -156,21 +156,22 @@ class SettingsPageState extends State<SettingsPage> {
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
-                child: Container(
-                  height: 65.0,
-                  child: RaisedButton(
-                    onPressed: () {
-                      feedback(context);
-                    },
-                    child: Text("FEEDBACK",
-                        style:
-                        TextStyle(color: Colors.white, fontSize: 22.0)),
-                    color: Colors.green,
-                  ),
-                ),
-              ),
+//              Padding(
+//                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+//                child: Container(
+//                  height: 65.0,
+//                  child: RaisedButton(
+//                    onPressed: () {
+//                      feedback(context);
+//                    },
+//                    child: Text("FEEDBACK",
+//                        style:
+//                        TextStyle(color: Colors.white, fontSize: 22.0)),
+//                    color: Colors.green,
+//                  ),
+//                ),
+//              ),
+
             ],
           ),
         ),

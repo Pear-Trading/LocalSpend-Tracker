@@ -5,7 +5,7 @@ class PopupListView {
   Future<dynamic> dialog(context, List<String> options, String title) {
     return showDialog<dynamic>(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
 
       builder: (BuildContext context) {
         return SimpleDialog(

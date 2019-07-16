@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:local_spend/common/functions/get_token.dart';
 
 class Organisation {
@@ -24,7 +25,7 @@ List<Organisation> jsonToOrganisations(String json) {
   Map decoded = jsonDecode(json);
 //  print(decoded);
 
-  List<dynamic> validated = decoded['unvalidated'];
+  List<dynamic> validated = decoded['validated'];
 //  Map organisation = validated[0];
 //
 //  print("");
@@ -101,4 +102,8 @@ Future<List<Organisation>> findOrganisations(String search) async {
     return null;
   }
 
+}
+
+class OrganizationController extends TextEditingController {
+  Organisation organisation;
 }
