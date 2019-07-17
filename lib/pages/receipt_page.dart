@@ -565,7 +565,7 @@ class ReceiptPageState extends State<ReceiptPage> {
             ),
 
             Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
+              padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
               child: Container(
                 height: 65.0,
                 child: RaisedButton(

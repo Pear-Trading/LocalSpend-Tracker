@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,6 +5,13 @@ import 'package:local_spend/common/functions/logout.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:local_spend/common/functions/customAbout.dart' as custom;
 import 'package:local_spend/common/functions/showDialogTwoButtons.dart';
+import 'package:local_spend/common/widgets/charts/donut_chart.dart';
+import 'package:local_spend/common/widgets/charts/outside_label.dart';
+import 'package:local_spend/common/widgets/charts/auto_label.dart';
+import 'package:local_spend/common/widgets/charts/grouped_bar_chart.dart';
+import 'package:local_spend/common/widgets/charts/scatter_bucketingAxis_legend.dart';
+import 'package:local_spend/common/widgets/charts/numeric_line_bar_combo.dart';
+import 'package:local_spend/common/widgets/charts/series_legend_with_measures.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -52,12 +58,171 @@ class StatsPageState extends State<StatsPage> {
         iconTheme: IconThemeData(color: Colors.black),
       ),
 
-      body: Container(
-        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-        child: Column(
+
+      body : Container(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        child: ListView(
           children: <Widget>[
             // some graphs and charts here etc
-            Center(child : Text("(imagine this is a really cool graph!)"),)
+//            Container(
+//              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+//              child : Text(
+//                "Really Cool Chart",
+//                textAlign: TextAlign.center,
+//                style: TextStyle(
+//                  fontSize: 22.0,
+//                  color: Colors.black,
+//                  fontWeight: FontWeight.bold,
+//                ),
+//              ),
+//            ),
+//
+//            Container(
+//              height: 250,
+////              width: 250,
+//              child: new DonutPieChart.withSampleData()
+//            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "GroupedBarChart",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              height: 200,
+//              width: 250,
+              child: new GroupedBarChart.withSampleData()
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "BucketingAxisScatterPlotChart",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+//              width: 250,
+                child: new BucketingAxisScatterPlotChart.withSampleData()
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,20,0.0,0.0),
+              child : Text(
+                "PieOutsideLabelChart",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+//              width: 250,
+                child: new PieOutsideLabelChart.withSampleData()
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "DonutAutoLabelChart",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+//              width: 250,
+                child: new DonutAutoLabelChart.withSampleData()
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "DonutPieChart",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+//              width: 250,
+                child: new DonutPieChart.withSampleData()
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "NumericComboLineBarChart",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+//              width: 250,
+                child: new NumericComboLineBarChart.withSampleData()
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "LegendWithMeasures",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+//              width: 250,
+                child: new LegendWithMeasures.withSampleData()
+            ),
+
           ],
         ),
       ),
