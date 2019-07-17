@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -143,7 +144,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                     child: new Text("OK"),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed("/HomePage");
+                      Navigator.of(context).pushReplacementNamed("/ReceiptPage");
                     },
                   ),
                 ],
@@ -169,7 +170,7 @@ class ReceiptPageState extends State<ReceiptPage> {
           receipt.essential = essential;
 
           submitReceiptAPI(context, receipt);
-          Navigator.of(context).pushReplacementNamed("/HomePage");
+          Navigator.of(context).pushReplacementNamed("/ReceiptPage");
         }
       }
     }
@@ -300,8 +301,10 @@ class ReceiptPageState extends State<ReceiptPage> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-
+      drawer: Drawer(),
       appBar: AppBar(
+        automaticallyImplyLeading: !Platform.isIOS, // done to remove UI glitch, now works on both platforms
+//        leading: Drawer(),
         backgroundColor: Colors.blue[400],
         title: Text(
           "Submit Receipt",
@@ -310,9 +313,8 @@ class ReceiptPageState extends State<ReceiptPage> {
             color: Colors.white,
           ),
         ),
-//          leading: BackButton(),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+//        iconTheme: IconThemeData(color: Colors.black),
       ),
 
       body: Container(
@@ -542,23 +544,23 @@ class ReceiptPageState extends State<ReceiptPage> {
                       ),
                     ),
 
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
-                        child: DropdownButton<String>(
-                          value: _categoryController.text,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _categoryController.text = newValue;
-                            });
-                          },
-                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        )
-                    ),
+//                    Container(
+//                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
+//                        child: DropdownButton<String>(
+//                          value: _categoryController.text,
+//                          onChanged: (String newValue) {
+//                            setState(() {
+//                              _categoryController.text = newValue;
+//                            });
+//                          },
+//                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
+//                            return DropdownMenuItem<String>(
+//                              value: value,
+//                              child: Text(value),
+//                            );
+//                          }).toList(),
+//                        )
+//                    ),
                   ],
                 ),
               ),

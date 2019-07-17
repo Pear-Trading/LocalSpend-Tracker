@@ -31,7 +31,7 @@ Future<LoginModel> requestLoginAPI(
     var user = new LoginModel.fromJson(responseJson);
 
     saveCurrentLogin(responseJson, body["email"]);
-    Navigator.of(context).pushReplacementNamed('/HomePage');
+    Navigator.of(context).pushReplacementNamed('/ReceiptPage');
 
     return LoginModel.fromJson(responseJson);
   } else {

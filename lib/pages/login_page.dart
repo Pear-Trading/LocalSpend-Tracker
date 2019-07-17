@@ -92,9 +92,9 @@ class LoginPageState extends State<LoginPage> {
       onWillPop: () {
         if (Navigator.canPop(context)) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-              '/HomePage', (Route<dynamic> route) => false);
+              '/ReceiptPage', (Route<dynamic> route) => false);
         } else {
-          Navigator.of(context).pushReplacementNamed('/HomePage');
+          Navigator.of(context).pushReplacementNamed('/ReceiptPage');
         }
       },
       child: PlatformScaffold(
