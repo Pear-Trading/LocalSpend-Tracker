@@ -13,6 +13,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/popupListView.dart';
 import 'package:local_spend/common/apifunctions/categories.dart';
+import 'package:local_spend/common/widgets/awesome_drawer.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -300,8 +301,10 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   @override
   Widget build(BuildContext context) {
+    var drawer = new AwesomeDrawer();
     return PlatformScaffold(
-      drawer: Drawer(),
+      drawer: drawer.getDrawer(context),
+
       appBar: AppBar(
         automaticallyImplyLeading: !Platform.isIOS, // done to remove UI glitch, now works on both platforms
 //        leading: Drawer(),

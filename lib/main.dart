@@ -5,6 +5,7 @@ import 'package:local_spend/pages/receipt_page.dart';
 import 'package:local_spend/pages/spash_screen.dart';
 import 'package:local_spend/pages/more_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:local_spend/pages/stats_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         "/LoginPage": (BuildContext context) => LoginPage(),
         "/ReceiptPage": (BuildContext context) => ReceiptPage(),
         "/MorePage": (BuildContext context) => MorePage(),
+        "/StatsPage" : (BuildContext context) => StatsPage(),
       },
       home: SplashScreen(),
     );

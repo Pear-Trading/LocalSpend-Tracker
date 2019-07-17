@@ -12,6 +12,7 @@ import 'package:local_spend/common/widgets/charts/grouped_bar_chart.dart';
 import 'package:local_spend/common/widgets/charts/scatter_bucketingAxis_legend.dart';
 import 'package:local_spend/common/widgets/charts/numeric_line_bar_combo.dart';
 import 'package:local_spend/common/widgets/charts/series_legend_with_measures.dart';
+import 'package:local_spend/common/widgets/awesome_drawer.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -43,7 +44,11 @@ class StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
+    var drawer = new AwesomeDrawer();
+
     return PlatformScaffold(
+      drawer: drawer.getDrawer(context),
+
       appBar: AppBar(
         backgroundColor: Colors.blue[400],
         title: Text(
