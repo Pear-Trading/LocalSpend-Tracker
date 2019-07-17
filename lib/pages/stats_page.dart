@@ -58,7 +58,6 @@ class StatsPageState extends State<StatsPage> {
             color: Colors.white,
           ),
         ),
-//          leading: BackButton(),
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.black),
       ),
@@ -68,25 +67,6 @@ class StatsPageState extends State<StatsPage> {
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: ListView(
           children: <Widget>[
-            // some graphs and charts here etc
-//            Container(
-//              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-//              child : Text(
-//                "Really Cool Chart",
-//                textAlign: TextAlign.center,
-//                style: TextStyle(
-//                  fontSize: 22.0,
-//                  color: Colors.black,
-//                  fontWeight: FontWeight.bold,
-//                ),
-//              ),
-//            ),
-//
-//            Container(
-//              height: 250,
-////              width: 250,
-//              child: new DonutPieChart.withSampleData()
-//            ),
 
             Container(
               padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
@@ -104,7 +84,6 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               height: 200,
-//              width: 250,
               child: new GroupedBarChart.withSampleData()
             ),
 
@@ -124,7 +103,6 @@ class StatsPageState extends State<StatsPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 200,
-//              width: 250,
                 child: new BucketingAxisScatterPlotChart.withSampleData()
             ),
 
@@ -164,7 +142,6 @@ class StatsPageState extends State<StatsPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 200,
-//              width: 250,
                 child: new DonutAutoLabelChart.withSampleData()
             ),
 
@@ -184,7 +161,6 @@ class StatsPageState extends State<StatsPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 200,
-//              width: 250,
                 child: new DonutPieChart.withSampleData()
             ),
 
@@ -204,7 +180,6 @@ class StatsPageState extends State<StatsPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 200,
-//              width: 250,
                 child: new NumericComboLineBarChart.withSampleData()
             ),
 
@@ -224,7 +199,6 @@ class StatsPageState extends State<StatsPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 height: 200,
-//              width: 250,
                 child: new LegendWithMeasures.withSampleData()
             ),
 

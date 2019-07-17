@@ -14,9 +14,9 @@ class AwesomeDrawer {
   Container(
   padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
   child :
-  FlatButton(onPressed: () => Navigator.of(context).pushReplacementNamed("/StatsPage"),
+  FlatButton(onPressed: () => Navigator.of(context).pushReplacementNamed("/ReceiptPage"),
     child:
-  Text("yeehaw",
+  Text("Submit Receipt",
   textAlign: Platform.isIOS ? TextAlign.right : TextAlign.left,
   style: new TextStyle(
   fontSize: 32.0,
@@ -29,8 +29,8 @@ class AwesomeDrawer {
   Container(
   padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
   child :
-  FlatButton(onPressed: () => Navigator.of(context).pushReplacementNamed("/MorePage"), child:
-  Text("clickity clack",
+  FlatButton(onPressed: () => Navigator.of(context).pushReplacementNamed("/StatsPage"), child:
+  Text("Statistics",
     textAlign: Platform.isIOS ? TextAlign.right : TextAlign.left,
     style: new TextStyle(
   fontSize: 32.0,
@@ -42,8 +42,8 @@ class AwesomeDrawer {
   Container(
   padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
   child :
-  FlatButton(onPressed: () => debugPrint("pressed"), child:
-  Text("scoot scoot",
+  FlatButton(onPressed: () => Navigator.of(context).pushReplacementNamed("/MorePage"), child:
+  Text("More",
   style: new TextStyle(
   fontSize: 32.0,
   color: Colors.black,

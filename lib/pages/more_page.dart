@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,6 +5,7 @@ import 'package:local_spend/common/functions/logout.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:local_spend/common/functions/customAbout.dart' as custom;
 import 'package:local_spend/common/functions/showDialogTwoButtons.dart';
+import 'package:local_spend/common/widgets/awesome_drawer.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -44,18 +44,13 @@ class MorePageState extends State<MorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        if (Navigator.canPop(context)) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              '/LoginPage', (Route<dynamic> route) => false);
-        } else {
-          Navigator.of(context).pushReplacementNamed('/LoginPage');
-        }
-      },
-      child: PlatformScaffold(
+    var drawer = new AwesomeDrawer();
+
+    return new PlatformScaffold(
+        drawer: drawer.getDrawer(context),
 
         appBar: AppBar(
+
           backgroundColor: Colors.blue[400],
           title: Text(
             "More",
@@ -173,7 +168,6 @@ class MorePageState extends State<MorePage> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
