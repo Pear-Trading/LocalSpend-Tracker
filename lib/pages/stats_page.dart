@@ -49,14 +49,14 @@ class StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (graphData.data != null) {
+//    if (graphData.data != null) {
       graphData.getGraphData('total_last_week').then((val) {
         totalLastWeek = val;
         setState(() {
           // update view
         });
       });
-    }
+//    }
 
     return PlatformScaffold(
       appBar: AppBar(

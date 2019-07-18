@@ -10,7 +10,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final int splashDuration = 3;
+  final int splashDuration = 1;
 
   startTime() async {
     return Timer(Duration(seconds: splashDuration), () {

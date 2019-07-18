@@ -17,7 +17,7 @@ class GraphData {
     /// HTTP POST request sample:
     /// {"graph":"total_last_week","session_key":"blahblahblah"}
 
-    charts.Series dataSeries = new charts.Series();
+    charts.Series<dynamic, DateTime> dataSeries = new charts.Series<dynamic, DateTime>();
     final url = "https://dev.peartrade.org/api/v1/customer/graphs";
     SharedPreferences preferences = await SharedPreferences.getInstance();
 

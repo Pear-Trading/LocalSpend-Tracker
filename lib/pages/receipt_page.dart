@@ -542,23 +542,24 @@ class ReceiptPageState extends State<ReceiptPage> {
                       ),
                     ),
 
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
-                        child: DropdownButton<String>(
-                          value: _categoryController.text,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _categoryController.text = newValue;
-                            });
-                          },
-                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),    // fix errors here by [items] being an empty container while _categoryDropDownItems is null
-                        )
-                    ),
+//                    Container(
+//                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
+//                        child: DropdownButton<String>(
+//                          value: _categoryController.text,
+//                          onChanged: (String newValue) {
+//                            setState(() {
+//                              _categoryController.text = newValue;
+//                            });
+//                          },
+//                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
+//                            return DropdownMenuItem<String>(
+//                              value: value,
+//                              child: Text(value),
+//                            );
+//                          }).toList(),    // fix errors here by [items] being an empty container while _categoryDropDownItems is null
+//                        )
+//                    ),
+
                   ],
                 ),
               ),
