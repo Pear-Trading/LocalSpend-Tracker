@@ -15,6 +15,7 @@ import 'package:local_spend/common/widgets/charts/series_legend_with_measures.da
 import 'package:local_spend/common/widgets/charts/time_series_simple.dart';
 import 'package:local_spend/common/apifunctions/get_graph_data.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:local_spend/common/widgets/charts/chart_builder.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -50,12 +51,12 @@ class StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
 //    if (graphData.data != null) {
-      graphData.getGraphData('total_last_week').then((val) {
-        totalLastWeek = val;
-        setState(() {
-          // update view
-        });
-      });
+//      graphData.getGraphData('total_last_week').then((val) {
+//        totalLastWeek = val;
+//        setState(() {
+//          // update view
+//        });
+//      });
 //    }
 
     return PlatformScaffold(
@@ -97,7 +98,8 @@ class StatsPageState extends State<StatsPage> {
               height: 200,
 //              width: 250,
 
-                child: new SimpleTimeSeriesChart(totalLastWeek),//seriesList: List<charts.Series>
+              child: new TimeSeries(),
+//                child: new SimpleTimeSeriesChart(totalLastWeek),//seriesList: List<charts.Series>
             ),
 
           ],

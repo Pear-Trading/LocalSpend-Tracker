@@ -28,7 +28,7 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _essentialController = TextEditingController();
   final TextEditingController _recurringController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();  // TODO: fix this
   final TextEditingController _orgController = TextEditingController();
   final OrganizationController _organizationController = OrganizationController();
   List<String> _categoryDropDownItems = List<String>();
@@ -542,23 +542,23 @@ class ReceiptPageState extends State<ReceiptPage> {
                       ),
                     ),
 
-//                    Container(
-//                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
-//                        child: DropdownButton<String>(
-//                          value: _categoryController.text,
-//                          onChanged: (String newValue) {
-//                            setState(() {
-//                              _categoryController.text = newValue;
-//                            });
-//                          },
-//                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
-//                            return DropdownMenuItem<String>(
-//                              value: value,
-//                              child: Text(value),
-//                            );
-//                          }).toList(),    // fix errors here by [items] being an empty container while _categoryDropDownItems is null
-//                        )
-//                    ),
+                    Container(
+                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
+                        child: DropdownButton<String>(
+                          value: _categoryController.text,
+                          onChanged: (String newValue) {
+                            setState(() {
+                              _categoryController.text = newValue;
+                            });
+                          },
+                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),    // fix errors here by [items] being an empty container while _categoryDropDownItems is null
+                        )
+                    ),
 
                   ],
                 ),

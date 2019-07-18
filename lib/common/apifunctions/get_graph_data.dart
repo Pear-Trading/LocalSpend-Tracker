@@ -49,8 +49,8 @@ class GraphData {
       List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
       for (int i = 0; i < labels.length; i++) {
-        print(DateTime(labels[i]));
-        timeSeriesSpendList.add(new TimeSeriesSpend(data[i], DateTime(labels[i])));
+        print(DateTime.parse(labels[i]));
+        timeSeriesSpendList.add(new TimeSeriesSpend(data[i], DateTime.parse(labels[i])));
       }
 
       return [
