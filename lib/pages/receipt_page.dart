@@ -28,7 +28,7 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _essentialController = TextEditingController();
   final TextEditingController _recurringController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();  // TODO: fix this
+  final TextEditingController _categoryController = TextEditingController();  // TODO: fix this!!
   final TextEditingController _orgController = TextEditingController();
   final OrganizationController _organizationController = OrganizationController();
   List<String> _categoryDropDownItems = List<String>();
