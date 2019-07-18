@@ -204,7 +204,7 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   List<String> getRecurringOptions() {
     var options = new List<String>(7);
-    options[0] = "None";
+    options[0] = "None";  // this should not be hardcoded and should be fetched from API instead
     options[1] = "Daily";
     options[2] = "Weekly";
     options[3] = "Fortnightly";
@@ -556,7 +556,7 @@ class ReceiptPageState extends State<ReceiptPage> {
                               value: value,
                               child: Text(value),
                             );
-                          }).toList(),
+                          }).toList(),    // fix errors here by [items] being an empty container while _categoryDropDownItems is null
                         )
                     ),
                   ],

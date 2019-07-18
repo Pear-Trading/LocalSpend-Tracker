@@ -12,6 +12,9 @@ import 'package:local_spend/common/widgets/charts/grouped_bar_chart.dart';
 import 'package:local_spend/common/widgets/charts/scatter_bucketingAxis_legend.dart';
 import 'package:local_spend/common/widgets/charts/numeric_line_bar_combo.dart';
 import 'package:local_spend/common/widgets/charts/series_legend_with_measures.dart';
+import 'package:local_spend/common/widgets/charts/time_series_simple.dart';
+import 'package:local_spend/common/apifunctions/get_graph_data.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -24,6 +27,9 @@ class StatsPage extends StatefulWidget {
 }
 
 class StatsPageState extends State<StatsPage> {
+
+  GraphData graphData = new GraphData();
+  List<charts.Series> totalLastWeek;
 
   @override
   void initState() {
@@ -43,6 +49,15 @@ class StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (graphData.data != null) {
+      graphData.getGraphData('total_last_week').then((val) {
+        totalLastWeek = val;
+        setState(() {
+          // update view
+        });
+      });
+    }
+
     return PlatformScaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[400],
@@ -63,30 +78,11 @@ class StatsPageState extends State<StatsPage> {
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: ListView(
           children: <Widget>[
-            // some graphs and charts here etc
-//            Container(
-//              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-//              child : Text(
-//                "Really Cool Chart",
-//                textAlign: TextAlign.center,
-//                style: TextStyle(
-//                  fontSize: 22.0,
-//                  color: Colors.black,
-//                  fontWeight: FontWeight.bold,
-//                ),
-//              ),
-//            ),
-//
-//            Container(
-//              height: 250,
-////              width: 250,
-//              child: new DonutPieChart.withSampleData()
-//            ),
 
             Container(
               padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
               child : Text(
-                "GroupedBarChart",
+                "This Week's Spend",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22.0,
@@ -100,127 +96,8 @@ class StatsPageState extends State<StatsPage> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               height: 200,
 //              width: 250,
-              child: new GroupedBarChart.withSampleData()
-            ),
 
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-              child : Text(
-                "BucketingAxisScatterPlotChart",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 200,
-//              width: 250,
-                child: new BucketingAxisScatterPlotChart.withSampleData()
-            ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0,20,0.0,0.0),
-              child : Text(
-                "PieOutsideLabelChart",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 200,
-//              width: 250,
-                child: new PieOutsideLabelChart.withSampleData()
-            ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-              child : Text(
-                "DonutAutoLabelChart",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 200,
-//              width: 250,
-                child: new DonutAutoLabelChart.withSampleData()
-            ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-              child : Text(
-                "DonutPieChart",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 200,
-//              width: 250,
-                child: new DonutPieChart.withSampleData()
-            ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-              child : Text(
-                "NumericComboLineBarChart",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 200,
-//              width: 250,
-                child: new NumericComboLineBarChart.withSampleData()
-            ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-              child : Text(
-                "LegendWithMeasures",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 200,
-//              width: 250,
-                child: new LegendWithMeasures.withSampleData()
+                child: new SimpleTimeSeriesChart(totalLastWeek),//seriesList: List<charts.Series>
             ),
 
           ],

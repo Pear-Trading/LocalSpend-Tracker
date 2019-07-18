@@ -15,8 +15,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    GraphData gd = new GraphData();
-    gd.getGraphData('total_last_week');
+//    GraphData gd = new GraphData();
+//    gd.getGraphData('total_last_week');
 
     //var config = ConfigWrapper.of(context);
     return new MaterialApp(

@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
-enum DataPoint {date, String}
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class GraphData {
-  List<DataPoint> data = new List<DataPoint>();
+  List<charts.Series> data = new List<charts.Series>();
 
-  Future<List<DataPoint>> getGraphData(String graphType) async {
+  Future<List<charts.Series>> getGraphData(String graphType) async {
     /// Graph types:
     /// - total_last_week
     /// - avg_spend_last_week
@@ -18,6 +17,7 @@ class GraphData {
     /// HTTP POST request sample:
     /// {"graph":"total_last_week","session_key":"blahblahblah"}
 
+    charts.Series dataSeries = new charts.Series();
     final url = "https://dev.peartrade.org/api/v1/customer/graphs";
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -33,17 +33,62 @@ class GraphData {
 
     if (response.statusCode == 200) {
       final responseJson = jsonDecode(response.body);
-      final labels = responseJson['graph']['labels'];
-      final data = responseJson['graph']['data'];
-//      final bounds = responseJson['graph']['bounds']; // why is this even returned?
+      final List<dynamic> labels = responseJson['graph']['labels'];
+      final List<dynamic> data = responseJson['graph']['data'];
+//      final List<String> bounds = responseJson['graph']['bounds']; // why is this even returned?
+
+      /*
+      final data = [
+        new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
+        new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
+        new TimeSeriesSales(new DateTime(2017, 10, 3), 100),
+        new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
+      ];
+       */
+
+      List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
+
+      for (int i = 0; i < labels.length; i++) {
+        print(DateTime(labels[i]));
+        timeSeriesSpendList.add(new TimeSeriesSpend(data[i], DateTime(labels[i])));
+      }
+
+      return [
+        new charts.Series<TimeSeriesSpend, DateTime>(
+          id: 'Spend',
+          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          domainFn: (TimeSeriesSpend spend, _) => spend.time,
+          measureFn: (TimeSeriesSpend spend, _) => spend.spend,
+          data: timeSeriesSpendList,
+        )
+      ];
+
+      /*
+        new charts.Series<TimeSeriesSales, DateTime>(
+        id: 'Sales',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (TimeSeriesSales sales, _) => sales.time,
+        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        data: data,
+      )*/
+
 //      print(labels[5]);
 //      print(data[5]);
     } else {
       final errorMessage = json.decode(response.body)['message'];
       print("Error: " + errorMessage);
+
+      return null;
     }
   }
 
 
+}
+
+class TimeSeriesSpend {
+  final DateTime time;
+  final int spend;
+
+  TimeSeriesSpend(this.spend, this.time);
 }
 
