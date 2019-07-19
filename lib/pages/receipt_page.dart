@@ -29,10 +29,12 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _essentialController = TextEditingController();
   final TextEditingController _recurringController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();  // TODO: fix this!!
+
+  TextEditingController _categoryController;  // TODO: fix this!!
   final TextEditingController _orgController = TextEditingController();
   final OrganizationController _organizationController = OrganizationController();
-  List<DropdownMenuItem<String>> _categoryDropDownItems;
+  DropdownButton _dropDownMenu = new DropdownButton(items: null, onChanged: null);
+  String _category;
 
   FocusNode focusNode;
 
@@ -53,9 +55,16 @@ class ReceiptPageState extends State<ReceiptPage> {
   @override
   void initState() {
 
-    getCategoriesList().then((value) {
-      setState(() {
-      _categoryDropDownItems = value;
+//    getCategoriesList().then((value) {
+//      setState(() {
+//      _categoryDropDownItems = value;
+//      });
+//    });
+//    loadDropDownMenu();
+
+    getDropDownMenu().then((value) {
+      setState((){
+        _dropDownMenu = value;
       });
     });
 
@@ -65,7 +74,7 @@ class ReceiptPageState extends State<ReceiptPage> {
     focusNode = FocusNode();
 
     _recurringController.text = "None";
-    _categoryController.text = "None";
+//    _categoryController.text = null;
   }
 
   @override
@@ -82,7 +91,57 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   // this file is getting really messy sorry everyone
 
-  void submitReceipt(String amount, String time, Organisation organisation, String recurring, String category, String essential) async {
+  void loadDropDownMenu() async {
+//    _dropDownMenu = await getDropDownMenu(
+//      "categories",
+//      setCategory,
+//    );
+
+    ///
+    /// so the below code works when 'value' is not specified but then, obviously, the value of the dropdownbutton can't be set.
+    /// when it is specified, it doesn't work:
+    /// [VERBOSE-2:ui_dart_state.cc(148)] Unhandled Exception: 'package:flutter/src/material/dropdown.dart': Failed assertion: line 608 pos 15: 'items == null || items.isEmpty || value == null || items.where((DropdownMenuItem<T> item) => item.value == value).length == 1': is not true.
+    ///
+
+    getDropDownItems("categories").then((categories) {
+//      _category = categories[0];
+//      _dropDownMenu = new DropdownButton<String>(/*value : _categoryController.text, */items: categories, onChanged: (newValue) => _categoryController.text = newValue);
+      setState(() {
+        _dropDownMenu = new DropdownButton(items: categories, onChanged: (newValue) => _category = newValue, value: _category);
+      });
+    });
+  }
+
+  Future<DropdownButton> getDropDownMenu() async {
+    List<DropdownMenuItem> categories = await getDropDownItems("categories");
+
+    categories.forEach((thisOne) {
+      print("This value: " + thisOne.value);
+    });
+//    _categoryController = new TextEditingController(text: null);
+    return new DropdownButton(
+        items: categories,
+        onChanged: (newValue) {
+          _category = newValue;
+          setState(() {
+            _category = newValue;
+          });
+        },
+
+        /*
+        items: categories.map((dynamic value) {
+          return DropdownMenuItem<String>(
+            value : value.value,
+            child: new Text(value.value)
+          );
+        }).toList(),
+        */
+
+        value: _category);
+  }
+
+  void submitReceipt(String amount, String time, Organisation organisation, String recurring, String category, String essential) async
+  {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
 
     if (organisation == null) {
@@ -185,27 +244,27 @@ class ReceiptPageState extends State<ReceiptPage> {
     return "false";
   }
 
-  Future<List<DropdownMenuItem<String>>> getCategoriesList() async {
-    //TODO: Return a list of [String, String] where {1} is categoryName and {2} is categoryValue for request
-    var categoriesList = List<DropdownMenuItem>();
-
-    var categories = await getCategories(); //future<list<cat>>
-
-    categories.forEach((thisCategory) {
-//        print(thisCategory.name);
-      var thisMap = new DropdownMenuItem(
-        child: new Text(thisCategory.name),
-        value: thisCategory.index,
-      );
-
-      categoriesList.add(thisMap);
-    });
-
-//      print(categoriesStrings[10]); // prints 'Banana'
-//      print(categoriesStrings.toString());
-
-    return categoriesList;
-  }
+//  Future<List<DropdownMenuItem<String>>> getCategoriesList() async {
+//    //TODO: Return a list of [String, String] where {1} is categoryName and {2} is categoryValue for request
+//    var categoriesList = List<DropdownMenuItem>();
+//
+//    var categories = await getCategories(); //future<list<cat>>
+//
+//    categories.forEach((thisCategory) {
+////        print(thisCategory.name);
+//      var thisMap = new DropdownMenuItem(
+//        child: new Text(thisCategory.name),
+//        value: thisCategory.index,
+//      );
+//
+//      categoriesList.add(thisMap);
+//    });
+//
+////      print(categoriesStrings[10]); // prints 'Banana'
+////      print(categoriesStrings.toString());
+//
+//    return categoriesList;
+//  }
 
   List<String> getRecurringOptions() {
     var options = new List<String>(7);
@@ -531,7 +590,6 @@ class ReceiptPageState extends State<ReceiptPage> {
               ),
             ),
 
-
             Padding(
               padding: EdgeInsets.fromLTRB(0.0,7,0.0,0.0),
 
@@ -554,23 +612,18 @@ class ReceiptPageState extends State<ReceiptPage> {
 
                     Container(
                       padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
-                      child: DropdownButton(
-//                        items: <DropdownMenuItem>[
-//                          DropdownMenuItem(child: Text("eeeee"), value: "eeeee"),
-//                          DropdownMenuItem(child: Text("Cucumbers"), value: "Cucumbers"),
-//                          DropdownMenuItem(child: Text("Mar shmellows"), value: "Marshmellows"),
-//                          DropdownMenuItem(child: Text("Pickled Sardines"), value: "Pickled Sardines"),
-//                        ].toList(),
-                          items: _categoryDropDownItems,
-
-                        value: _categoryController.text,
-//                      value: "skip skap skop",
-                        onChanged: (newValue) {
-                          setState(() {
-                            _categoryController.text = newValue;
-                          });
-                        }
-                      ),
+                        child: _dropDownMenu,
+//                      child: DropdownButton(
+//                          items: _categoryDropDownItems,
+//
+//                        value: _categoryController.text,
+////                      value: "skip skap skop",
+//                        onChanged: (newValue) {
+//                          setState(() {
+//                            _categoryController.text = newValue;
+//                          });
+//                        }
+//                      ),
                     ),
 
 //                    Container(

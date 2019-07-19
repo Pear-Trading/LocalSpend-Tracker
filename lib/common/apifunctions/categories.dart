@@ -70,7 +70,9 @@ Future<List<Category>> getCategories() async {  // confusing name
 //    });
 
 //    print(categories[10].name.toString());  // prints "Banana"
-    return categories;
+
+    return categories;  // categories is List<Category>
+    // Category is defined at the top^^
   } else {
     // not successful
     return null;

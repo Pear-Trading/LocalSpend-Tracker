@@ -1,35 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:local_spend/common/apifunctions/categories.dart';
+import 'dart:async';
 
-class DropDownMenu extends StatefulWidget {
+Future<List<DropdownMenuItem>> getDropDownItems(String type) async {
+  List<DropdownMenuItem<String>> items = new List<DropdownMenuItem<String>>();
 
-  final List<DropdownMenuItem> items;
-  final Function onChanged;
-  final String value;
-  
-  DropDownMenu({
-    this.items,
-    this.onChanged,
-    this.value,
-  });
+//  if (type == "categories") {
+    var categories = await getCategories();
 
-  @override
-  _DropDownMenuState createState() => _DropDownMenuState(items: this.items, onNewValue: this.onChanged, value: this.value);
-}
+    categories.forEach((thisValue) {
+      items.add(
+        new DropdownMenuItem(
+          child: new Text(thisValue.name),
+          value: thisValue.index,
+          key: Key(thisValue.index),
+        ),
+      );
+    });
 
-class _DropDownMenuState extends State<DropDownMenu> {
+    print("oof");
 
-  final List<DropdownMenuItem> items;
-  final Function onNewValue;
-  final String value;
-
-  _DropDownMenuState({
-    this.items,
-    this.onNewValue,
-    this.value
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return new DropdownButton(value: this.value, items: this.items, onChanged: (newValue) => onNewValue(newValue),);
-  }
+    return items;
+//  }
 }
