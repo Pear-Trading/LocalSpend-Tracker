@@ -13,7 +13,7 @@ class Category {
   });
 }
 
-Future<List<Category>> getCategories() async {
+Future<List<Category>> getCategories() async {  // confusing name
   const url = "https://dev.peartrade.org/api/search/category";
   var token;
 

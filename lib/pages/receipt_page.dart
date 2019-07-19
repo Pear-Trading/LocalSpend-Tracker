@@ -12,6 +12,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/popupListView.dart';
 import 'package:local_spend/common/apifunctions/categories.dart';
+import 'package:local_spend/common/widgets/future_dropdownmenu.dart';
 
 const URL = "https://flutter.io/";
 const demonstration = false;
@@ -31,7 +32,7 @@ class ReceiptPageState extends State<ReceiptPage> {
   final TextEditingController _categoryController = TextEditingController();  // TODO: fix this!!
   final TextEditingController _orgController = TextEditingController();
   final OrganizationController _organizationController = OrganizationController();
-  List<String> _categoryDropDownItems = List<String>();
+  List<DropdownMenuItem<String>> _categoryDropDownItems;
 
   FocusNode focusNode;
 
@@ -51,8 +52,11 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   @override
   void initState() {
-    getCategoriesStrings().then((value) {
+
+    getCategoriesList().then((value) {
+      setState(() {
       _categoryDropDownItems = value;
+      });
     });
 
     super.initState();
@@ -61,10 +65,7 @@ class ReceiptPageState extends State<ReceiptPage> {
     focusNode = FocusNode();
 
     _recurringController.text = "None";
-    _categoryController.text = "";
-//    getCategoriesStrings().then((value) {
-//      _categoryDropDownItems = value;
-//    });
+    _categoryController.text = "None";
   }
 
   @override
@@ -184,22 +185,26 @@ class ReceiptPageState extends State<ReceiptPage> {
     return "false";
   }
 
-  Future<List<String>> getCategoriesStrings() async {
-    var categories = getCategories(); //future<list<cat>>
-    var categoriesStrings = List<String>();
+  Future<List<DropdownMenuItem<String>>> getCategoriesList() async {
+    //TODO: Return a list of [String, String] where {1} is categoryName and {2} is categoryValue for request
+    var categoriesList = List<DropdownMenuItem>();
 
-    categories.then((val) {
-      val.forEach((thisCategory) {
+    var categories = await getCategories(); //future<list<cat>>
+
+    categories.forEach((thisCategory) {
 //        print(thisCategory.name);
-        categoriesStrings.add(thisCategory.name);
-      });
+      var thisMap = new DropdownMenuItem(
+        child: new Text(thisCategory.name),
+        value: thisCategory.index,
+      );
+
+      categoriesList.add(thisMap);
+    });
 
 //      print(categoriesStrings[10]); // prints 'Banana'
 //      print(categoriesStrings.toString());
 
-      _categoryDropDownItems = categoriesStrings;
-      return categoriesStrings;
-    });
+    return categoriesList;
   }
 
   List<String> getRecurringOptions() {
@@ -237,7 +242,7 @@ class ReceiptPageState extends State<ReceiptPage> {
     return (components[2] + "-" + components[1] + "-" + components[0]
         + "T" + components[3] + ":" + components[4] + ":00.000+01:00");
 
-    // Yes, there is probably a function to convert dates, but I didn't
+    // Yes, there is a function to convert dates, but I didn't
     // know that before writing this and it's done now so I'm keeping it.
   }
 
@@ -299,6 +304,13 @@ class ReceiptPageState extends State<ReceiptPage> {
 
   @override
   Widget build(BuildContext context) {
+//    _categoryDropDownItems = [
+//      Map.fromIterable(["wappa dappa doo", "1"]),
+//      Map.fromIterable(["interesting flip flops", "2"]),
+//      "gray skies", value:  "3"),
+//      "fortified systems" value: "4"),
+//    ];
+
     return PlatformScaffold(
 
       appBar: AppBar(
@@ -521,15 +533,13 @@ class ReceiptPageState extends State<ReceiptPage> {
 
 
             Padding(
-              padding: EdgeInsets.fromLTRB(0.0,18,0.0,0.0),
+              padding: EdgeInsets.fromLTRB(0.0,7,0.0,0.0),
 
               child : Container (
                 height: 35,
 //                  width: 400,
 
-                child : ListView(
-                  scrollDirection: Axis.horizontal,
-
+                child : Row(
                   children: <Widget>[
                     Container(
                       padding: const EdgeInsets.fromLTRB(0, 7, 0, 8),
@@ -543,22 +553,43 @@ class ReceiptPageState extends State<ReceiptPage> {
                     ),
 
                     Container(
-                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
-                        child: DropdownButton<String>(
-                          value: _categoryController.text,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _categoryController.text = newValue;
-                            });
-                          },
-                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),    // fix errors here by [items] being an empty container while _categoryDropDownItems is null
-                        )
+                      padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
+                      child: DropdownButton(
+//                        items: <DropdownMenuItem>[
+//                          DropdownMenuItem(child: Text("eeeee"), value: "eeeee"),
+//                          DropdownMenuItem(child: Text("Cucumbers"), value: "Cucumbers"),
+//                          DropdownMenuItem(child: Text("Mar shmellows"), value: "Marshmellows"),
+//                          DropdownMenuItem(child: Text("Pickled Sardines"), value: "Pickled Sardines"),
+//                        ].toList(),
+                          items: _categoryDropDownItems,
+
+                        value: _categoryController.text,
+//                      value: "skip skap skop",
+                        onChanged: (newValue) {
+                          setState(() {
+                            _categoryController.text = newValue;
+                          });
+                        }
+                      ),
                     ),
+
+//                    Container(
+//                        padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
+//                        child: DropdownButton<String>(
+//                          value: _categoryController.text,
+//                          onChanged: (String newValue) {
+//                            setState(() {
+//                              _categoryController.text = newValue;
+//                            });
+//                          },
+//                          items: _categoryDropDownItems.map<DropdownMenuItem<String>>((String value) {
+//                            return DropdownMenuItem<String>(
+//                              value: value,
+//                              child: Text(value),
+//                            );
+//                          }).toList(),    // fix errors here by [items] being an empty container while _categoryDropDownItems is null
+//                        )
+//                    ),
 
                   ],
                 ),
