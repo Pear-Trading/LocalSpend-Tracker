@@ -12,6 +12,7 @@ class ReceiptPage2 extends StatefulWidget {
 
 class ReceiptPage2State extends State<ReceiptPage2> {
   DateTime _transactionDate = DateTime.now();
+  double _transactionAmount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
         children: <Widget>[
           // each CHILD has its own horizontal padding because if the listView has padding, Android's end-of-scroll animation
           // doesn't fit the screen properly and looks weird
+
           Container(
             padding: const EdgeInsets.fromLTRB(15, 17, 0, 0),
             child : Text(
@@ -44,7 +46,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
+          ), // "Receipt Details" title
 
           Container(
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
@@ -100,11 +102,49 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                 ),
               ],
             ),
-          ),
+          ), // Date/Time picker
+
+          Container(
+            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            child: Row(
+              children: <Widget> [
+                Text(
+                  "Amount",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                Container(
+                  padding: const EdgeInsets.fromLTRB(36, 0, 0, 0),
+                  height: 32.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext builder) {
+                            return Container(
+                              height: MediaQuery.of(context).copyWith().size.height / 3,
+                            );
+                          });
+                    },//                      onPressed: () => showDatePicker(context: context, initialDate: _transactionDate, firstDate: null, lastDate: _transactionDate),
+                    child: Text(
+                      _transactionAmount == null
+                        ? 'None set.'
+                        : "£" + _transactionAmount.toString() + "0",
+                      style : TextStyle(color: Colors.white, fontSize: 18.0),
+                    ),
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ), // Date/Time picker
 
         ],
       ),
-
     );
   }
 }

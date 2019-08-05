@@ -100,7 +100,7 @@ class MorePageState extends State<MorePage> {
                         applicationName: "Local Spend Tracker",
                         children: <Widget> [
                           Text("Pear Trading is a commerce company designed to register and monitor money circulating in the local economy."),
-                          Text("\nContact at test@example.com or +44(0)1524 64544"),
+                          Text("\nContact at test@example.com or +44 01524 64544"),
 
                           Padding(
                             padding: EdgeInsets.fromLTRB(0,20,0,0),
