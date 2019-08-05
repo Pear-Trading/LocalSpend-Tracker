@@ -3,6 +3,16 @@ import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
+class Transaction {
+  DateTime date;
+  double amount;
+  
+  Transaction(
+    this.date,
+    this.amount,
+  );
+}
+
 class ReceiptPage2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -11,9 +21,8 @@ class ReceiptPage2 extends StatefulWidget {
 }
 
 class ReceiptPage2State extends State<ReceiptPage2> {
-  DateTime _transactionDate = DateTime.now();
-  double _transactionAmount = 0;
-
+  Transaction transaction = new Transaction(DateTime.now(), 0);
+  
   @override
   Widget build(BuildContext context) {
 
@@ -52,17 +61,20 @@ class ReceiptPage2State extends State<ReceiptPage2> {
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
             child: Row(
               children: <Widget> [
-                Text(
-                  "Date/Time",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  child : Text(
+                    "Date/Time",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  width: 110,
                 ),
 
                 Container(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   height: 32.0,
                   child: RaisedButton(
                     onPressed: () {
@@ -72,14 +84,14 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                             return Container(
                               height: MediaQuery.of(context).copyWith().size.height / 3,
                               child: CupertinoDatePicker(
-                                initialDateTime: _transactionDate.isAfter(DateTime.now())
+                                initialDateTime: transaction.date.isAfter(DateTime.now())
                                   ? DateTime.now()
-                                  : _transactionDate,
+                                  : transaction.date,
                                 onDateTimeChanged: (DateTime newDate) {
                                   setState(() => {
                                     newDate.isAfter(DateTime.now())
-                                        ? _transactionDate = DateTime.now()
-                                        : _transactionDate = newDate,
+                                        ? transaction.date = DateTime.now()
+                                        : transaction.date = newDate,
                                   });
                                 },
                                 use24hFormat: true,
@@ -89,11 +101,11 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                           });
                     },//                      onPressed: () => showDatePicker(context: context, initialDate: _transactionDate, firstDate: null, lastDate: _transactionDate),
                     child: Text(
-                      _transactionDate == null
+                      transaction.date == null
                           ? 'None set.'
-                          : _transactionDate.year == DateTime.now().year
-                            ? '${new DateFormat.MMMd().format(_transactionDate)}' + ", " + '${new DateFormat.Hm().format(_transactionDate)}'
-                            : '${new DateFormat.MMMd().format(_transactionDate)}' + " " + _transactionDate.year.toString() + ", " + '${new DateFormat.Hm().format(_transactionDate)}',
+                          : transaction.date.year == DateTime.now().year
+                            ? '${new DateFormat.MMMd().format(transaction.date)}' + ", " + '${new DateFormat.Hm().format(transaction.date)}'
+                            : '${new DateFormat.MMMd().format(transaction.date)}' + " " + transaction.date.year.toString() + ", " + '${new DateFormat.Hm().format(transaction.date)}',
                       style:
                       TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
@@ -108,17 +120,21 @@ class ReceiptPage2State extends State<ReceiptPage2> {
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
             child: Row(
               children: <Widget> [
-                Text(
-                  "Amount",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  child : Text(
+                    "Amount",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  width: 110,
                 ),
 
+
                 Container(
-                  padding: const EdgeInsets.fromLTRB(36, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   height: 32.0,
                   child: RaisedButton(
                     onPressed: () {
@@ -131,9 +147,9 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                           });
                     },//                      onPressed: () => showDatePicker(context: context, initialDate: _transactionDate, firstDate: null, lastDate: _transactionDate),
                     child: Text(
-                      _transactionAmount == null
+                      transaction.amount == null
                         ? 'None set.'
-                        : "£" + _transactionAmount.toString() + "0",
+                        : "£" + transaction.amount.toString() + "0",
                       style : TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                     color: Colors.blue,
@@ -141,7 +157,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                 ),
               ],
             ),
-          ), // Date/Time picker
+          ), // Amount picker
 
         ],
       ),
