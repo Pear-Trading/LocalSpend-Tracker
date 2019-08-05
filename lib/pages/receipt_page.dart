@@ -33,7 +33,8 @@ class ReceiptPageState extends State<ReceiptPage> {
   TextEditingController _categoryController;  // TODO: fix this!!
   final TextEditingController _orgController = TextEditingController();
   final OrganizationController _organizationController = OrganizationController();
-  DropdownButton _dropDownMenu = new DropdownButton(items: null, onChanged: null);
+  DropdownButton _categoriesDropDownButton = new DropdownButton(items: null /*onChanged: blahBlahBlah*/);
+  DropdownButton _recurringDropDownButton = new DropdownButton(items: null /*onChanged: blahBlahBlah*/);
   String _category;
 
   FocusNode focusNode;
@@ -62,9 +63,9 @@ class ReceiptPageState extends State<ReceiptPage> {
 //    });
 //    loadDropDownMenu();
 
-    getDropDownMenu().then((value) {
+    getCategoriesDropDownMenu("categories").then((value) {
       setState((){
-        _dropDownMenu = value;
+        _categoriesDropDownButton = value;
       });
     });
 
@@ -107,20 +108,20 @@ class ReceiptPageState extends State<ReceiptPage> {
 //      _category = categories[0];
 //      _dropDownMenu = new DropdownButton<String>(/*value : _categoryController.text, */items: categories, onChanged: (newValue) => _categoryController.text = newValue);
       setState(() {
-        _dropDownMenu = new DropdownButton(items: categories, onChanged: (newValue) => _category = newValue, value: _category);
+        _categoriesDropDownButton = new DropdownButton(items: categories, onChanged: (newValue) => _category = newValue, value: _category);
       });
     });
   }
+  
+  Future<DropdownButton> getCategoriesDropDownMenu(String type) async {
+    List<DropdownMenuItem> dropDownItems = await getDropDownItems(type);
 
-  Future<DropdownButton> getDropDownMenu() async {
-    List<DropdownMenuItem> categories = await getDropDownItems("categories");
-
-    categories.forEach((thisOne) {
-      print("This value: " + thisOne.value);
-    });
+//    dropDownItems.forEach((thisOne) {
+//      print("This value: " + thisOne.value);
+//    });
 //    _categoryController = new TextEditingController(text: null);
     return new DropdownButton(
-        items: categories,
+        items: dropDownItems,
         onChanged: (newValue) {
           _category = newValue;
           setState(() {
@@ -267,16 +268,18 @@ class ReceiptPageState extends State<ReceiptPage> {
 //  }
 
   List<String> getRecurringOptions() {
-    var options = new List<String>(7);
-    options[0] = "None";  // this should not be hardcoded and should be fetched from API instead
-    options[1] = "Daily";
-    options[2] = "Weekly";
-    options[3] = "Fortnightly";
-    options[4] = "Monthly";
-    options[5] = "Quarterly";
-    options[6] = "Yearly";
+//    var options = new List<String>(7);
+//    options[0] = "None";  // this should not be hardcoded and should be fetched from API instead
+//    options[1] = "Daily";
+//    options[2] = "Weekly";
+//    options[3] = "Fortnightly";
+//    options[4] = "Monthly";
+//    options[5] = "Quarterly";
+//    options[6] = "Yearly";
+//
+//    return options;
 
-    return options;
+    var options =
   }
 
   String formatDate(String date) {
@@ -612,7 +615,7 @@ class ReceiptPageState extends State<ReceiptPage> {
 
                     Container(
                       padding: const EdgeInsets.fromLTRB(29, 0, 0, 0),
-                        child: _dropDownMenu,
+                        child: _categoriesDropDownButton,
 //                      child: DropdownButton(
 //                          items: _categoryDropDownItems,
 //
