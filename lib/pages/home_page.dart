@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_spend/pages/receipt_page.dart';
+import 'package:local_spend/pages/receipt_page_2.dart';
 import 'package:local_spend/pages/more_page.dart';
 import 'package:local_spend/pages/stats_page.dart';
 
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePageWidget> {
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    ReceiptPage(),
+    ReceiptPage2(),
     StatsPage(),
     MorePage()
   ];

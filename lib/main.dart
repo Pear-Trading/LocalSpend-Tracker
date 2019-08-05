@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_spend/pages/home_page.dart';
 import 'package:local_spend/pages/login_page.dart';
 import 'package:local_spend/pages/receipt_page.dart';
+import 'package:local_spend/pages/receipt_page_2.dart';
 import 'package:local_spend/pages/spash_screen.dart';
 import 'package:local_spend/pages/more_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         "/HomePage": (BuildContext context) => HomePage(),
         "/LoginPage": (BuildContext context) => LoginPage(),
-        "/ReceiptPage": (BuildContext context) => ReceiptPage(),
+        "/ReceiptPage": (BuildContext context) => ReceiptPage2(),
         "/MorePage": (BuildContext context) => MorePage(),
       },
       home: SplashScreen(),

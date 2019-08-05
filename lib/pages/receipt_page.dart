@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -112,7 +113,7 @@ class ReceiptPageState extends State<ReceiptPage> {
       });
     });
   }
-  
+
   Future<DropdownButton> getCategoriesDropDownMenu(String type) async {
     List<DropdownMenuItem> dropDownItems = await getDropDownItems(type);
 
@@ -268,18 +269,16 @@ class ReceiptPageState extends State<ReceiptPage> {
 //  }
 
   List<String> getRecurringOptions() {
-//    var options = new List<String>(7);
-//    options[0] = "None";  // this should not be hardcoded and should be fetched from API instead
-//    options[1] = "Daily";
-//    options[2] = "Weekly";
-//    options[3] = "Fortnightly";
-//    options[4] = "Monthly";
-//    options[5] = "Quarterly";
-//    options[6] = "Yearly";
-//
-//    return options;
+    var options = new List<String>(7);
+    options[0] = "None";  // this should not be hardcoded and should be fetched from API instead
+    options[1] = "Daily";
+    options[2] = "Weekly";
+    options[3] = "Fortnightly";
+    options[4] = "Monthly";
+    options[5] = "Quarterly";
+    options[6] = "Yearly";
 
-    var options =
+    return options;
   }
 
   String formatDate(String date) {
@@ -698,3 +697,5 @@ class ReceiptPageState extends State<ReceiptPage> {
     );
   }
 }
+
+*/
