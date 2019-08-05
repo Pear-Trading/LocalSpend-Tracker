@@ -86,11 +86,6 @@ class MorePageState extends State<MorePage> {
                   ),
                 ),
               ),
-//
-//              Padding(
-//                padding: EdgeInsets.fromLTRB(10, 15, 0, 0),
-//                child: Text("helloooo"),
-//              ),
 
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
