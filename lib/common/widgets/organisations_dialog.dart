@@ -15,7 +15,7 @@ class FindOrganisations {
     );
   }
 
-  List<Text> getStuff() {
+  List<Text> getFavourites() {
     var numItems = 200;
     var itemsList = new List<Text>();
 
@@ -29,9 +29,12 @@ class FindOrganisations {
     return itemsList;
   }
 
+  // todo: get all organisations, favourites and all data from one 'organisations' class or similar
+  // eg items: organisations.getFavourites().orderBy(name),
+
   Future<Organisation> dialog(context) {
     var searchBar = getSearchBar(null, "Payee Name");
-    var stuff = getStuff();
+    var favourites = getFavourites();
     return showDialog<Organisation>(
       context: context,
       barrierDismissible: true,
@@ -53,21 +56,22 @@ class FindOrganisations {
             ),
 
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.67,
 
               child: Material(
                 shadowColor: Colors.transparent,
                 color: Colors.transparent,
                 child: ListView.builder(
-                  itemCount: stuff.length,
+                  itemCount: favourites.length,
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
                         leading: Icon(Icons.person),
-                        title: stuff[index],
+                        title: favourites[index],
                         trailing: Icon(Icons.arrow_forward_ios),
+                        onTap: () {},
                       )
                     );
                   },
