@@ -45,6 +45,14 @@ class FindOrganisations {
             ),
 
             Container(
+              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              child: Text(
+                "Favourites",
+                style: new TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            Container(
               padding: EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width * 0.7,
               height: MediaQuery.of(context).size.height * 0.7,
