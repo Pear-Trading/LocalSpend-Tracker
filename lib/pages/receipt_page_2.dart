@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/organisations_dialog.dart';
@@ -39,6 +40,9 @@ class ReceiptPage2State extends State<ReceiptPage2> {
   
   @override
   Widget build(BuildContext context) {
+    var dialog = new Dialog(
+      child: FindOrganisations(),
+    );
 
     return PlatformScaffold(
       appBar: AppBar(
@@ -151,14 +155,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                   height: 32.0,
                   child: RaisedButton(
                     onPressed: () {
-//                      var popupListView = new PopupListView();
-//                      var dialog = popupListView.dialog(context, optionsList, "Choose Organization");
-                      var organisations = new FindOrganisations();
-                      var orgDialog = organisations.dialog(context);
-
-                      orgDialog.then((organisation) {
-                        debugPrint(organisation.name);
-                      });
+                      dialog.then((org) {});
                     },
                     child: Text(
                       transaction.organisation.name == null
