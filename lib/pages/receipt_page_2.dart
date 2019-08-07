@@ -17,12 +17,6 @@ class Transaction {
   );
 }
 
-// Find Organisations
-
-
-
-// end Find Organisations
-
 class ReceiptPage2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
