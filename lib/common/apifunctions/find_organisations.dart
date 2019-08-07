@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:local_spend/common/functions/get_token.dart';
 
+
 class Organisation {
   var id = 0;
   var name = "";
@@ -11,40 +12,22 @@ class Organisation {
   var streetName = "";  //street_name
   var town = "";
 
-  Organisation(int id, String name, String postcode, String streetName, String town) {
-    this.id = id;
-    this.name = name;
-    this.postcode = postcode;
-    this.streetName = streetName; //street_name
-    this.town = town;
-  }
+  Organisation(
+    this.id,
+    this.name,
+    this.postcode,
+    this.streetName,
+    this.town,
+  );
 
 }
 
 List<Organisation> jsonToOrganisations(String json) {
   Map decoded = jsonDecode(json);
-//  print(decoded);
-
   List<dynamic> validated = decoded['validated'];
-//  Map organisation = validated[0];
-//
-//  print("");
-//  print("Response:");
-//  for (var i = 0; i < validated.length; i++) {
-//    print(validated[i]);
-//  }
-
   List<Map> organisationsMaps = new List<Map>();
-
   validated.forEach((element) => organisationsMaps.add(element));
-
-//  print("");
-//  print("organisationsMaps:");
-//  print(organisationsMaps);
-
   List<Organisation> organisations = new List<Organisation>();
-  
-//  organisationsMaps[0].forEach((k,v) => print('${k}: ${v}'));
 
   for (var i = 0; i < organisationsMaps.length; i++) {
     final params = organisationsMaps[i].values.toList();
@@ -59,17 +42,6 @@ List<Organisation> jsonToOrganisations(String json) {
 
     organisations.add(newOrganisation);
   }
-
-  // the reason some organizations do not show up is because they are not all validated
-  // option to 'show unvalidated' should be added along with maybe a settings section
-//
-//  print("");
-//  print("Local:");
-//  for (var i = 0; i < organisations.length; i++)
-//    {
-//      print(organisations[i].name);
-//    }
-//  print("");
 
   return organisations;
 }
@@ -91,8 +63,6 @@ Future<List<Organisation>> findOrganisations(String search) async {
     url,
     body: json.encode(body),
   );
-
-//  print(response.body);
 
   if (response.statusCode == 200) {
     //request successful

@@ -2,16 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:local_spend/common/apifunctions/find_organisations.dart';
+import 'package:local_spend/common/widgets/organisations_dialog.dart';
 
 class Transaction {
   DateTime date;
-  double amount;
-  
+  TextEditingController amount;
+  Organisation organisation;
+
   Transaction(
     this.date,
     this.amount,
+    this.organisation,
   );
 }
+
+// Find Organisations
+
+
+
+// end Find Organisations
 
 class ReceiptPage2 extends StatefulWidget {
   @override
@@ -21,7 +31,11 @@ class ReceiptPage2 extends StatefulWidget {
 }
 
 class ReceiptPage2State extends State<ReceiptPage2> {
-  Transaction transaction = new Transaction(DateTime.now(), 0);
+  Transaction transaction = new Transaction(
+    DateTime.now(),
+    new TextEditingController(),
+    new Organisation(null, null, null, null, null),
+  );
   
   @override
   Widget build(BuildContext context) {
@@ -122,6 +136,50 @@ class ReceiptPage2State extends State<ReceiptPage2> {
               children: <Widget> [
                 Container(
                   child : Text(
+                    "Payee",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  width: 110,
+                ),
+
+                Container(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  height: 32.0,
+                  child: RaisedButton(
+                    onPressed: () {
+//                      var popupListView = new PopupListView();
+//                      var dialog = popupListView.dialog(context, optionsList, "Choose Organization");
+                      var organisations = new FindOrganisations();
+                      var orgDialog = organisations.dialog(context);
+
+                      orgDialog.then((organisation) {
+                        debugPrint(organisation.name);
+                      });
+                    },
+                    child: Text(
+                      transaction.organisation.name == null
+                          ? 'Find'
+                          : transaction.organisation.name,
+                      style:
+                      TextStyle(color: Colors.white, fontSize: 18.0),
+                    ),
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ), // Organisation picker
+
+          Container(
+            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child : Text(
                     "Amount",
                     style: TextStyle(
                       fontSize: 18,
@@ -136,23 +194,13 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   height: 32.0,
-                  child: RaisedButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext builder) {
-                            return Container(
-                              height: MediaQuery.of(context).copyWith().size.height / 3,
-                            );
-                          });
-                    },//                      onPressed: () => showDatePicker(context: context, initialDate: _transactionDate, firstDate: null, lastDate: _transactionDate),
-                    child: Text(
-                      transaction.amount == null
-                        ? 'None set.'
-                        : "£" + transaction.amount.toString() + "0",
-                      style : TextStyle(color: Colors.white, fontSize: 18.0),
+                  width: 100,
+                  child: TextField(
+                    controller: transaction.amount,
+                    decoration: InputDecoration(
+                        hintText: "£0.00"
                     ),
-                    color: Colors.blue,
+                    keyboardType: TextInputType.number,
                   ),
                 ),
               ],
