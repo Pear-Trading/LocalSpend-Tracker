@@ -24,7 +24,7 @@ class Organisation {
 class Organisations {
 
   List<Organisation> getTestData() {
-    var numItems = 200;
+    var numItems = 10;
     var itemsList = new List<Organisation>();
 
     for (int i = 0; i < numItems; i++) {

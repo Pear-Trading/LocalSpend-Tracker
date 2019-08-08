@@ -36,16 +36,16 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
     return PlatformScaffold(
       appBar: AppBar(
-      backgroundColor: Colors.blue[400],
-      title: Text(
-        "Submit Receipt",
-        style: TextStyle(
-          fontSize: 20,
-          color: Colors.white,
+        backgroundColor: Colors.blue[400],
+        title: Text(
+          "Submit Receipt",
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
         ),
-      ),
-      centerTitle: true,
-      iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
 
       body: ListView(
@@ -107,7 +107,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                               ),
                             );
                           });
-                    },//                      onPressed: () => showDatePicker(context: context, initialDate: _transactionDate, firstDate: null, lastDate: _transactionDate),
+                    },
                     child: Text(
                       transaction.date == null
                           ? 'None set.'
