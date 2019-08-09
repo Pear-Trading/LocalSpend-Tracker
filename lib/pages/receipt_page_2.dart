@@ -194,7 +194,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     decoration: InputDecoration(
                         hintText: "£0.00"
                     ),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
                   ),
                 ),
               ],
