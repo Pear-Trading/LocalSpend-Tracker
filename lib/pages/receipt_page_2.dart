@@ -149,8 +149,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 //                      var dialog = popupListView.dialog(context, optionsList, "Choose Organization");
                       var organisations = new FindOrganisations();
                       var orgDialog = organisations.dialog(context);
-
                       orgDialog.then((organisation) {
+                        setState(() => {});
                         debugPrint(organisation.name);
                       });
                     },
