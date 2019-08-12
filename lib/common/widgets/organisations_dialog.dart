@@ -91,8 +91,13 @@ class FindOrganisations {
                           ignoring: _searchEnabled,
                           child: RaisedButton(
                             onPressed: () {
-                              _submitSearch(searchBarText.text);
-                              setState(() => {});
+                                if (_searchEnabled) {
+                                  var result = _submitSearch(
+                                      searchBarText.text);
+                                  result.then((_) {
+                                    setState(() {});
+                                  });
+                                }
                               },
 
                             child: Icon(Icons.search, color: Colors.white),
