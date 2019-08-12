@@ -59,11 +59,15 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     receipt.postcode = transaction.organisation.postcode;
     receipt.town = transaction.organisation.town;
     receipt.recurring = transaction.recurring;
+
+    if (transaction.recurring == "None") {
+      receipt.recurring = "";
+    }
+
     receipt.category = transaction.category;
     receipt.amount = transaction.amount.text.toString();
     receipt.time = DateFormat("yyyy-MM-dd'T'hh:mm':00.000+01:00'").format(transaction.date).toString();
     receipt.essential = transaction.isEssential.toString();
-//    receipt.time = dt.format(transaction.date);
 
     submitReceiptAPI(context, receipt);
   }
