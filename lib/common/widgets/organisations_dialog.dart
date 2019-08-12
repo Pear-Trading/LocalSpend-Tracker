@@ -25,17 +25,18 @@ class FindOrganisations {
     var listTitle = "All Organisations";
     var organisationsList = organisations.getTestData();
 
-    void _submitSearch(String search) async {
+    Future<int> _submitSearch(String search) async {
       _searchEnabled = false;
       listTitle = "Results for \'" + search + "\'";
 
-      var futureOrgs = organisations.findOrganisations(search);
-      futureOrgs.then((value) {
-        debugPrint("There are " + value.length.toString() +
+      var futureOrgs = await organisations.findOrganisations(search);
+//      futureOrgs.then((value) {
+        debugPrint("There are " + futureOrgs.length.toString() +
             " payees matching the query \'" + search + "\'.");
-        organisationsList = value;
+        organisationsList = futureOrgs;
         _searchEnabled = true;
-      });
+        return futureOrgs.length;
+//      });
     }
 
     return showDialog<Organisation>(
@@ -69,8 +70,10 @@ class FindOrganisations {
                           },
                           onSubmitted: (value) {
                             if (_searchEnabled) {
-                              _submitSearch(searchBarText.text);
-                              setState(() => {});
+                              var result = _submitSearch(searchBarText.text);
+                              result.then((_) {
+                                setState(() {});
+                              });
                             }
                           },
                         ),
