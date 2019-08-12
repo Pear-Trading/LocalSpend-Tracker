@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:intl/intl.dart';
+import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/organisations_dialog.dart';
 import 'package:local_spend/common/apifunctions/submit_receipt_api.dart';
+import 'package:local_spend/common/apifunctions/categories.dart';
 
 class Transaction {
   DateTime date;
@@ -40,6 +42,10 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     false,
     "Uncategorised",
   );
+  
+  Future<List<String>> getCats() async {
+    return await getCategories();
+  }
 
   _submitReceipt(Transaction transaction) {
     DateTime dt = new DateTime.now();
@@ -64,6 +70,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
       receipt.recurring = "";
     }
 
+    print("Category: " + transaction.category);
     receipt.category = transaction.category;
     receipt.amount = transaction.amount.text.toString();
     receipt.time = DateFormat("yyyy-MM-dd'T'hh:mm':00.000+01:00'").format(transaction.date).toString();
@@ -73,10 +80,20 @@ class ReceiptPage2State extends State<ReceiptPage2> {
   }
 
   List<String> _sampleRecurringOptions = new List<String>(7);
-  List<String> _sampleCategories = new List<String>(4);
 
   @override
   Widget build(BuildContext context) {
+
+    Future<List<String>> _futureCats = getCats();
+    List<String> _categories = new List<String>();
+    _categories.add("Fetching categories...");
+
+    _futureCats.then((value) {
+      _categories = null;
+      _categories = value;
+      setState(() {});
+    });
+    
     _sampleRecurringOptions[0] = "None";
     _sampleRecurringOptions[1] = "Daily";
     _sampleRecurringOptions[2] = "Weekly";
@@ -84,11 +101,6 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     _sampleRecurringOptions[4] = "Monthly";
     _sampleRecurringOptions[5] = "Quarterly";
     _sampleRecurringOptions[6] = "Yearly"; // these will be difficult to fetch from server as they are coded into the site's rather than fetched
-
-    _sampleCategories[0] = "Uncategorised";
-    _sampleCategories[1] = "Cheese";
-    _sampleCategories[2] = "Fish";
-    _sampleCategories[3] = "Music";
 
 
     return PlatformScaffold(
@@ -313,9 +325,9 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                               height: MediaQuery.of(context).copyWith().size.height / 3,
                               child: CupertinoPicker(
                                 backgroundColor: Colors.white,
-                                children: _sampleCategories.map((thisOption) => Text(thisOption)).toList(),
+                                children: _categories.map((thisOption) => Text(thisOption)).toList(),
                                 onSelectedItemChanged: ((newValue) {
-                                  transaction.category = _sampleCategories[newValue];
+                                  transaction.category = _categories[newValue];
                                   setState(() {});
                                 }),
                                 itemExtent: 32,

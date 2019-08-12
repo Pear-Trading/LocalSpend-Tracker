@@ -4,35 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:local_spend/common/functions/get_token.dart';
 import 'package:flutter/material.dart';
 
-class Category {
-  String name;
-  String index;
-
-  Category({
-    this.name,
-    this.index,
-  });
-}
-
-Future<List<DropdownMenuItem<String>>> getCategoriesList() async {
-  //TODO: Return a list of [String, String] where {1} is categoryName and {2} is categoryValue for request
-  var categoriesList = List<DropdownMenuItem>();
-
-  var categories = await getCategories();
-
-  categories.forEach((thisCategory) {
-    var thisMap = new DropdownMenuItem(
-      child: new Text(thisCategory.name),
-      value: thisCategory.index,
-    );
-
-    categoriesList.add(thisMap);
-  });
-
-  return categoriesList;
-}
-
-Future<List<Category>> getCategories() async {  // confusing name
+Future<List<String>> getCategories() async {
   const url = "https://dev.peartrade.org/api/search/category";
   var token;
 
@@ -53,7 +25,7 @@ Future<List<Category>> getCategories() async {  // confusing name
 
   if (response.statusCode == 200) {
     //request successful
-    List<Category> categories = new List<Category>();
+    List<String> categories = new List<String>();
     Map responseMap = json.decode(response.body);
 
     var categoriesJSON = responseMap['categories'];
@@ -70,8 +42,7 @@ Future<List<Category>> getCategories() async {  // confusing name
       if (categoriesJSON[i.toString()] != null) {
 //        print("Iteration " + i.toString());
 //        print(categoriesJSON[i.toString()]);
-        categories.add(new Category(
-            name: categoriesJSON[i.toString()], index: i.toString()));
+        categories.add(categoriesJSON[i.toString()]);
 //        print(categories.last);
         i++;
       } else {
