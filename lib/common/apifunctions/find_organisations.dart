@@ -31,7 +31,7 @@ class Organisations {
       itemsList.add(new Organisation(
         i,
         "Payee " + (i + 1).toString(),
-        "eee eee",
+        "tee hee hee",
         "yeet street",
         "Robloxia"
       ));

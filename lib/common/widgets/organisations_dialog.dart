@@ -39,6 +39,10 @@ class FindOrganisations {
 //      });
     }
 
+    _chosenOrg(Organisation chosen) {
+      debugPrint(chosen.name + " tapped");
+    }
+
     return showDialog<Organisation>(
       context: context,
       barrierDismissible: true,
@@ -114,7 +118,7 @@ class FindOrganisations {
                   width: MediaQuery
                       .of(context)
                       .size
-                      .width * 0.7,
+                      .width,
                   height: MediaQuery
                       .of(context)
                       .size
@@ -127,12 +131,20 @@ class FindOrganisations {
                       itemCount: organisationsList.length,
                       itemBuilder: (context, index) {
                         return Card(
-                            child: ListTile(
-                              leading: Icon(Icons.person),
-                              title: Text(organisationsList[index].name, style: new TextStyle(fontSize: 18)),
-                              trailing: Icon(Icons.arrow_forward_ios),
-                              onTap: () {},
-                            )
+                          child: ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text(organisationsList[index].name, style: new TextStyle(fontSize: 18)),
+                            subtitle: Text(organisationsList[index].postcode.toUpperCase()),
+//                            trailing: Icon(Icons.arrow_forward_ios),
+//                            onTap: _chosenOrg(organisationsList[index]),
+                            onTap: (){
+                              _chosenOrg(organisationsList[index]);
+                            },
+                            onLongPress: (){
+                              // show more details about the organisation in a new dialog
+
+                            },
+                          ),
                         );
                       },
                     ),
