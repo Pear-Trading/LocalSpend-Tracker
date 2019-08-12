@@ -50,12 +50,12 @@ Future<LoginModel> submitReceiptAPI(
     body: json.encode(body),
   );
 
-  debugPrint(response.body);
+//  debugPrint(response.body);
 
   if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
 
-    print(responseJson[0]);
+//    print(responseJson[0]);
 
     showDialogSingleButton(
         context,

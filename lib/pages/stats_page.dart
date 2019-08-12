@@ -30,7 +30,7 @@ class StatsPage extends StatefulWidget {
 class StatsPageState extends State<StatsPage> {
 
   GraphData graphData = new GraphData();
-  List<charts.Series> totalLastWeek;
+  List<charts.Series<dynamic, DateTime>> displayedGraphData;
 
   @override
   void initState() {
@@ -50,14 +50,15 @@ class StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
-//    if (graphData.data != null) {
-//      graphData.getGraphData('total_last_week').then((val) {
-//        totalLastWeek = val;
-//        setState(() {
-//          // update view
-//        });
-//      });
-//    }
+    if (graphData.data.length == 0) {
+      graphData.getGraphData('total_last_week').then((fetchedData) {
+        displayedGraphData = (fetchedData);
+        for (int i = 0; i < fetchedData[0].data.length; i++) {
+          print(fetchedData[0].data[i].time); // this is getting very frustrating
+        }
+        setState(() {});
+      });
+    }
 
     return PlatformScaffold(
       appBar: AppBar(
@@ -98,8 +99,10 @@ class StatsPageState extends State<StatsPage> {
               height: 200,
 //              width: 250,
 
-              child: new TimeSeries(),
-//                child: new SimpleTimeSeriesChart(totalLastWeek),//seriesList: List<charts.Series>
+//                child: new TimeSeries(),
+              child: displayedGraphData != null ? new charts.TimeSeriesChart(displayedGraphData) : Container(), //List<Series<dynamic, DateTime>>
+//              child: new charts.TimeSeriesChart(displayedGraphData),
+//                child: new SimpleTimeSeriesChart(),//seriesList: List<charts.Series>
             ),
 
           ],

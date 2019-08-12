@@ -7,7 +7,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 class GraphData {
   List<charts.Series> data = new List<charts.Series>();
 
-  Future<List<charts.Series>> getGraphData(String graphType) async {
+  Future<List<charts.Series<dynamic, DateTime>>> getGraphData(String graphType) async {
+//    print("called");
     /// Graph types:
     /// - total_last_week
     /// - avg_spend_last_week
@@ -35,6 +36,10 @@ class GraphData {
       final responseJson = jsonDecode(response.body);
       final List<dynamic> labels = responseJson['graph']['labels'];
       final List<dynamic> data = responseJson['graph']['data'];
+
+      for (int i = 0; i < data.length; i++) {
+//        print(labels[i].toString() + " : " + data[i].toString());
+      }
 //      final List<String> bounds = responseJson['graph']['bounds']; // why is this even returned?
 
       /*
@@ -49,10 +54,12 @@ class GraphData {
       List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
       for (int i = 0; i < labels.length; i++) {
-        print(DateTime.parse(labels[i]));
+//        print(DateTime.parse(labels[i]));
         timeSeriesSpendList.add(new TimeSeriesSpend(i, DateTime(i)));
 //        timeSeriesSpendList.add(new TimeSeriesSpend(data[i], DateTime.parse(labels[i])));
       }
+
+//      print(timeSeriesSpendList);
 
       return [
         new charts.Series<TimeSeriesSpend, DateTime>(
