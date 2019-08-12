@@ -71,9 +71,9 @@ class FindOrganisations {
                             } else {
                               _searchEnabled = false;
                             }
-                            setState(() => {});
+                            setState(() => {_searchEnabled});
                           },
-                          onSubmitted: (value) {
+                          onSubmitted: (_) {
                             if (_searchEnabled) {
                               var result = _submitSearch(searchBarText.text);
                               result.then((_) {
@@ -87,23 +87,20 @@ class FindOrganisations {
                       Container(
                         width: 80,
                         padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        child: IgnorePointer(
-                          ignoring: _searchEnabled,
-                          child: RaisedButton(
-                            onPressed: () {
-                                if (_searchEnabled) {
-                                  var result = _submitSearch(
-                                      searchBarText.text);
-                                  result.then((_) {
-                                    setState(() {});
-                                  });
-                                }
-                              },
 
-                            child: Icon(Icons.search, color: Colors.white),
-                            color: _searchEnabled ? Colors.blue : Colors.blue[200],
-                            // make inactive when search in progress as activity indicator
-                          ),
+                        child: RaisedButton(
+                          onPressed: (() {
+                            if (_searchEnabled) {
+                              var result = _submitSearch(searchBarText.text);
+                              result.then((_) {
+                                setState(() {});
+                              });
+                            }
+                          }),
+
+                          child: Icon(Icons.search, color: Colors.white),
+                          color: _searchEnabled ? Colors.blue : Colors.blue[200],
+                          // make inactive when search in progress as activity indicator
                         ),
                       ),
                     ],

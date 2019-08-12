@@ -7,6 +7,27 @@ import 'package:local_spend/common/functions/save_current_login.dart';
 import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/model/json/login_model.dart';
 
+Future<void> _incorrectDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Unable to Login"),
+        content: Text("Incorrect login details. Please try again."),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 Future<LoginModel> requestLoginAPI(
     BuildContext context, String email, String password) async {
   //var apiUrl = ConfigWrapper.of(context).apiKey;
@@ -41,11 +62,7 @@ Future<LoginModel> requestLoginAPI(
 
     saveCurrentLogin(responseJson, body["email"]);
 
-    showDialogSingleButton(
-        context,
-        "Unable to Login",
-        "You may have supplied an invalid 'Email' / 'Password' combination. Please try again or email an administrator.",
-        "OK");
+    _incorrectDialog(context);
 
     return null;
   }

@@ -439,14 +439,6 @@ class ReceiptPage2State extends State<ReceiptPage2> {
               child: RaisedButton(
                 onPressed: () {
                   try {
-                    /*
-                        DateTime.now(),
-                        new TextEditingController(),
-                        new Organisation(null, null, null, null, null),
-                        "None",
-                        false,
-                        "Uncategorised",
-                     */
                     if (transaction.amount.text == "" || transaction.organisation.name == null) {
                       showDialog(
                           context: context,
@@ -459,10 +451,10 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                         _submitReceipt(transaction);
                       } else {
                         showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return _invalidDialog(context);
-                            }
+                          context: context,
+                          builder: (BuildContext context) {
+                            return _invalidDialog(context);
+                          }
                         );
                       }
                     }

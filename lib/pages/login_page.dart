@@ -109,12 +109,13 @@ class LoginPageState extends State<LoginPage> {
         body: Container(
           decoration: new BoxDecoration(
             gradient: new LinearGradient(
-              colors: [Colors.white, Colors.blue[50]],
+              colors: [Colors.blue[50], Colors.white],
               stops: [0,1],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
-          ),          child: Container(
+          ),
+          child: Container(
             margin: EdgeInsets.fromLTRB(60,30,60,0),
             child: Column(
               children: <Widget>[
@@ -178,19 +179,6 @@ class LoginPageState extends State<LoginPage> {
 
               child : Material(
                 child: new Container(
-                  child : InkWell(
-                    onTap: () => login( _emailController.text, _passwordController.text),
-                    child: new Container(
-                      width: 100,
-                      height: 50,
-                      child: new Center(
-                        child: new Text(
-                            'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
-                        ),
-                      ),
-                      splashColor: Colors.lightBlueAccent,
-                    ),
-
                   decoration: new BoxDecoration(
                     border: new Border.all(color : Colors.transparent, width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(2)),
@@ -204,6 +192,24 @@ class LoginPageState extends State<LoginPage> {
                       end: Alignment.bottomRight,
                     ),
                   ),
+
+                  child : Material(
+                    type: MaterialType.transparency,
+
+                    child : InkWell(
+                      onTap: () => login( _emailController.text, _passwordController.text),
+                      child: new Container(
+                        width: 100,
+                        height: 50,
+                        child: new Center(
+                          child: new Text(
+                              'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
+                        ),
+                      ),
+                    ),
+                  ),
+
+
                   ),
                 ),
               ),
