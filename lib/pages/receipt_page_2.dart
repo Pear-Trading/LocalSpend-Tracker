@@ -42,7 +42,23 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     false,
     "Uncategorised",
   );
-  
+
+  _invalidDialog(context) {
+    return AlertDialog(
+      title: new Text("Invalid data"),
+      content: new Text(
+          "We couldn't process your request because some of the data entered is invalid."),
+      actions: <Widget>[
+        new FlatButton(
+          child: new Text("OK"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+
   Future<List<String>> getCats() async {
     return await getCategories();
   }
@@ -64,14 +80,19 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     receipt.street = transaction.organisation.streetName;
     receipt.postcode = transaction.organisation.postcode;
     receipt.town = transaction.organisation.town;
+
     receipt.recurring = transaction.recurring;
 
     if (transaction.recurring == "None") {
       receipt.recurring = "";
     }
 
-    print("Category: " + transaction.category);
     receipt.category = transaction.category;
+
+    if (transaction.category == "Uncategorised") {
+      receipt.category = "";
+    }
+
     receipt.amount = transaction.amount.text.toString();
     receipt.time = DateFormat("yyyy-MM-dd'T'hh:mm':00.000+01:00'").format(transaction.date).toString();
     receipt.essential = transaction.isEssential.toString();
@@ -418,27 +439,40 @@ class ReceiptPage2State extends State<ReceiptPage2> {
               child: RaisedButton(
                 onPressed: () {
                   try {
-                    _submitReceipt(transaction);
+                    /*
+                        DateTime.now(),
+                        new TextEditingController(),
+                        new Organisation(null, null, null, null, null),
+                        "None",
+                        false,
+                        "Uncategorised",
+                     */
+                    if (transaction.amount.text == "" || transaction.organisation.name == null) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return _invalidDialog(context);
+                          }
+                      );
+                    } else {
+                      if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
+                        _submitReceipt(transaction);
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return _invalidDialog(context);
+                            }
+                        );
+                      }
+                    }
                   }
                   catch (_) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        // return object of type Dialog
-                        return AlertDialog(
-                          title: new Text("Invalid data"),
-                          content: new Text(
-                              "We couldn't process your request because some of the data entered is invalid."),
-                          actions: <Widget>[
-                            new FlatButton(
-                              child: new Text("OK"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
+                        return _invalidDialog(context);
+                      }
                     );
                   }
                 },
