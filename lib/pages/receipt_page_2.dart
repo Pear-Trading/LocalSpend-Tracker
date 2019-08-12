@@ -9,11 +9,17 @@ class Transaction {
   DateTime date;
   TextEditingController amount;
   Organisation organisation;
+  String recurring;
+  bool isEssential;
+  String category;
 
   Transaction(
     this.date,
     this.amount,
     this.organisation,
+    this.recurring,
+    this.isEssential,
+    this.category,
   );
 }
 
@@ -29,10 +35,29 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     DateTime.now(),
     new TextEditingController(),
     new Organisation(null, null, null, null, null),
+    "None",
+    false,
+    "Uncategorised",
   );
-  
+
+  List<String> _sampleRecurringOptions = new List<String>(7);
+  List<String> _sampleCategories = new List<String>(4);
+
   @override
   Widget build(BuildContext context) {
+    _sampleRecurringOptions[0] = "None";
+    _sampleRecurringOptions[1] = "Daily";
+    _sampleRecurringOptions[2] = "Weekly";
+    _sampleRecurringOptions[3] = "Fortnightly";
+    _sampleRecurringOptions[4] = "Monthly";
+    _sampleRecurringOptions[5] = "Quarterly";
+    _sampleRecurringOptions[6] = "Yearly"; // these will be difficult to fetch from server as they are coded into the site's rather than fetched
+
+    _sampleCategories[0] = "Uncategorised";
+    _sampleCategories[1] = "Cheese";
+    _sampleCategories[2] = "Fish";
+    _sampleCategories[3] = "Music";
+
 
     return PlatformScaffold(
       appBar: AppBar(
@@ -110,7 +135,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     },
                     child: Text(
                       transaction.date == null
-                          ? 'None set.'
+                          ? 'None set'
                           : transaction.date.year == DateTime.now().year
                             ? '${new DateFormat.MMMd().format(transaction.date)}' + ", " + '${new DateFormat.Hm().format(transaction.date)}'
                             : '${new DateFormat.MMMd().format(transaction.date)}' + " " + transaction.date.year.toString() + ", " + '${new DateFormat.Hm().format(transaction.date)}',
@@ -182,6 +207,139 @@ class ReceiptPage2State extends State<ReceiptPage2> {
               children: <Widget> [
                 Container(
                   child : Text(
+                    "Recurring",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  width: 110,
+                ),
+
+                Container(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  height: 32.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext builder) {
+                            return Container(
+                              height: MediaQuery.of(context).copyWith().size.height / 3,
+                              child: CupertinoPicker(
+                                backgroundColor: Colors.white,
+                                children: _sampleRecurringOptions.map((thisOption) => Text(thisOption)).toList(),
+                                onSelectedItemChanged: ((newValue) {
+                                  transaction.recurring = _sampleRecurringOptions[newValue];
+                                  setState(() {});
+                                }),
+                                itemExtent: 32,
+                              ),
+                            );
+                          });
+                    },
+                    child: Text(
+                      transaction.recurring == null
+                          ? 'None'
+                          : transaction.recurring,
+                      style:
+                      TextStyle(color: Colors.white, fontSize: 18.0),
+                    ),
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ), // Recurring picker
+
+          Container(
+            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child : Text(
+                    "Category",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  width: 110,
+                ),
+
+                Container(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  height: 32.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext builder) {
+                            return Container(
+                              height: MediaQuery.of(context).copyWith().size.height / 3,
+                              child: CupertinoPicker(
+                                backgroundColor: Colors.white,
+                                children: _sampleCategories.map((thisOption) => Text(thisOption)).toList(),
+                                onSelectedItemChanged: ((newValue) {
+                                  transaction.category = _sampleCategories[newValue];
+                                  setState(() {});
+                                }),
+                                itemExtent: 32,
+                              ),
+                            );
+                          });
+                    },
+                    child: Text(
+                      transaction.category == null
+                          ? 'None'
+                          : transaction.category,
+                      style:
+                      TextStyle(color: Colors.white, fontSize: 18.0),
+                    ),
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ), // Category picker
+
+          Container(
+            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child : Text(
+                    "Essential",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                                    width: 95,
+                ),
+
+                Container(
+                  height: 32.0,
+                  child: Checkbox(
+                    value: transaction.isEssential,
+                    onChanged: ((value) {
+                      setState(() => transaction.isEssential = value);
+                    }),
+                  ),
+                ),
+              ],
+            ),
+          ), // Essential
+
+          Container(
+            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child : Text(
                     "Amount",
                     style: TextStyle(
                       fontSize: 18,
@@ -200,7 +358,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                   child: TextField(
                     controller: transaction.amount,
                     decoration: InputDecoration(
-                        hintText: "£0.00"
+                        hintText: "0.00"
                     ),
                     keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
                   ),
