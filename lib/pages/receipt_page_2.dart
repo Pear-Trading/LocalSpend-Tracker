@@ -101,19 +101,20 @@ class ReceiptPage2State extends State<ReceiptPage2> {
   }
 
   List<String> _sampleRecurringOptions = new List<String>(7);
+  List<String> _categories = new List<String>();
 
   @override
   Widget build(BuildContext context) {
 
-    Future<List<String>> _futureCats = getCats();
-    List<String> _categories = new List<String>();
-    _categories.add("Fetching categories...");
-
-    _futureCats.then((value) {
-      _categories = null;
-      _categories = value;
-      setState(() {});
-    });
+    if (_categories.length == 0) {
+      Future<List<String>> _futureCats = getCats();
+      _categories.add("Fetching categories...");
+      _futureCats.then((value) {
+        _categories = null;
+        _categories = value;
+        setState(() {});
+      });
+    }
     
     _sampleRecurringOptions[0] = "None";
     _sampleRecurringOptions[1] = "Daily";
