@@ -23,7 +23,8 @@ class FindOrganisations {
     TextEditingController searchBarText = new TextEditingController();
     var organisations = new Organisations();
     var listTitle = "All Organisations";
-    var organisationsList = organisations.getTestData();
+//    var organisationsList = organisations.getTestData();
+    var organisationsList = List<Organisation>();
 
     Future<int> _submitSearch(String search) async {
       _searchEnabled = false;

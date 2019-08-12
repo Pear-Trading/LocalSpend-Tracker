@@ -150,8 +150,11 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                       var organisations = new FindOrganisations();
                       var orgDialog = organisations.dialog(context);
                       orgDialog.then((organisation) {
-                        setState(() => {});
-                        debugPrint(organisation.name);
+                        try {
+                          debugPrint(organisation.name);
+                        } catch(_) {
+                          debugPrint("No organisation chosen.");
+                        }
                       });
                     },
                     child: Text(
