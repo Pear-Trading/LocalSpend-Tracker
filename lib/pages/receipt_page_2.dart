@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/organisations_dialog.dart';
+import 'package:local_spend/common/apifunctions/submit_receipt_api.dart';
 
 class Transaction {
   DateTime date;
@@ -39,6 +40,33 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     false,
     "Uncategorised",
   );
+
+  _submitReceipt(Transaction transaction) {
+    DateTime dt = new DateTime.now();
+    // sample transaction:
+    // {
+    //  "transaction_type":1,
+    //  "transaction_value":33,
+    //  "purchase_time":"2019-08-12T11:06:00.000+01:00",
+    //  "organisation_id":59661,
+    //  "essential":false,
+    //  "session_key":"C438432A-B775-11E9-8EE8-147589E69626"
+    // }
+
+    Receipt receipt = new Receipt();
+    receipt.organisationName = transaction.organisation.name;
+    receipt.street = transaction.organisation.streetName;
+    receipt.postcode = transaction.organisation.postcode;
+    receipt.town = transaction.organisation.town;
+    receipt.recurring = transaction.recurring;
+    receipt.category = transaction.category;
+    receipt.amount = transaction.amount.text.toString();
+    receipt.time = DateFormat("yyyy-MM-dd'T'hh:mm':00.000+01:00'").format(transaction.date).toString();
+    receipt.essential = transaction.isEssential.toString();
+//    receipt.time = dt.format(transaction.date);
+
+    submitReceiptAPI(context, receipt);
+  }
 
   List<String> _sampleRecurringOptions = new List<String>(7);
   List<String> _sampleCategories = new List<String>(4);
@@ -367,6 +395,44 @@ class ReceiptPage2State extends State<ReceiptPage2> {
             ),
           ), // Amount picker
 
+          Padding(
+            padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+            child: Container(
+              height: 65.0,
+              child: RaisedButton(
+                onPressed: () {
+                  try {
+                    _submitReceipt(transaction);
+                  }
+                  catch (_) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        // return object of type Dialog
+                        return AlertDialog(
+                          title: new Text("Invalid data"),
+                          content: new Text(
+                              "We couldn't process your request because some of the data entered is invalid."),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                child: Text("GO",
+                    style:
+                    TextStyle(color: Colors.white, fontSize: 22.0)),
+                color: Colors.blue,
+              ),
+            ),
+          ),
         ],
       ),
     );

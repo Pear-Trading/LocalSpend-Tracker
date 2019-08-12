@@ -12,13 +12,12 @@ class Organisation {
   var town = "";
 
   Organisation(
-      this.id,
-      this.name,
-      this.postcode,
-      this.streetName,
-      this.town,
-      );
-
+    this.id,
+    this.name,
+    this.postcode,
+    this.streetName,
+    this.town,
+    );
 }
 
 class Organisations {

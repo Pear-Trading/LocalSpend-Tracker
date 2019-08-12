@@ -37,26 +37,25 @@ Future<LoginModel> submitReceiptAPI(
     'recurring': receipt.recurring,
     'street_name': receipt.street,
     'postcode': receipt.postcode,
-
     'town': receipt.town,
 
     'session_key': preferences.get('LastToken'),
   };
 
 //  debugPrint('$body');
-//  debugPrint(json.encode(body));
+  debugPrint(json.encode(body));
 
   final response = await http.post(
     url,
     body: json.encode(body),
   );
 
-//  debugPrint(response.body);
+  debugPrint(response.body);
 
   if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
 
-//    print(responseJson[0]);
+    print(responseJson[0]);
 
     showDialogSingleButton(
         context,
