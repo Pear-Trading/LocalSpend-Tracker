@@ -32,8 +32,8 @@ class FindOrganisations {
 
       var futureOrgs = await organisations.findOrganisations(search);
 //      futureOrgs.then((value) {
-        debugPrint("There are " + futureOrgs.length.toString() +
-            " payees matching the query \'" + search + "\'.");
+//        debugPrint("There are " + futureOrgs.length.toString() +
+//            " payees matching the query \'" + search + "\'.");
         organisationsList = futureOrgs;
         _searchEnabled = true;
         return futureOrgs.length;
@@ -41,7 +41,7 @@ class FindOrganisations {
     }
 
     _chosenOrg(Organisation chosen) {
-      debugPrint(chosen.name + " tapped");
+//      debugPrint(chosen.name + " tapped");
     }
 
     return showDialog<Organisation>(
@@ -139,6 +139,7 @@ class FindOrganisations {
 //                            trailing: Icon(Icons.arrow_forward_ios),
 //                            onTap: _chosenOrg(organisationsList[index]),
                             onTap: (){
+                              Navigator.of(context).pop(organisationsList[index]);
                               _chosenOrg(organisationsList[index]);
                             },
                             onLongPress: (){

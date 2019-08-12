@@ -151,7 +151,10 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                       var orgDialog = organisations.dialog(context);
                       orgDialog.then((organisation) {
                         try {
-                          debugPrint(organisation.name);
+                          organisation.name.length;
+                          transaction.organisation = organisation;
+//                          debugPrint(organisation.name);
+                          setState(() {});
                         } catch(_) {
                           debugPrint("No organisation chosen.");
                         }
@@ -160,7 +163,9 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child: Text(
                       transaction.organisation.name == null
                           ? 'Find'
-                          : transaction.organisation.name,
+                          : transaction.organisation.name.length > 14
+                            ? transaction.organisation.name.substring(0,12) + "..."
+                            : transaction.organisation.name,
                       style:
                       TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
