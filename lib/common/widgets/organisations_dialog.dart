@@ -18,6 +18,69 @@ class FindOrganisations {
   // todo: get all organisations, favourites and all data from one 'organisations' class or similar
   // eg items: organisations.getFavourites().orderBy(name),
 
+  Future<dynamic> _moreInfoDialog(context, Organisation organisation) {
+    TextStyle informationTitleStyle = new TextStyle(fontSize: 16);
+    TextStyle informationStyle = new TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+
+    return showDialog<Organisation>(
+      context: context,
+      barrierDismissible: true,
+
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return SimpleDialog(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Text(
+                    organisation.name,
+                    style: new TextStyle(
+                        fontSize: 21, fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Divider(),
+                ),
+
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Table(
+//                    defaultColumnWidth: FixedColumnWidth(100),
+                    children: [
+                      TableRow(
+                        children: [
+                          Text("Street:", style: informationTitleStyle),
+                          Text(organisation.streetName, style: informationStyle),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Text("Postcode:", style: informationTitleStyle),
+                          Text(organisation.postcode.toUpperCase(), style: informationStyle),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Text("Town:", style: informationTitleStyle),
+                          Text(organisation.town, style: informationStyle),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<Organisation> dialog(context) {
     bool _searchEnabled = false;
     TextEditingController searchBarText = new TextEditingController();
@@ -38,10 +101,6 @@ class FindOrganisations {
         _searchEnabled = true;
         return futureOrgs.length;
 //      });
-    }
-
-    _chosenOrg(Organisation chosen) {
-//      debugPrint(chosen.name + " tapped");
     }
 
     return showDialog<Organisation>(
@@ -142,11 +201,11 @@ class FindOrganisations {
 //                            onTap: _chosenOrg(organisationsList[index]),
                             onTap: (){
                               Navigator.of(context).pop(organisationsList[index]);
-                              _chosenOrg(organisationsList[index]);
                             },
                             onLongPress: (){
                               // show more details about the organisation in a new dialog
-
+                              var moreInfo = _moreInfoDialog(context, organisationsList[index]);
+                              moreInfo.whenComplete(null);
                             },
                           ),
                         );
