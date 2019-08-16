@@ -7,14 +7,14 @@ import 'package:local_spend/common/functions/save_current_login.dart';
 import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/model/json/login_model.dart';
 
-Future<void> _incorrectDialog(BuildContext context) async {
+Future<void> _incorrectDialog(BuildContext context, bool isLoginWrong) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text("Unable to Login"),
-        content: Text("Incorrect login details. Please try again."),
+        content: Text(isLoginWrong ? "Incorrect login details. Please try again." : "The server is having issues; sorry for the inconvenience. Please try again later."),
         actions: <Widget>[
           FlatButton(
             child: Text('OK'),
@@ -40,30 +40,30 @@ Future<LoginModel> requestLoginAPI(
 
 //  debugPrint('$body');
 
-  final response = await http.post(
-    url,
-    body: json.encode(body),
-  );
+  try {
+    final response = await http.post(
+      url,
+      body: json.encode(body),
+    );
 
-//  debugPrint(response.body);
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
 
-  if (response.statusCode == 200) {
-    final responseJson = json.decode(response.body);
-    var user = new LoginModel.fromJson(responseJson);
+      saveCurrentLogin(responseJson, body["email"]);
+      Navigator.of(context).pushReplacementNamed('/HomePage');
 
-    saveCurrentLogin(responseJson, body["email"]);
-    Navigator.of(context).pushReplacementNamed('/HomePage');
+      return LoginModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
 
-    return LoginModel.fromJson(responseJson);
-  } else {
-//    debugPrint("Invalid, either credentials are wrong or server is down");
+      saveCurrentLogin(responseJson, body["email"]);
 
-    final responseJson = json.decode(response.body);
+      _incorrectDialog(context, true);
 
-    saveCurrentLogin(responseJson, body["email"]);
-
-    _incorrectDialog(context);
-
-    return null;
+      return null;
+    }
+  } catch (_) {
+    _incorrectDialog(context, false);
   }
 }
+
