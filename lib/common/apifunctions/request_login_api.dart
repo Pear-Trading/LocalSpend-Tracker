@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_spend/common/functions/save_current_login.dart';
-import 'package:local_spend/common/functions/show_dialog_single_button.dart';
 import 'package:local_spend/model/json/login_model.dart';
 
 Future<void> _incorrectDialog(BuildContext context, bool isLoginWrong) async {
@@ -14,7 +13,7 @@ Future<void> _incorrectDialog(BuildContext context, bool isLoginWrong) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text("Unable to Login"),
-        content: Text(isLoginWrong ? "Incorrect login details. Please try again." : "The server is having issues; sorry for the inconvenience. Please try again later."),
+        content: Text(isLoginWrong ? "Incorrect login details. Please try again." : "Our servers are having issues at the moment; sorry for the inconvenience. Please try again later."),
         actions: <Widget>[
           FlatButton(
             child: Text('OK'),
