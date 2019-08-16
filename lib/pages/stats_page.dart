@@ -122,7 +122,7 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               height: 200,
-              child: totalLastWeekGraph.graph != null ? new charts.TimeSeriesChart(totalLastWeekGraph.graph) : Container(), //List<Series<dynamic, DateTime>>
+              child: totalLastWeekGraph.graph != null ? new charts.TimeSeriesChart(totalLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
             ),
 
             Container(
@@ -141,7 +141,7 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               height: 200,
-              child: avgSpendLastWeekGraph.graph != null ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph) : Container(), //List<Series<dynamic, DateTime>>
+              child: avgSpendLastWeekGraph.graph != null ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
             ),
 
             Container(
@@ -160,7 +160,7 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               height: 200,
-              child: totalLastMonthGraph.graph != null ? new charts.TimeSeriesChart(totalLastMonthGraph.graph) : Container(), //List<Series<dynamic, DateTime>>
+              child: totalLastMonthGraph.graph != null ? new charts.TimeSeriesChart(totalLastMonthGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
             ),
 
             Container(
@@ -179,7 +179,7 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               height: 200,
-              child: avgSpendLastMonth.graph != null ? new charts.TimeSeriesChart(avgSpendLastMonth.graph) : Container(), //List<Series<dynamic, DateTime>>
+              child: avgSpendLastMonth.graph != null ? new charts.TimeSeriesChart(avgSpendLastMonth.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
             ),
 
           ],
