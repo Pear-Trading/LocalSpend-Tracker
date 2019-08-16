@@ -61,7 +61,8 @@ Future<LoginModel> requestLoginAPI(
 
       return null;
     }
-  } catch (_) {
+  } catch (error) {
+    debugPrint(error.toString());
     _incorrectDialog(context, false);
   }
 }
