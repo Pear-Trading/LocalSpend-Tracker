@@ -5,25 +5,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class GraphData {
-  List<charts.Series> data = new List<charts.Series>();
+  var chartType;
+  List<charts.Series<dynamic, DateTime>> graph;
 
-  Future<List<charts.Series<dynamic, DateTime>>> getGraphData(String graphType) async {
-//    print("called");
-    /// Graph types:
-    /// - total_last_week
-    /// - avg_spend_last_week
-    /// - total_last_month
-    /// - avg_spend_last_month
-    ///
-    /// HTTP POST request sample:
-    /// {"graph":"total_last_week","session_key":"blahblahblah"}
+  GraphData(
+    this.chartType,
+  );
 
-    charts.Series<dynamic, DateTime> dataSeries = new charts.Series<dynamic, DateTime>();
+  List<TimeSeriesSpend> cachedData;
+  bool loaded = false;
+
+  Future<void> setGraphData() async {
+    if (loaded == true) {
+      this.graph = [
+        new charts.Series<TimeSeriesSpend, DateTime>(
+          id: 'Spend',
+          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          domainFn: (TimeSeriesSpend spend, _) => spend.time,
+          measureFn: (TimeSeriesSpend spend, _) => spend.spend,
+          data: cachedData,
+        )
+      ];
+    }
+
     final url = "https://dev.peartrade.org/api/v1/customer/graphs";
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     Map<String, String> body = {
-      'graph': graphType,
+      'graph': this.chartType,
       'session_key': preferences.get('LastToken'),
     };
 
@@ -37,29 +46,82 @@ class GraphData {
       final List<dynamic> labels = responseJson['graph']['labels'];
       final List<dynamic> data = responseJson['graph']['data'];
 
-      for (int i = 0; i < data.length; i++) {
-//        print(labels[i].toString() + " : " + data[i].toString());
-      }
-//      final List<String> bounds = responseJson['graph']['bounds']; // why is this even returned?
+      List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
-      /*
-      final data = [
-        new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
-        new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
-        new TimeSeriesSales(new DateTime(2017, 10, 3), 100),
-        new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
+      for (int i = 0; i < labels.length; i++) {
+        timeSeriesSpendList.add(new TimeSeriesSpend(data[i]*1.00, DateTime.parse(labels[i])));
+//        print(timeSeriesSpendList[i].time.toString() + " : " + timeSeriesSpendList[i].spend.toString());
+      }
+
+      cachedData = timeSeriesSpendList;
+      loaded = true;
+
+      this.graph = [
+        new charts.Series<TimeSeriesSpend, DateTime>(
+          id: 'Spend',
+          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          domainFn: (TimeSeriesSpend spend, _) => spend.time,
+          measureFn: (TimeSeriesSpend spend, _) => spend.spend,
+          data: timeSeriesSpendList,
+        )
       ];
-       */
+    } else {
+      final errorMessage = json.decode(response.body)['message'];
+      print("Error: " + errorMessage);
+
+      this.graph = null;
+    }
+  }
+
+  Future<List<charts.Series<dynamic, DateTime>>> getGraphData() async {
+    if (loaded == true) {
+      return [
+        new charts.Series<TimeSeriesSpend, DateTime>(
+          id: 'Spend',
+          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          domainFn: (TimeSeriesSpend spend, _) => spend.time,
+          measureFn: (TimeSeriesSpend spend, _) => spend.spend,
+          data: cachedData,
+        )
+      ];
+    }
+
+    /// Graph types:
+    /// - total_last_week
+    /// - avg_spend_last_week
+    /// - total_last_month
+    /// - avg_spend_last_month
+    ///
+    /// HTTP POST request sample:
+    /// {"graph":"total_last_week","session_key":"blahblahblah"}
+
+    final url = "https://dev.peartrade.org/api/v1/customer/graphs";
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    Map<String, String> body = {
+      'graph': this.chartType,
+      'session_key': preferences.get('LastToken'),
+    };
+
+    final response = await http.post(
+      url,
+      body: json.encode(body),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = jsonDecode(response.body);
+      final List<dynamic> labels = responseJson['graph']['labels'];
+      final List<dynamic> data = responseJson['graph']['data'];
 
       List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
       for (int i = 0; i < labels.length; i++) {
-//        print(DateTime.parse(labels[i]));
-        timeSeriesSpendList.add(new TimeSeriesSpend(i, DateTime(i)));
-//        timeSeriesSpendList.add(new TimeSeriesSpend(data[i], DateTime.parse(labels[i])));
+        timeSeriesSpendList.add(new TimeSeriesSpend(data[i]*1.00, DateTime.parse(labels[i])));
+//        print(timeSeriesSpendList[i].time.toString() + " : " + timeSeriesSpendList[i].spend.toString());
       }
 
-//      print(timeSeriesSpendList);
+      cachedData = timeSeriesSpendList;
+      loaded = true;
 
       return [
         new charts.Series<TimeSeriesSpend, DateTime>(
@@ -70,18 +132,6 @@ class GraphData {
           data: timeSeriesSpendList,
         )
       ];
-
-      /*
-        new charts.Series<TimeSeriesSales, DateTime>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-        data: data,
-      )*/
-
-//      print(labels[5]);
-//      print(data[5]);
     } else {
       final errorMessage = json.decode(response.body)['message'];
       print("Error: " + errorMessage);
@@ -95,7 +145,7 @@ class GraphData {
 
 class TimeSeriesSpend {
   final DateTime time;
-  final int spend;
+  final double spend;
 
   TimeSeriesSpend(this.spend, this.time);
 }

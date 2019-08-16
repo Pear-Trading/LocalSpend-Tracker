@@ -29,8 +29,16 @@ class StatsPage extends StatefulWidget {
 
 class StatsPageState extends State<StatsPage> {
 
-  GraphData graphData = new GraphData();
-  List<charts.Series<dynamic, DateTime>> displayedGraphData;
+  /// Graph types:
+  /// - total_last_week
+  /// - avg_spend_last_week
+  /// - total_last_month
+  /// - avg_spend_last_month
+
+  GraphData totalLastWeekGraph = new GraphData("total_last_week");
+  GraphData avgSpendLastWeekGraph = new GraphData("avg_spend_last_week");
+  GraphData totalLastMonthGraph = new GraphData("total_last_month");
+  GraphData avgSpendLastMonth = new GraphData("avg_spend_last_month");
 
   @override
   void initState() {
@@ -50,12 +58,29 @@ class StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (graphData.data.length == 0) {
-      graphData.getGraphData('total_last_week').then((fetchedData) {
-        displayedGraphData = (fetchedData);
-        for (int i = 0; i < fetchedData[0].data.length; i++) {
-          print(fetchedData[0].data[i].time); // this is getting very frustrating
-        }
+
+    // Initializing graphs:
+
+    if (!totalLastWeekGraph.loaded) {
+      totalLastWeekGraph.setGraphData().then((_) {
+        setState(() {});
+      });
+    }
+
+    if (!avgSpendLastWeekGraph.loaded) {
+      avgSpendLastWeekGraph.setGraphData().then((_) {
+        setState(() {});
+      });
+    }
+
+    if (!totalLastMonthGraph.loaded) {
+      totalLastMonthGraph.setGraphData().then((_) {
+        setState(() {});
+      });
+    }
+
+    if (!avgSpendLastMonth.loaded) {
+      avgSpendLastMonth.setGraphData().then((_) {
         setState(() {});
       });
     }
@@ -84,7 +109,7 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
               child : Text(
-                "This Week's Spend",
+                "Last Week's Total Spend",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22.0,
@@ -97,12 +122,64 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               height: 200,
-//              width: 250,
+              child: totalLastWeekGraph.graph != null ? new charts.TimeSeriesChart(totalLastWeekGraph.graph) : Container(), //List<Series<dynamic, DateTime>>
+            ),
 
-//                child: new TimeSeries(),
-              child: displayedGraphData != null ? new charts.TimeSeriesChart(displayedGraphData) : Container(), //List<Series<dynamic, DateTime>>
-//              child: new charts.TimeSeriesChart(displayedGraphData),
-//                child: new SimpleTimeSeriesChart(),//seriesList: List<charts.Series>
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "Last Week's Average Spend",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              height: 200,
+              child: avgSpendLastWeekGraph.graph != null ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph) : Container(), //List<Series<dynamic, DateTime>>
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "Last Month's Spend",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              height: 200,
+              child: totalLastMonthGraph.graph != null ? new charts.TimeSeriesChart(totalLastMonthGraph.graph) : Container(), //List<Series<dynamic, DateTime>>
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
+              child : Text(
+                "Last Month's Average Spend",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              height: 200,
+              child: avgSpendLastMonth.graph != null ? new charts.TimeSeriesChart(avgSpendLastMonth.graph) : Container(), //List<Series<dynamic, DateTime>>
             ),
 
           ],
