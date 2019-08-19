@@ -470,6 +470,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                   }
                 },
                 child: Text("GO",
+                    key: Key("goButton"),
                     style:
                     TextStyle(color: Colors.white, fontSize: 22.0)),
                 color: Colors.blue,
