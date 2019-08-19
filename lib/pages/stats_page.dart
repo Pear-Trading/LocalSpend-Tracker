@@ -147,7 +147,7 @@ class StatsPageState extends State<StatsPage> {
             Container(
               padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
               child : Text(
-                "Last Month's Spend",
+                "Last Month's Total Spend",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22.0,

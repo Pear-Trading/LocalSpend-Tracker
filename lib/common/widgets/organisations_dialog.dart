@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'package:flutter/services.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 
 class FindOrganisations {
@@ -83,6 +83,7 @@ class FindOrganisations {
 
   Future<Organisation> dialog(context) {
     bool _searchEnabled = false;
+    bool _orgsFetched = false;
     TextEditingController searchBarText = new TextEditingController();
     var organisations = new Organisations();
     var listTitle = "All Organisations";
@@ -107,62 +108,66 @@ class FindOrganisations {
           builder: (context, setState) {
             return SimpleDialog(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 140,
-                        height: 50,
-                        child: TextField(
-                          controller: searchBarText,
-                          decoration: InputDecoration(
-                            hintText: "Payee Name",
+                Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          width: 150,
+                          height: 50,
+                          child: TextField(
+                            controller: searchBarText,
+                            decoration: InputDecoration(
+                              hintText: "Payee Name",
+                            ),
+                            onChanged: (value) {
+                              if (value.length > 0) {
+                                _searchEnabled = true;
+                              } else {
+                                _searchEnabled = false;
+                              }
+                              setState(() => {_searchEnabled});
+                            },
+                            onSubmitted: _searchEnabled ? (_) {
+                                var result = _submitSearch(searchBarText.text);
+                                result.then((_) {
+                                  setState(() {});
+                                });
+                            }  : null,
                           ),
-                          onChanged: (value) {
-                            if (value.length > 0) {
-                              _searchEnabled = true;
-                            } else {
-                              _searchEnabled = false;
-                            }
-                            setState(() => {_searchEnabled});
-                          },
-                          onSubmitted: (_) {
-                            if (_searchEnabled) {
-                              var result = _submitSearch(searchBarText.text);
-                              result.then((_) {
-                                setState(() {});
-                              });
-                            }
-                          },
                         ),
-                      ),
 
-                      Container(
-                        width: 80,
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        Container(
+                          width: 80,
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
 
-                        child: RaisedButton(
-                          onPressed: (() {
-                            if (_searchEnabled) {
-                              var result = _submitSearch(searchBarText.text);
-                              result.then((_) {
-                                setState(() {});
-                              });
-                            }
-                          }),
+                          child: RaisedButton(
+                            onPressed: (() {
+                              if (_searchEnabled) {
+                                SystemChannels.textInput.invokeMethod('TextInput.hide');
+                                var result = _submitSearch(searchBarText.text);
+                                result.then((_) {
+                                  setState(() {
+                                    _orgsFetched = true;
+                                  });
+                                });
+                              }
+                            }),
 
-                          child: Icon(Icons.search, color: Colors.white),
-                          color: _searchEnabled ? Colors.blue : Colors.blue[200],
-                          // make inactive when search in progress as activity indicator
+                            child: Icon(Icons.search, color: Colors.white),
+                            color: _searchEnabled ? Colors.blue : Colors.blue[200],
+                            // make inactive when search in progress as activity indicator
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 Column(
-                  children: organisationsList.length > 0 ? [
+                  children: _orgsFetched ? [
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Text(
