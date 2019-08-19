@@ -119,10 +119,13 @@ class StatsPageState extends State<StatsPage> {
               ),
             ),
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              height: 200,
-              child: totalLastWeekGraph.graph != null ? new charts.TimeSeriesChart(totalLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            Tooltip(
+              message: "Graph of total spend last week",
+              child : Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+                child: totalLastWeekGraph.graph != null ? new charts.TimeSeriesChart(totalLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+              ),
             ),
 
             Container(
@@ -138,10 +141,13 @@ class StatsPageState extends State<StatsPage> {
               ),
             ),
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              height: 200,
-              child: avgSpendLastWeekGraph.graph != null ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            Tooltip(
+              message: "Graph of average spend last week",
+              child : Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+                child: avgSpendLastWeekGraph.graph != null ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+              ),
             ),
 
             Container(
@@ -157,10 +163,13 @@ class StatsPageState extends State<StatsPage> {
               ),
             ),
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              height: 200,
-              child: totalLastMonthGraph.graph != null ? new charts.TimeSeriesChart(totalLastMonthGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            Tooltip(
+              message: "Graph of total spend last month",
+              child : Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+                child: totalLastMonthGraph.graph != null ? new charts.TimeSeriesChart(totalLastMonthGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+              ),
             ),
 
             Container(
@@ -176,10 +185,13 @@ class StatsPageState extends State<StatsPage> {
               ),
             ),
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              height: 200,
-              child: avgSpendLastMonth.graph != null ? new charts.TimeSeriesChart(avgSpendLastMonth.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            Tooltip(
+              message: "Graph of average spend last month",
+              child : Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 200,
+                child: avgSpendLastMonth.graph != null ? new charts.TimeSeriesChart(avgSpendLastMonth.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+              ),
             ),
 
           ],
