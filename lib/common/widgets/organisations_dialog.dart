@@ -224,6 +224,13 @@ class FindOrganisations {
                             ),
                           ),
                         ),
+
+                        Center(
+                          child : Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child : Text("Long press a payee for more info", style: TextStyle(fontStyle: FontStyle.italic)),
+                          ),
+                        ),
                       ] : [ Container() ],
                     ),
 
