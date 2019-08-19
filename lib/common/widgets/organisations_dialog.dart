@@ -106,9 +106,11 @@ class FindOrganisations {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            return AnimatedContainer(
-            duration: Duration(seconds: 1),
-                child : SimpleDialog(
+            return
+//              AnimatedContainer(
+//            duration: Duration(seconds: 1),
+//                child :
+                SimpleDialog(
                   children: <Widget>[
                     Column(
                       children: [
@@ -217,14 +219,14 @@ class FindOrganisations {
                             ),
                           ),
                         ),
-                      ] : [ Container(), ],
+                      ] : [ Container() ],
                     ),
 
                     // help button for if org not listed
                     // cancel and ok buttons
 
                   ],
-                ),
+//                ),
               );
           },
         );
