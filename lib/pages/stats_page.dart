@@ -63,7 +63,7 @@ class StatsPageState extends State<StatsPage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10)
+              padding: EdgeInsets.symmetric(horizontal: 7)
             ),
 
             Text(
