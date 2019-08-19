@@ -338,6 +338,17 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   height: 32.0,
+//                  child: DropdownButton(
+//                    value: transaction.category,
+//                    items: _categories.map((thisOption) {
+//                      DropdownMenuItem(child: Text(thisOption));
+//                    }).toList(),
+////                    items: _categories.map((thisOption) => DropdownMenuItem(child : Text(thisOption))).toList(),
+//                    onChanged: ((newValue) {
+//                      transaction.category = _categories[newValue];
+//                      setState(() {});
+//                    })
+//                  ),
                   child: RaisedButton(
                     onPressed: () {
                       showModalBottomSheet(
