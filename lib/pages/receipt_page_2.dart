@@ -241,8 +241,6 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     height: 32.0,
                     child: RaisedButton(
                       onPressed: () {
-  //                      var popupListView = new PopupListView();
-  //                      var dialog = popupListView.dialog(context, optionsList, "Choose Organization");
                         var organisations = new FindOrganisations();
                         var orgDialog = organisations.dialog(context);
                         orgDialog.then((organisation) {

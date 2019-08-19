@@ -134,12 +134,17 @@ class FindOrganisations {
                                   }
                                   setState(() => {_searchEnabled});
                                 },
-                                onSubmitted: _searchEnabled ? (_) {
+                                onSubmitted: ((_) {
+                                  if (_searchEnabled) {
+                                    SystemChannels.textInput.invokeMethod('TextInput.hide');
                                     var result = _submitSearch(searchBarText.text);
                                     result.then((_) {
-                                      setState(() {});
+                                      setState(() {
+                                        _orgsFetched = true;
+                                      });
                                     });
-                                }  : null,
+                                  }
+                                }),
                               ),
                             ),
 
