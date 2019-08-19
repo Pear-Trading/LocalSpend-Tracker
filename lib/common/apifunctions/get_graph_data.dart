@@ -86,11 +86,26 @@ class GraphData {
       ];
     }
 
-    /// Graph types:
+    // TODO: Show available graph types based on whether or not the user is an Organisation or User
+
+    /// Customer graph types: https://dev.peartrade.org/api/v1/customer/graphs
     /// - total_last_week
     /// - avg_spend_last_week
     /// - total_last_month
     /// - avg_spend_last_month
+    ///
+    /// Organisations' graphs types: to fetch, POST to https://dev.peartrade.org/api/stats/[name] as {"session_key":"[boop beep]"}
+    /// - organisations_all :     organisation
+    /// - pies :                  organisation/pies
+    /// - snippets :              organisation/snippets
+    /// - graphs :                organisation/graphs
+    ///   - {"graph":"customers_last_7_days","session_key":"[bleep]"}
+    ///   - {"graph":"customers_last_30_days","session_key":"[blah]"}
+    ///   - {"graph":"sales_last_7_days","session_key":"[bloop]"}
+    ///   - {"graph":"sales_last_7_days","session_key":"[reee]"}
+    ///   - {"graph":"purchases_last_7_days","session_key":"[yee]"}
+    ///   - {"graph":"purchases_last_30_days","session_key":"[yah]"}
+    ///   - {"graph":"purchases_all;","session_key":"[kappa]"}          // I don't think this one works
     ///
     /// HTTP POST request sample:
     /// {"graph":"total_last_week","session_key":"blahblahblah"}

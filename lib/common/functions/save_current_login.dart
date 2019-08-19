@@ -16,6 +16,9 @@ saveCurrentLogin(Map responseJson, loginEmail) async {
   var email = (loginEmail != null)
       ? loginEmail
       : "";
+  var userType = (responseJson != null && responseJson.isNotEmpty)
+      ? LoginModel.fromJson(responseJson).userType
+      : "";
 
   await preferences.setString(
       'LastUser', (user != null && user.length > 0) ? user : "");
@@ -23,4 +26,6 @@ saveCurrentLogin(Map responseJson, loginEmail) async {
       'LastToken', (token != null && token.length > 0) ? token : "");
   await preferences.setString(
       'LastEmail', (email != null && email.length > 0) ? email : "");
+  await preferences.setString(
+      'LastUserType', (userType != null && userType.length > 0) ? userType : "");
 }
