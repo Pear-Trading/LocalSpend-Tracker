@@ -63,11 +63,11 @@ class StatsPageState extends State<StatsPage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 7)
+              padding: EdgeInsets.symmetric(horizontal: 4)
             ),
 
             Text(
-              "User type: " + userType,
+              userType,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white70,
