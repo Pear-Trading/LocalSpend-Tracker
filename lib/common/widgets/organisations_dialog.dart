@@ -86,7 +86,6 @@ class FindOrganisations {
     TextEditingController searchBarText = new TextEditingController();
     var organisations = new Organisations();
     var listTitle = "All Organisations";
-//    var organisationsList = organisations.getTestData();
     var organisationsList = List<Organisation>();
 
     Future<int> _submitSearch(String search) async {
@@ -94,13 +93,9 @@ class FindOrganisations {
       listTitle = "Results for \'" + search + "\'";
 
       var futureOrgs = await organisations.findOrganisations(search);
-//      futureOrgs.then((value) {
-//        debugPrint("There are " + futureOrgs.length.toString() +
-//            " payees matching the query \'" + search + "\'.");
         organisationsList = futureOrgs;
         _searchEnabled = true;
         return futureOrgs.length;
-//      });
     }
 
     return showDialog<Organisation>(
@@ -166,54 +161,57 @@ class FindOrganisations {
                   ),
                 ),
 
-                Container(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: Text(
-                    listTitle,
-                    style: new TextStyle(
-                        fontSize: 23, fontWeight: FontWeight.bold),
-                  ),
-                ),
-
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.67,
-
-                  child: Material(
-                    shadowColor: Colors.transparent,
-                    color: Colors.transparent,
-                    child: ListView.builder(
-                      itemCount: organisationsList.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            leading: Icon(Icons.person),
-                            title: Text(organisationsList[index].name, style: new TextStyle(fontSize: 18)),
-                            subtitle: Text(organisationsList[index].postcode.toUpperCase()),
-//                            trailing: Icon(Icons.arrow_forward_ios),
-//                            onTap: _chosenOrg(organisationsList[index]),
-                            onTap: (){
-                              Navigator.of(context).pop(organisationsList[index]);
-                            },
-                            onLongPress: (){
-                              // show more details about the organisation in a new dialog
-                              var moreInfo = _moreInfoDialog(context, organisationsList[index]);
-                              moreInfo.whenComplete(null);
-                            },
-                          ),
-                        );
-                      },
+                Column(
+                  children: organisationsList.length > 0 ? [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: Text(
+                        listTitle,
+                        style: new TextStyle(
+                            fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                ),
 
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                      height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 0.67,
+
+                      child: Material(
+                        shadowColor: Colors.transparent,
+                        color: Colors.transparent,
+                        child: ListView.builder(
+                          itemCount: organisationsList.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: ListTile(
+                                leading: Icon(Icons.person),
+                                title: Text(organisationsList[index].name, style: new TextStyle(fontSize: 18)),
+                                subtitle: Text(organisationsList[index].postcode.toUpperCase()),
+                                  //                            trailing: Icon(Icons.arrow_forward_ios),
+                                  //                            onTap: _chosenOrg(organisationsList[index]),
+                                onTap: (){
+                                  Navigator.of(context).pop(organisationsList[index]);
+                                },
+                                onLongPress: (){
+                                  // show more details about the organisation in a new dialog
+                                  var moreInfo = _moreInfoDialog(context, organisationsList[index]);
+                                  moreInfo.whenComplete(null);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ] : [ Container(), ],
+                ),
 
                 // help button for if org not listed
                 // cancel and ok buttons
