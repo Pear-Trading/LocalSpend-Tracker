@@ -106,123 +106,126 @@ class FindOrganisations {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            return SimpleDialog(
-              children: <Widget>[
-                Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            return AnimatedContainer(
+            duration: Duration(seconds: 1),
+                child : SimpleDialog(
+                  children: <Widget>[
+                    Column(
                       children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                          width: 150,
-                          height: 50,
-                          child: TextField(
-                            controller: searchBarText,
-                            decoration: InputDecoration(
-                              hintText: "Payee Name",
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                              width: 150,
+                              height: 50,
+                              child: TextField(
+                                controller: searchBarText,
+                                decoration: InputDecoration(
+                                  hintText: "Payee Name",
+                                ),
+                                onChanged: (value) {
+                                  if (value.length > 0) {
+                                    _searchEnabled = true;
+                                  } else {
+                                    _searchEnabled = false;
+                                  }
+                                  setState(() => {_searchEnabled});
+                                },
+                                onSubmitted: _searchEnabled ? (_) {
+                                    var result = _submitSearch(searchBarText.text);
+                                    result.then((_) {
+                                      setState(() {});
+                                    });
+                                }  : null,
+                              ),
                             ),
-                            onChanged: (value) {
-                              if (value.length > 0) {
-                                _searchEnabled = true;
-                              } else {
-                                _searchEnabled = false;
-                              }
-                              setState(() => {_searchEnabled});
-                            },
-                            onSubmitted: _searchEnabled ? (_) {
-                                var result = _submitSearch(searchBarText.text);
-                                result.then((_) {
-                                  setState(() {});
-                                });
-                            }  : null,
-                          ),
-                        ),
 
-                        Container(
-                          width: 80,
-                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            Container(
+                              width: 80,
+                              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
 
-                          child: RaisedButton(
-                            onPressed: (() {
-                              if (_searchEnabled) {
-                                SystemChannels.textInput.invokeMethod('TextInput.hide');
-                                var result = _submitSearch(searchBarText.text);
-                                result.then((_) {
-                                  setState(() {
-                                    _orgsFetched = true;
-                                  });
-                                });
-                              }
-                            }),
+                              child: RaisedButton(
+                                onPressed: (() {
+                                  if (_searchEnabled) {
+                                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                                    var result = _submitSearch(searchBarText.text);
+                                    result.then((_) {
+                                      setState(() {
+                                        _orgsFetched = true;
+                                      });
+                                    });
+                                  }
+                                }),
 
-                            child: Icon(Icons.search, color: Colors.white),
-                            color: _searchEnabled ? Colors.blue : Colors.blue[200],
-                            // make inactive when search in progress as activity indicator
-                          ),
+                                child: Icon(Icons.search, color: Colors.white),
+                                color: _searchEnabled ? Colors.blue : Colors.blue[200],
+                                // make inactive when search in progress as activity indicator
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
+
+                    Column(
+                      children: _orgsFetched ? [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                          child: Text(
+                            listTitle,
+                            style: new TextStyle(
+                                fontSize: 23, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                          height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.67,
+
+                          child: Material(
+                            shadowColor: Colors.transparent,
+                            color: Colors.transparent,
+                            child: ListView.builder(
+                              itemCount: organisationsList.length,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: ListTile(
+                                    leading: Icon(Icons.person),
+                                    title: Text(organisationsList[index].name, style: new TextStyle(fontSize: 18)),
+                                    subtitle: Text(organisationsList[index].postcode.toUpperCase()),
+                                      //                            trailing: Icon(Icons.arrow_forward_ios),
+                                      //                            onTap: _chosenOrg(organisationsList[index]),
+                                    onTap: (){
+                                      Navigator.of(context).pop(organisationsList[index]);
+                                    },
+                                    onLongPress: (){
+                                      // show more details about the organisation in a new dialog
+                                      var moreInfo = _moreInfoDialog(context, organisationsList[index]);
+                                      moreInfo.whenComplete(null);
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ] : [ Container(), ],
+                    ),
+
+                    // help button for if org not listed
+                    // cancel and ok buttons
+
                   ],
                 ),
-
-                Column(
-                  children: _orgsFetched ? [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                      child: Text(
-                        listTitle,
-                        style: new TextStyle(
-                            fontSize: 23, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                      height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.67,
-
-                      child: Material(
-                        shadowColor: Colors.transparent,
-                        color: Colors.transparent,
-                        child: ListView.builder(
-                          itemCount: organisationsList.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              child: ListTile(
-                                leading: Icon(Icons.person),
-                                title: Text(organisationsList[index].name, style: new TextStyle(fontSize: 18)),
-                                subtitle: Text(organisationsList[index].postcode.toUpperCase()),
-                                  //                            trailing: Icon(Icons.arrow_forward_ios),
-                                  //                            onTap: _chosenOrg(organisationsList[index]),
-                                onTap: (){
-                                  Navigator.of(context).pop(organisationsList[index]);
-                                },
-                                onLongPress: (){
-                                  // show more details about the organisation in a new dialog
-                                  var moreInfo = _moreInfoDialog(context, organisationsList[index]);
-                                  moreInfo.whenComplete(null);
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ] : [ Container(), ],
-                ),
-
-                // help button for if org not listed
-                // cancel and ok buttons
-
-              ],
-            );
+              );
           },
         );
       },

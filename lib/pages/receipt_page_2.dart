@@ -158,164 +158,173 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
           Container(
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child : Text(
-                    "Date/Time",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            child: Tooltip(
+              message: "Date and time of transaction",
+              child: Row(
+                children: <Widget> [
+                  Container(
+                    child : Text(
+                      "Date/Time",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    width: 110,
                   ),
-                  width: 110,
-                ),
 
-                Container(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  height: 32.0,
-                  child: RaisedButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext builder) {
-                            return Container(
-                              height: MediaQuery.of(context).copyWith().size.height / 3,
-                              child: CupertinoDatePicker(
-                                initialDateTime: transaction.date.isAfter(DateTime.now())
-                                  ? DateTime.now()
-                                  : transaction.date,
-                                onDateTimeChanged: (DateTime newDate) {
-                                  setState(() => {
-                                    newDate.isAfter(DateTime.now())
-                                        ? transaction.date = DateTime.now()
-                                        : transaction.date = newDate,
-                                  });
-                                },
-                                use24hFormat: true,
-                                maximumDate: DateTime.now(),
-                              ),
-                            );
-                          });
-                    },
-                    child: Text(
-                      transaction.date == null
-                          ? 'None set'
-                          : transaction.date.year == DateTime.now().year
-                            ? '${new DateFormat.MMMd().format(transaction.date)}' + ", " + '${new DateFormat.Hm().format(transaction.date)}'
-                            : '${new DateFormat.MMMd().format(transaction.date)}' + " " + transaction.date.year.toString() + ", " + '${new DateFormat.Hm().format(transaction.date)}',
-                      style:
-                      TextStyle(color: Colors.white, fontSize: 18.0),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    height: 32.0,
+                    child: RaisedButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext builder) {
+                              return Container(
+                                height: MediaQuery.of(context).copyWith().size.height / 3,
+                                child: CupertinoDatePicker(
+                                  initialDateTime: transaction.date.isAfter(DateTime.now())
+                                    ? DateTime.now()
+                                    : transaction.date,
+                                  onDateTimeChanged: (DateTime newDate) {
+                                    setState(() => {
+                                      newDate.isAfter(DateTime.now())
+                                          ? transaction.date = DateTime.now()
+                                          : transaction.date = newDate,
+                                    });
+                                  },
+                                  use24hFormat: true,
+                                  maximumDate: DateTime.now(),
+                                ),
+                              );
+                            });
+                      },
+                      child: Text(
+                        transaction.date == null
+                            ? 'None set'
+                            : transaction.date.year == DateTime.now().year
+                              ? '${new DateFormat.MMMd().format(transaction.date)}' + ", " + '${new DateFormat.Hm().format(transaction.date)}'
+                              : '${new DateFormat.MMMd().format(transaction.date)}' + " " + transaction.date.year.toString() + ", " + '${new DateFormat.Hm().format(transaction.date)}',
+                        style:
+                        TextStyle(color: Colors.white, fontSize: 18.0),
+                      ),
+                      color: Colors.blue,
                     ),
-                    color: Colors.blue,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ), // Date/Time picker
 
           Container(
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child : Text(
-                    "Payee",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            child: Tooltip(
+              message: "Transaction payee",
+              child: Row(
+                children: <Widget> [
+                  Container(
+                    child : Text(
+                      "Payee",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    width: 110,
                   ),
-                  width: 110,
-                ),
 
-                Container(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  height: 32.0,
-                  child: RaisedButton(
-                    onPressed: () {
-//                      var popupListView = new PopupListView();
-//                      var dialog = popupListView.dialog(context, optionsList, "Choose Organization");
-                      var organisations = new FindOrganisations();
-                      var orgDialog = organisations.dialog(context);
-                      orgDialog.then((organisation) {
-                        try {
-                          organisation.name.length;
-                          transaction.organisation = organisation;
-//                          debugPrint(organisation.name);
-                          setState(() {});
-                        } catch(_) {
-                          debugPrint("No organisation chosen.");
-                        }
-                      });
-                    },
-                    child: Text(
-                      transaction.organisation.name == null
-                          ? 'Find'
-                          : transaction.organisation.name.length > 14
-                            ? transaction.organisation.name.substring(0,12) + "..."
-                            : transaction.organisation.name,
-                      style:
-                      TextStyle(color: Colors.white, fontSize: 18.0),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    height: 32.0,
+                    child: RaisedButton(
+                      onPressed: () {
+  //                      var popupListView = new PopupListView();
+  //                      var dialog = popupListView.dialog(context, optionsList, "Choose Organization");
+                        var organisations = new FindOrganisations();
+                        var orgDialog = organisations.dialog(context);
+                        orgDialog.then((organisation) {
+                          try {
+                            organisation.name.length;
+                            transaction.organisation = organisation;
+  //                          debugPrint(organisation.name);
+                            setState(() {});
+                          } catch(_) {
+                            debugPrint("No organisation chosen.");
+                          }
+                        });
+                      },
+                      child: Text(
+                        transaction.organisation.name == null
+                            ? 'Find'
+                            : transaction.organisation.name.length > 14
+                              ? transaction.organisation.name.substring(0,12) + "..."
+                              : transaction.organisation.name,
+                        style:
+                        TextStyle(color: Colors.white, fontSize: 18.0),
+                      ),
+                      color: Colors.blue,
                     ),
-                    color: Colors.blue,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ), // Organisation picker
 
           Container(
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child : Text(
-                    "Recurring",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            child: Tooltip(
+              message: "Transaction recrudescence",
+              child: Row(
+                children: <Widget> [
+                  Container(
+                    child : Text(
+                      "Recurring",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    width: 110,
                   ),
-                  width: 110,
-                ),
 
-                Container(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  height: 32.0,
-                  child: RaisedButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext builder) {
-                            return Container(
-                              height: MediaQuery.of(context).copyWith().size.height / 3,
-                              child: CupertinoPicker(
-                                backgroundColor: Colors.white,
-                                children: _sampleRecurringOptions.map((thisOption) => Text(thisOption)).toList(),
-                                onSelectedItemChanged: ((newValue) {
-                                  transaction.recurring = _sampleRecurringOptions[newValue];
-                                  setState(() {});
-                                }),
-                                itemExtent: 32,
-                              ),
-                            );
-                          });
-                    },
-                    child: Text(
-                      transaction.recurring == null
-                          ? 'None'
-                          : transaction.recurring,
-                      style:
-                      TextStyle(color: Colors.white, fontSize: 18.0),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    height: 32.0,
+                    child: RaisedButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext builder) {
+                              return Container(
+                                height: MediaQuery.of(context).copyWith().size.height / 3,
+                                child: CupertinoPicker(
+                                  backgroundColor: Colors.white,
+                                  children: _sampleRecurringOptions.map((thisOption) => Text(thisOption)).toList(),
+                                  onSelectedItemChanged: ((newValue) {
+                                    transaction.recurring = _sampleRecurringOptions[newValue];
+                                    setState(() {});
+                                  }),
+                                  itemExtent: 32,
+                                ),
+                              );
+                            });
+                      },
+                      child: Text(
+                        transaction.recurring == null
+                            ? 'None'
+                            : transaction.recurring,
+                        style:
+                        TextStyle(color: Colors.white, fontSize: 18.0),
+                      ),
+                      color: Colors.blue,
                     ),
-                    color: Colors.blue,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ), // Recurring picker
 
@@ -338,33 +347,36 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   height: 32.0,
-                  child: RaisedButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext builder) {
-                            return Container(
-                              height: MediaQuery.of(context).copyWith().size.height / 3,
-                              child: CupertinoPicker(
-                                backgroundColor: Colors.white,
-                                children: _categories.map((thisOption) => Text(thisOption)).toList(),
-                                onSelectedItemChanged: ((newValue) {
-                                  transaction.category = _categories[newValue];
-                                  setState(() {});
-                                }),
-                                itemExtent: 32,
-                              ),
-                            );
-                          });
-                    },
-                    child: Text(
-                      transaction.category == null
-                          ? 'None'
-                          : transaction.category,
-                      style:
-                      TextStyle(color: Colors.white, fontSize: 18.0),
+                  child: Tooltip(
+                    message: "Category of transaction",
+                    child: RaisedButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext builder) {
+                              return Container(
+                                height: MediaQuery.of(context).copyWith().size.height / 3,
+                                child: CupertinoPicker(
+                                  backgroundColor: Colors.white,
+                                  children: _categories.map((thisOption) => Text(thisOption)).toList(),
+                                  onSelectedItemChanged: ((newValue) {
+                                    transaction.category = _categories[newValue];
+                                    setState(() {});
+                                  }),
+                                  itemExtent: 32,
+                                ),
+                              );
+                            });
+                      },
+                      child: Text(
+                        transaction.category == null
+                            ? 'None'
+                            : transaction.category,
+                        style:
+                        TextStyle(color: Colors.white, fontSize: 18.0),
+                      ),
+                      color: Colors.blue,
                     ),
-                    color: Colors.blue,
                   ),
                 ),
               ],
@@ -373,107 +385,118 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
           Container(
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child : Text(
-                    "Essential",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            child: Tooltip(
+              message: "Essential or not",
+              child: Row(
+                children: <Widget> [
+                  Container(
+                    child : Text(
+                      "Essential",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                                      width: 95,
+                  ),
+
+                  Container(
+                    height: 32.0,
+                    child: Checkbox(
+                      value: transaction.isEssential,
+                      onChanged: ((value) {
+                        setState(() => transaction.isEssential = value);
+                      }),
                     ),
                   ),
-                                    width: 95,
-                ),
-
-                Container(
-                  height: 32.0,
-                  child: Checkbox(
-                    value: transaction.isEssential,
-                    onChanged: ((value) {
-                      setState(() => transaction.isEssential = value);
-                    }),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ), // Essential
 
           Container(
             padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child : Text(
-                    "Amount",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            child: Tooltip(
+              message: "Transaction amount",
+              child: Row(
+                children: <Widget> [
+                  Container(
+                    child : Text(
+                      "Amount",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    width: 110,
                   ),
-                  width: 110,
-                ),
 
 
-                Container(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  height: 32.0,
-                  width: 100,
-                  child: TextField(
-                    controller: transaction.amount,
-                    decoration: InputDecoration(
-                        hintText: "0.00"
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    height: 32.0,
+                    width: 100,
+                    child: TextField(
+                      controller: transaction.amount,
+                      decoration: InputDecoration(
+                          hintText: "0.00"
+                      ),
+                      keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
                     ),
-                    keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ), // Amount picker
 
           Padding(
             padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-            child: Container(
-              height: 65.0,
-              child: RaisedButton(
-                onPressed: () {
-                  try {
-                    if (transaction.amount.text == "" || transaction.organisation.name == null) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return _invalidDialog(context);
-                          }
-                      );
-                    } else {
-                      if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
-                        _submitReceipt(transaction);
-                      } else {
+            child: Tooltip(
+              message: "Submit receipt",
+              child: Container(
+                height: 65.0,
+                child: RaisedButton(
+                  onPressed: () {
+                    try {
+                      if (transaction.amount.text == "" || transaction.organisation.name == null) {
                         showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return _invalidDialog(context);
-                          }
+                            context: context,
+                            builder: (BuildContext context) {
+                              return _invalidDialog(context);
+                            }
                         );
+                      } else {
+                        if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
+                          _submitReceipt(transaction);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return _invalidDialog(context);
+                            }
+                          );
+                        }
                       }
                     }
-                  }
-                  catch (_) {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return _invalidDialog(context);
-                      }
-                    );
-                  }
-                },
-                child: Text("GO",
-                    key: Key("goButton"),
-                    style:
-                    TextStyle(color: Colors.white, fontSize: 22.0)),
-                color: Colors.blue,
+                    catch (_) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return _invalidDialog(context);
+                        }
+                      );
+                    }
+                  },
+
+
+                  child: Text("GO",
+                      style:
+                      TextStyle(color: Colors.white, fontSize: 22.0),
+                  ),
+                  color: Colors.blue,
+                ),
               ),
             ),
           ),
