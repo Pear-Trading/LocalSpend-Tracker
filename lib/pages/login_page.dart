@@ -7,6 +7,7 @@ import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:local_spend/common/widgets/labeled_checkbox.dart';
+import 'package:local_spend/common/widgets/animatedGradientButton.dart';
 
 const URL = "https://flutter.io/";
 
@@ -101,137 +102,117 @@ class LoginPageState extends State<LoginPage> {
         }
       },
       child: PlatformScaffold(
-        body: Container(
-          decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-              colors: [Colors.blue[50], Colors.white],
-              stops: [0,1],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          child: AnimatedContainer(
-            duration: Duration(seconds: 2),
-            margin: EdgeInsets.fromLTRB(60,30,60,0),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: AnimatedContainer(
-                    duration: Duration(seconds: 2),
-                    margin: EdgeInsets.fromLTRB(15,0,15,0),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/launch_image.png')
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                  child: TextField(
-                    autocorrect: false,
-                    textAlign: TextAlign.center,
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: "EMAIL",
-                      hintStyle: TextStyle(fontSize: 15),
-                    ),
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(focusNode);
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
-                  child: TextField(
-                    autocorrect: false,
-                    textAlign: TextAlign.center,
-                    controller: _passwordController,
-                    focusNode: focusNode,
-                    decoration: InputDecoration(
-                      hintText: 'PASSWORD',
-                      hintStyle: TextStyle(fontSize: 15),
-                    ),
-                    obscureText: true,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onSubmitted: (_) {
-                      login( _emailController.text,
-                          _passwordController.text);
-                    },
-                  ),
-                ),
+        body: Stack(
+          children: [
+            AnimatedBackground([Colors.blue[50], Colors.lightBlue[50]], Colors.white, Alignment.topRight, Alignment.bottomLeft),
 
-              Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
-
-              child: Opacity(
-                opacity: _isLoggingIn ? 0.5 : 1,
-                child : Material(
-                  child: new Container(
-                    decoration: new BoxDecoration(
-                      border: new Border.all(color : Colors.transparent, width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(2)),
-                      gradient: new LinearGradient(
-                        colors: [
-                          Colors.blue[300],
-                          Colors.blue[500],
-                        ],
-                        stops: [0,1],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
-
-                    child : Material(
-                      type: MaterialType.transparency,
-
-                      child : InkWell(
-                        onTap: _isLoggingIn ? null : () => login( _emailController.text, _passwordController.text),
-                        child: new Container(
-                          width: 100,
-                          height: 50,
-                          child: new Center(
-                            child: new Text(
-                                'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
-                          ),
+            Container(
+              margin: EdgeInsets.fromLTRB(60,30,60,0),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: AnimatedContainer(
+                      duration: Duration(seconds: 2),
+                      margin: EdgeInsets.fromLTRB(15,0,15,0),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/launch_image.png')
                         ),
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                    child: TextField(
+                      autocorrect: false,
+                      textAlign: TextAlign.center,
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        hintText: "EMAIL",
+                        hintStyle: TextStyle(fontSize: 15),
+                      ),
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.bold,
+                      ),
+                      onSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(focusNode);
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                    child: TextField(
+                      autocorrect: false,
+                      textAlign: TextAlign.center,
+                      controller: _passwordController,
+                      focusNode: focusNode,
+                      decoration: InputDecoration(
+                        hintText: 'PASSWORD',
+                        hintStyle: TextStyle(fontSize: 15),
+                      ),
+                      obscureText: true,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.bold,
+                      ),
+                      onSubmitted: (_) {
+                        login( _emailController.text,
+                            _passwordController.text);
+                      },
+                    ),
+                  ),
 
+                Container(
+                  margin: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
+                  width: 100,
+                  height: 50,
+                  child: Opacity(
+                    opacity: _isLoggingIn ? 0.5 : 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(2),
+                      child : Stack(
+                        children : [
+                          AnimatedBackground([Colors.blue, Colors.lightBlue[300]], Colors.lightBlue, Alignment.topRight, Alignment.bottomLeft),
+                          Material(
+                            type: MaterialType.transparency,
+                            child : InkWell(
+                              onTap: _isLoggingIn ? null : () => login( _emailController.text, _passwordController.text),
 
+                              child: new Center(
+                                child: new Text(
+                                    'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
 
-                  child: LabeledCheckbox(
-                    label : "SAVE LOGIN",
-                    textStyle: TextStyle(fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
-                    padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                    value : _saveLoginDetails,
+                    child: LabeledCheckbox(
+                      label : "SAVE LOGIN",
+                      textStyle: TextStyle(fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
+                      padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                      value : _saveLoginDetails,
 
-                    onChanged: (bool newValue) {
-                      setState(() {
-                        _saveLoginDetails = newValue;
-                      });
-                    },
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          _saveLoginDetails = newValue;
+                        });
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

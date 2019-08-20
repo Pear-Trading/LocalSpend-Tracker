@@ -66,15 +66,6 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
   _submitReceipt(Transaction transaction) {
     DateTime dt = new DateTime.now();
-    // sample transaction:
-    // {
-    //  "transaction_type":1,
-    //  "transaction_value":33,
-    //  "purchase_time":"2019-08-12T11:06:00.000+01:00",
-    //  "organisation_id":59661,
-    //  "essential":false,
-    //  "session_key":"C438440A-B775-11E9-8EE8-147589E69626"
-    // }
 
     Receipt receipt = new Receipt();
     receipt.organisationName = transaction.organisation.name;
@@ -205,10 +196,12 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                       },
                       child: Text(
                         transaction.date == null
-                            ? 'None set'
-                            : transaction.date.year == DateTime.now().year
-                              ? '${new DateFormat.MMMd().format(transaction.date)}' + ", " + '${new DateFormat.Hm().format(transaction.date)}'
-                              : '${new DateFormat.MMMd().format(transaction.date)}' + " " + transaction.date.year.toString() + ", " + '${new DateFormat.Hm().format(transaction.date)}',
+                            ? 'None set.'
+                            : transaction.date.year != DateTime.now().year
+                              ? '${new DateFormat.MMMd().format(transaction.date)}' + " " + transaction.date.year.toString() + " at " + '${new DateFormat.Hm().format(transaction.date)}'
+                              : transaction.date.day == DateTime.now().day && transaction.date.month == DateTime.now().month
+                                ? "Today at " + '${new DateFormat.Hm().format(transaction.date)}'
+                                : '${new DateFormat.MMMd().format(transaction.date)}' + " at " + '${new DateFormat.Hm().format(transaction.date)}',
                         style:
                         TextStyle(color: Colors.white, fontSize: 22.0),
                       ),
@@ -299,23 +292,24 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child: RaisedButton(
                       onPressed: () {
                         showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext builder) {
-                              return Container(
-                                height: MediaQuery.of(context).copyWith().size.height / 3,
-                                child: CupertinoPicker(
-                                  backgroundColor: Colors.white,
-                                  children: _sampleRecurringOptions.map((thisOption) => Text(thisOption, style: TextStyle(fontSize: 30))).toList(),
-                                  onSelectedItemChanged: ((newValue) {
-                                    transaction.recurring = _sampleRecurringOptions[newValue];
-                                    setState(() {});
-                                  }),
-                                  magnification: 1.1,
-                                  useMagnifier: true,
-                                  itemExtent: 36,
-                                ),
-                              );
-                            });
+                          context: context,
+                          builder: (BuildContext builder) {
+                            return Container(
+                              height: MediaQuery.of(context).copyWith().size.height / 3,
+                              child: CupertinoPicker(
+                                backgroundColor: Colors.white,
+                                children: _sampleRecurringOptions.map((thisOption) => Text(thisOption, style: TextStyle(fontSize: 30))).toList(),
+                                onSelectedItemChanged: ((newValue) {
+                                  transaction.recurring = _sampleRecurringOptions[newValue];
+                                  setState(() {});
+                                }),
+                                magnification: 1.1,
+                                useMagnifier: true,
+                                itemExtent: 36,
+                              ),
+                            );
+                          }
+                        );
                       },
                       child: Text(
                         transaction.recurring == null
@@ -380,7 +374,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                             ? 'None'
                             : transaction.category,
                         style:
-                        TextStyle(color: Colors.white, fontSize: 22.0),
+                          TextStyle(color: Colors.white, fontSize: 22.0),
                       ),
                       color: Colors.blue,
                     ),
@@ -471,52 +465,55 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                 height: 75.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(2),
-                  child: Stack(
-                    children: [
-                      AnimatedBackground(),
-                      Material(
-                        type: MaterialType.transparency,
-                        child: InkWell(
-                          child: Center(
-                            child : Text("GO",
-                              style:
-                              TextStyle(color: Colors.white, fontSize: 30.0),
+                  child: Opacity(
+                    opacity: 1,
+                    child: Stack(
+                      children: [
+                        AnimatedBackground([Colors.blue, Colors.lightBlue[300]], Colors.lightBlue, Alignment.topLeft, Alignment.bottomRight),
+                        Material(
+                          type: MaterialType.transparency,
+                          child: InkWell(
+                            child: Center(
+                              child : Text("GO",
+                                style:
+                                TextStyle(color: Colors.white, fontSize: 30.0),
+                              ),
                             ),
-                          ),
-                          onTap: () {
-                            try {
-                              if (transaction.amount.text == "" || transaction.organisation.name == null) {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return _invalidDialog(context);
-                                    }
-                                );
-                              } else {
-                                if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
-                                  _submitReceipt(transaction);
-                                } else {
+                            onTap: () {
+                              try {
+                                if (transaction.amount.text == "" || transaction.organisation.name == null) {
                                   showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return _invalidDialog(context);
-                                    }
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return _invalidDialog(context);
+                                      }
                                   );
+                                } else {
+                                  if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
+                                    _submitReceipt(transaction);
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return _invalidDialog(context);
+                                      }
+                                    );
+                                  }
                                 }
                               }
-                            }
-                            catch (_) {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return _invalidDialog(context);
-                                }
-                              );
-                            }
-                          },
+                              catch (_) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return _invalidDialog(context);
+                                  }
+                                );
+                              }
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
