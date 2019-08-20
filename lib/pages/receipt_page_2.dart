@@ -305,12 +305,14 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                 height: MediaQuery.of(context).copyWith().size.height / 3,
                                 child: CupertinoPicker(
                                   backgroundColor: Colors.white,
-                                  children: _sampleRecurringOptions.map((thisOption) => Text(thisOption)).toList(),
+                                  children: _sampleRecurringOptions.map((thisOption) => Text(thisOption, style: TextStyle(fontSize: 30))).toList(),
                                   onSelectedItemChanged: ((newValue) {
                                     transaction.recurring = _sampleRecurringOptions[newValue];
                                     setState(() {});
                                   }),
-                                  itemExtent: 40,
+                                  magnification: 1.1,
+                                  useMagnifier: true,
+                                  itemExtent: 36,
                                 ),
                               );
                             });
@@ -361,12 +363,14 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                 height: MediaQuery.of(context).copyWith().size.height / 3,
                                 child: CupertinoPicker(
                                   backgroundColor: Colors.white,
-                                  children: _categories.map((thisOption) => Text(thisOption)).toList(),
+                                  children: _categories.map((thisOption) => Text(thisOption, style: TextStyle(fontSize: 30),)).toList(),
                                   onSelectedItemChanged: ((newValue) {
                                     transaction.category = _categories[newValue];
                                     setState(() {});
                                   }),
-                                  itemExtent: 40,
+                                  magnification: 1.1,
+                                  useMagnifier: true,
+                                  itemExtent: 36,
                                 ),
                               );
                             });
