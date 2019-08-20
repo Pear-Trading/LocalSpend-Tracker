@@ -9,5 +9,5 @@ part of 'dev.dart';
 const _$configJsonLiteral = {
   'env': 'DEV',
   'production': false,
-  'apiUrl': 'https://dev.peartrade.org/api'
+  'apiUrl': 'https://dev.localspend.co.uk/api'
 };

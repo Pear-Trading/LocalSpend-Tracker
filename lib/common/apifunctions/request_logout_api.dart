@@ -8,7 +8,7 @@ import 'package:local_spend/common/functions/save_logout.dart';
 import 'package:local_spend/model/json/login_model.dart';
 
 Future<LoginModel> requestLogoutAPI(BuildContext context) async {
-  final url = "https://dev.peartrade.org/api/logout";
+  final url = "https://dev.localspend.co.uk/api/logout";
 
   var token;
 

@@ -23,7 +23,7 @@ class Receipt {
 Future<LoginModel> submitReceiptAPI(
     BuildContext context, Receipt receipt) async {
   //var apiUrl = ConfigWrapper.of(context).apiKey;
-  final url = "https://dev.peartrade.org/api/upload";
+  final url = "https://dev.localspend.co.uk/api/upload";
 
   SharedPreferences preferences = await SharedPreferences.getInstance();
 

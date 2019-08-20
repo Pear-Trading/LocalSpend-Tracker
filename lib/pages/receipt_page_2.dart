@@ -3,6 +3,7 @@ import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:intl/intl.dart';
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
+import 'package:local_spend/common/widgets/animatedGradientButton.dart';
 import 'package:local_spend/common/apifunctions/find_organisations.dart';
 import 'package:local_spend/common/widgets/organisations_dialog.dart';
 import 'package:local_spend/common/apifunctions/submit_receipt_api.dart';
@@ -72,7 +73,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     //  "purchase_time":"2019-08-12T11:06:00.000+01:00",
     //  "organisation_id":59661,
     //  "essential":false,
-    //  "session_key":"C438432A-B775-11E9-8EE8-147589E69626"
+    //  "session_key":"C438440A-B775-11E9-8EE8-147589E69626"
     // }
 
     Receipt receipt = new Receipt();
@@ -149,7 +150,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
             child : Text(
               "Receipt Details",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 26,
                 color: Colors.grey[700],
                 fontWeight: FontWeight.bold,
               ),
@@ -166,17 +167,18 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child : Text(
                       "Date/Time",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 22,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    width: 110,
+                    width: MediaQuery.of(context).size.width * 0.3,
                   ),
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 32.0,
+                    height: 40.0,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
                         showModalBottomSheet(
@@ -208,7 +210,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                               ? '${new DateFormat.MMMd().format(transaction.date)}' + ", " + '${new DateFormat.Hm().format(transaction.date)}'
                               : '${new DateFormat.MMMd().format(transaction.date)}' + " " + transaction.date.year.toString() + ", " + '${new DateFormat.Hm().format(transaction.date)}',
                         style:
-                        TextStyle(color: Colors.white, fontSize: 18.0),
+                        TextStyle(color: Colors.white, fontSize: 22.0),
                       ),
                       color: Colors.blue,
                     ),
@@ -228,17 +230,18 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child : Text(
                       "Payee",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 22,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    width: 110,
+                    width: MediaQuery.of(context).size.width * 0.3,
                   ),
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 32.0,
+                    height: 40.0,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
                         var organisations = new FindOrganisations();
@@ -261,7 +264,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                               ? transaction.organisation.name.substring(0,12) + "..."
                               : transaction.organisation.name,
                         style:
-                        TextStyle(color: Colors.white, fontSize: 18.0),
+                        TextStyle(color: Colors.white, fontSize: 22.0),
                       ),
                       color: Colors.blue,
                     ),
@@ -281,17 +284,18 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child : Text(
                       "Recurring",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 22,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    width: 110,
+                    width: MediaQuery.of(context).size.width * 0.3,
                   ),
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 32.0,
+                    height: 40.0,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
                         showModalBottomSheet(
@@ -306,7 +310,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                     transaction.recurring = _sampleRecurringOptions[newValue];
                                     setState(() {});
                                   }),
-                                  itemExtent: 32,
+                                  itemExtent: 40,
                                 ),
                               );
                             });
@@ -316,7 +320,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                             ? 'None'
                             : transaction.recurring,
                         style:
-                        TextStyle(color: Colors.white, fontSize: 18.0),
+                        TextStyle(color: Colors.white, fontSize: 22.0),
                       ),
                       color: Colors.blue,
                     ),
@@ -334,17 +338,18 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                   child : Text(
                     "Category",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 22,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  width: 110,
+                  width: MediaQuery.of(context).size.width * 0.3,
                 ),
 
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  height: 32.0,
+                  height: 40.0,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   child: Tooltip(
                     message: "Category of transaction",
                     child: RaisedButton(
@@ -361,7 +366,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                     transaction.category = _categories[newValue];
                                     setState(() {});
                                   }),
-                                  itemExtent: 32,
+                                  itemExtent: 40,
                                 ),
                               );
                             });
@@ -371,7 +376,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                             ? 'None'
                             : transaction.category,
                         style:
-                        TextStyle(color: Colors.white, fontSize: 18.0),
+                        TextStyle(color: Colors.white, fontSize: 22.0),
                       ),
                       color: Colors.blue,
                     ),
@@ -391,16 +396,17 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child : Text(
                       "Essential",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 22,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                                      width: 95,
+                    width: MediaQuery.of(context).size.width * 0.3,
                   ),
 
                   Container(
-                    height: 32.0,
+                    height: 40.0,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: Checkbox(
                       value: transaction.isEssential,
                       onChanged: ((value) {
@@ -423,19 +429,19 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child : Text(
                       "Amount",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 22,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    width: 110,
+                    width: MediaQuery.of(context).size.width * 0.3,
                   ),
 
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 32.0,
-                    width: 100,
+                    height: 40.0,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: TextField(
                       controller: transaction.amount,
                       decoration: InputDecoration(
@@ -454,46 +460,57 @@ class ReceiptPage2State extends State<ReceiptPage2> {
             child: Tooltip(
               message: "Submit receipt",
               child: Container(
-                height: 65.0,
-                child: RaisedButton(
-                  onPressed: () {
-                    try {
-                      if (transaction.amount.text == "" || transaction.organisation.name == null) {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return _invalidDialog(context);
+                decoration: new BoxDecoration(
+                  border: new Border.all(color : Colors.transparent, width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(2)),
+                ),
+                height: 75.0,
+                child: Stack(
+                  children: [
+                    AnimatedBackground(),
+                    Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        child: Center(
+                          child : Text("GO",
+                            style:
+                            TextStyle(color: Colors.white, fontSize: 30.0),
+                          ),
+                        ),
+                        onTap: () {
+                          try {
+                            if (transaction.amount.text == "" || transaction.organisation.name == null) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return _invalidDialog(context);
+                                  }
+                              );
+                            } else {
+                              if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
+                                _submitReceipt(transaction);
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return _invalidDialog(context);
+                                  }
+                                );
+                              }
                             }
-                        );
-                      } else {
-                        if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
-                          _submitReceipt(transaction);
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return _invalidDialog(context);
-                            }
-                          );
-                        }
-                      }
-                    }
-                    catch (_) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return _invalidDialog(context);
-                        }
-                      );
-                    }
-                  },
-
-
-                  child: Text("GO",
-                      style:
-                      TextStyle(color: Colors.white, fontSize: 22.0),
-                  ),
-                  color: Colors.blue,
+                          }
+                          catch (_) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return _invalidDialog(context);
+                              }
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

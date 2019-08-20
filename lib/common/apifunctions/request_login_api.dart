@@ -11,26 +11,27 @@ Future<void> _incorrectDialog(BuildContext context, bool isLoginWrong) async {
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Unable to Login"),
-        content: Text(isLoginWrong ? "Incorrect login details. Please try again." : "Our servers are having issues at the moment; sorry for the inconvenience. Please try again later."),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+      return AnimatedContainer(
+        duration: Duration(seconds: 2),
+        child : AlertDialog(
+          title: Text("Uh-oh!"),
+          content: Text(isLoginWrong ? "Incorrect login details. Please try again." : "Our servers are having issues at the moment; sorry for the inconvenience. Please try again later."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
       );
     },
   );
 }
 
-Future<LoginModel> requestLoginAPI(
-    BuildContext context, String email, String password) async {
-  //var apiUrl = ConfigWrapper.of(context).apiKey;
-  final url = "https://dev.peartrade.org/api/login";
+Future<LoginModel> requestLoginAPI(BuildContext context, String email, String password) async {
+  final url = "https://dev.localspend.co.uk/api/login";
 
   Map<String, String> body = {
     'email': email,
@@ -43,7 +44,7 @@ Future<LoginModel> requestLoginAPI(
     final response = await http.post(
       url,
       body: json.encode(body),
-    );
+    ).timeout(Duration(seconds: 5));
 
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
@@ -61,6 +62,8 @@ Future<LoginModel> requestLoginAPI(
 
       return null;
     }
+  } on TimeoutException catch (_) {
+    _incorrectDialog(context, false);
   } catch (error) {
     debugPrint(error.toString());
     _incorrectDialog(context, false);

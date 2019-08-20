@@ -5,7 +5,7 @@ import 'package:local_spend/common/functions/get_token.dart';
 import 'package:flutter/material.dart';
 
 Future<List<String>> getCategories() async {
-  const url = "https://dev.peartrade.org/api/search/category";
+  const url = "https://dev.localspend.co.uk/api/search/category";
   var token;
 
   await getToken().then((result) {

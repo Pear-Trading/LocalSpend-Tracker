@@ -1,5 +1,5 @@
 {
   "env": "PROD",
   "production": true,
-  "apiUrl": "https://www.peartrade.org/api"
+  "apiUrl": "https://www.localspend.co.uk/api"
 }

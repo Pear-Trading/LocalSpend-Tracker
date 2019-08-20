@@ -64,7 +64,7 @@ class Organisations {
   }
 
   Future<List<Organisation>> findOrganisations(String search) async {
-    final url = "https://dev.peartrade.org/api/search";
+    final url = "https://dev.localspend.co.uk/api/search";
     var token;
 
     await getToken().then((result) {

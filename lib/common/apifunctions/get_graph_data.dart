@@ -28,7 +28,7 @@ class GraphData {
       ];
     }
 
-    final url = "https://dev.peartrade.org/api/v1/customer/graphs";
+    final url = "https://dev.localspend.co.uk/api/v1/customer/graphs";
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     Map<String, String> body = {
@@ -88,13 +88,13 @@ class GraphData {
 
     // TODO: Show available graph types based on whether or not the user is an Organisation or User
 
-    /// Customer graph types: https://dev.peartrade.org/api/v1/customer/graphs
+    /// Customer graph types: https://dev.localspend.co.uk/api/v1/customer/graphs
     /// - total_last_week
     /// - avg_spend_last_week
     /// - total_last_month
     /// - avg_spend_last_month
     ///
-    /// Organisations' graphs types: to fetch, POST to https://dev.peartrade.org/api/stats/[name] as {"session_key":"[boop beep]"}
+    /// Organisations' graphs types: to fetch, POST to https://dev.localspend.co.uk/api/stats/[name] as {"session_key":"[boop beep]"}
     /// - organisations_all :     organisation
     /// - pies :                  organisation/pies
     /// - snippets :              organisation/snippets
@@ -110,7 +110,7 @@ class GraphData {
     /// HTTP POST request sample:
     /// {"graph":"total_last_week","session_key":"blahblahblah"}
 
-    final url = "https://dev.peartrade.org/api/v1/customer/graphs";
+    final url = "https://dev.localspend.co.uk/api/v1/customer/graphs";
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     Map<String, String> body = {
@@ -182,7 +182,7 @@ class OrgGraphData {
       ];
     }
 
-    final url = "https://dev.peartrade.org/api/v1/customer/graphs";
+    final url = "https://dev.localspend.co.uk/api/v1/customer/graphs";
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     Map<String, String> body = {
@@ -242,13 +242,13 @@ class OrgGraphData {
 
     // TODO: Show available graph types based on whether or not the user is an Organisation or User
 
-    /// Customer graph types: https://dev.peartrade.org/api/v1/customer/graphs
+    /// Customer graph types: https://dev.localspend.co.uk/api/v1/customer/graphs
     /// - total_last_week
     /// - avg_spend_last_week
     /// - total_last_month
     /// - avg_spend_last_month
     ///
-    /// Organisations' graphs types: to fetch, POST to https://dev.peartrade.org/api/stats/[name] as {"session_key":"[boop beep]"}
+    /// Organisations' graphs types: to fetch, POST to https://dev.localspend.co.uk/api/stats/[name] as {"session_key":"[boop beep]"}
     /// - organisations_all :     organisation
     /// - pies :                  organisation/pies
     /// - snippets :              organisation/snippets
@@ -264,7 +264,7 @@ class OrgGraphData {
     /// HTTP POST request sample:
     /// {"graph":"total_last_week","session_key":"blahblahblah"}
 
-    final url = "https://dev.peartrade.org/api/v1/customer/graphs";
+    final url = "https://dev.localspend.co.uk/api/v1/customer/graphs";
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     Map<String, String> body = {

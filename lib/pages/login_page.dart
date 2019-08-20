@@ -18,6 +18,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  bool _isLoggingIn = false;
   final TextEditingController _emailController = TextEditingController(/*text: 'test@example.com'*/); // remove
   final TextEditingController _passwordController = TextEditingController(/*text: 'abc123'*/);        // remove
   bool _saveLoginDetails = true;  // I am extremely sorry for the placement of this variable
@@ -69,6 +70,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   login(String username, String password) async {
+    _isLoggingIn = true;
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -82,8 +84,9 @@ class LoginPageState extends State<LoginPage> {
       print("details cleared");
     }
 
-    requestLoginAPI(context, username,
-        password);
+    requestLoginAPI(context, username, password).then((value) {
+      _isLoggingIn = false;
+    });
   }
 
   @override
@@ -98,14 +101,6 @@ class LoginPageState extends State<LoginPage> {
         }
       },
       child: PlatformScaffold(
-//        drawer: BasicDrawer(),
-//        body: Container(
-//          decoration: BoxDecoration(color: Colors.white),
-//          margin: const EdgeInsets.all(20),
-//          child: Padding(
-//            padding: EdgeInsets.fromLTRB(30.0, 170.0, 30.0, 0.0),
-//            child: ListView(
-//              children: <Widget>[
         body: Container(
           decoration: new BoxDecoration(
             gradient: new LinearGradient(
@@ -115,14 +110,15 @@ class LoginPageState extends State<LoginPage> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: Container(
+          child: AnimatedContainer(
+            duration: Duration(seconds: 2),
             margin: EdgeInsets.fromLTRB(60,30,60,0),
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: Container(
-                      margin: EdgeInsets.fromLTRB(15,0,15,0),
-//                    alignment: FractionalOffset(0.5, 0.3),  // not sure what this does ngl :/
+                  child: AnimatedContainer(
+                    duration: Duration(seconds: 2),
+                    margin: EdgeInsets.fromLTRB(15,0,15,0),
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/launch_image.png')
@@ -177,39 +173,42 @@ class LoginPageState extends State<LoginPage> {
               Padding(
               padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
 
-              child : Material(
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    border: new Border.all(color : Colors.transparent, width: 2),
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                    gradient: new LinearGradient(
-                      colors: [
-                        Colors.blue[300],
-                        Colors.blue[500],
-                      ],
-                      stops: [0,1],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+              child: Opacity(
+                opacity: _isLoggingIn ? 0.5 : 1,
+                child : Material(
+                  child: new Container(
+                    decoration: new BoxDecoration(
+                      border: new Border.all(color : Colors.transparent, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(2)),
+                      gradient: new LinearGradient(
+                        colors: [
+                          Colors.blue[300],
+                          Colors.blue[500],
+                        ],
+                        stops: [0,1],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
                     ),
-                  ),
 
-                  child : Material(
-                    type: MaterialType.transparency,
+                    child : Material(
+                      type: MaterialType.transparency,
 
-                    child : InkWell(
-                      onTap: () => login( _emailController.text, _passwordController.text),
-                      child: new Container(
-                        width: 100,
-                        height: 50,
-                        child: new Center(
-                          child: new Text(
-                              'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
+                      child : InkWell(
+                        onTap: _isLoggingIn ? null : () => login( _emailController.text, _passwordController.text),
+                        child: new Container(
+                          width: 100,
+                          height: 50,
+                          child: new Center(
+                            child: new Text(
+                                'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
 
+                    ),
                   ),
                 ),
               ),
@@ -229,22 +228,6 @@ class LoginPageState extends State<LoginPage> {
                       });
                     },
                   ),
-
-                  /*child: LabeledCheckboxWithIcon(
-                    label : "SAVE LOGIN",
-                    textStyle: TextStyle(fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
-                    icon: Icons.account_box,  // need to remove icon padding!!
-                    iconSize: 18,
-                    iconColor: Colors.black54,
-                    padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                    value : _saveLoginDetails,
-
-                    onChanged: (bool newValue) {
-                      setState(() {
-                        _saveLoginDetails = newValue;
-                      });
-                    },
-                  ),*/
                 ),
               ],
             ),
