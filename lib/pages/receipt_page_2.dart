@@ -158,7 +158,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // "Receipt Details" title
 
           Container(
-            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Tooltip(
               message: "Date and time of transaction",
               child: Row(
@@ -221,7 +221,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // Date/Time picker
 
           Container(
-            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Tooltip(
               message: "Transaction payee",
               child: Row(
@@ -275,7 +275,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // Organisation picker
 
           Container(
-            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Tooltip(
               message: "Transaction recrudescence",
               child: Row(
@@ -331,7 +331,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // Recurring picker
 
           Container(
-            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Row(
               children: <Widget> [
                 Container(
@@ -387,7 +387,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // Category picker
 
           Container(
-            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Tooltip(
               message: "Essential or not",
               child: Row(
@@ -420,7 +420,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // Essential
 
           Container(
-            padding: EdgeInsets.fromLTRB(25,15,15.0,0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Tooltip(
               message: "Transaction amount",
               child: Row(
@@ -456,7 +456,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // Amount picker
 
           Padding(
-            padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Tooltip(
               message: "Submit receipt",
               child: Container(
