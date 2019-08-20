@@ -104,7 +104,6 @@ class ReceiptPage2State extends State<ReceiptPage2> {
       _futureCats.then((value) {
         _categories = null;
         _categories = value;
-        setState(() {});
       });
     }
     
