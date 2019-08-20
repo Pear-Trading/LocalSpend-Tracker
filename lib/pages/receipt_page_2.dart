@@ -460,57 +460,56 @@ class ReceiptPage2State extends State<ReceiptPage2> {
             child: Tooltip(
               message: "Submit receipt",
               child: Container(
-                decoration: new BoxDecoration(
-                  border: new Border.all(color : Colors.transparent, width: 2),
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                ),
                 height: 75.0,
-                child: Stack(
-                  children: [
-                    AnimatedBackground(),
-                    Material(
-                      type: MaterialType.transparency,
-                      child: InkWell(
-                        child: Center(
-                          child : Text("GO",
-                            style:
-                            TextStyle(color: Colors.white, fontSize: 30.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(2),
+                  child: Stack(
+                    children: [
+                      AnimatedBackground(),
+                      Material(
+                        type: MaterialType.transparency,
+                        child: InkWell(
+                          child: Center(
+                            child : Text("GO",
+                              style:
+                              TextStyle(color: Colors.white, fontSize: 30.0),
+                            ),
                           ),
-                        ),
-                        onTap: () {
-                          try {
-                            if (transaction.amount.text == "" || transaction.organisation.name == null) {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return _invalidDialog(context);
-                                  }
-                              );
-                            } else {
-                              if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
-                                _submitReceipt(transaction);
-                              } else {
+                          onTap: () {
+                            try {
+                              if (transaction.amount.text == "" || transaction.organisation.name == null) {
                                 showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return _invalidDialog(context);
-                                  }
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return _invalidDialog(context);
+                                    }
                                 );
+                              } else {
+                                if (double.tryParse(transaction.amount.text) != null && double.tryParse(transaction.amount.text) > 0) {
+                                  _submitReceipt(transaction);
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return _invalidDialog(context);
+                                    }
+                                  );
+                                }
                               }
                             }
-                          }
-                          catch (_) {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return _invalidDialog(context);
-                              }
-                            );
-                          }
-                        },
+                            catch (_) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return _invalidDialog(context);
+                                }
+                              );
+                            }
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
