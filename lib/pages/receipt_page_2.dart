@@ -443,6 +443,10 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     height: 40.0,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextField(
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.center,
                       controller: transaction.amount,
                       decoration: InputDecoration(
                           hintText: "0.00"
