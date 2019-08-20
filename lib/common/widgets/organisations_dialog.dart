@@ -82,6 +82,8 @@ class FindOrganisations {
   }
 
   Future<Organisation> dialog(context) {
+    var focusNode = new FocusNode();
+
     bool _searchEnabled = false;
     bool _orgsFetched = false;
     TextEditingController searchBarText = new TextEditingController();
@@ -104,6 +106,8 @@ class FindOrganisations {
       barrierDismissible: true,
 
       builder: (BuildContext context) {
+        FocusScope.of(context).requestFocus(focusNode);
+
         return StatefulBuilder(
           builder: (context, setState) {
             return
@@ -122,6 +126,7 @@ class FindOrganisations {
                               width: 150,
                               height: 50,
                               child: TextField(
+                                focusNode: focusNode,
                                 controller: searchBarText,
                                 decoration: InputDecoration(
                                   hintText: "Payee Name",
@@ -134,17 +139,15 @@ class FindOrganisations {
                                   }
                                   setState(() => {_searchEnabled});
                                 },
-                                onSubmitted: ((_) {
-                                  if (_searchEnabled) {
-                                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                                    var result = _submitSearch(searchBarText.text);
-                                    result.then((_) {
-                                      setState(() {
-                                        _orgsFetched = true;
-                                      });
+                                onSubmitted: _searchEnabled ? ((_) {
+                                  SystemChannels.textInput.invokeMethod('TextInput.hide');
+                                  var result = _submitSearch(searchBarText.text);
+                                  result.then((_) {
+                                    setState(() {
+                                      _orgsFetched = true;
                                     });
-                                  }
-                                }),
+                                  });
+                                }) : null,
                               ),
                             ),
 
@@ -153,8 +156,7 @@ class FindOrganisations {
                               padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
 
                               child: RaisedButton(
-                                onPressed: (() {
-                                  if (_searchEnabled) {
+                                onPressed: _searchEnabled ? (() {
                                     SystemChannels.textInput.invokeMethod('TextInput.hide');
                                     var result = _submitSearch(searchBarText.text);
                                     result.then((_) {
@@ -162,12 +164,10 @@ class FindOrganisations {
                                         _orgsFetched = true;
                                       });
                                     });
-                                  }
-                                }),
+                                }) : null,
 
                                 child: Icon(Icons.search, color: Colors.white),
-                                color: _searchEnabled ? Colors.blue : Colors.blue[200],
-                                // make inactive when search in progress as activity indicator
+                                color : Colors.blue,
                               ),
                             ),
                           ],
