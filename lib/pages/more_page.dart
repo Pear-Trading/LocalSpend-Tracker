@@ -70,12 +70,11 @@ class MorePageState extends State<MorePage> {
         ),
 
         body: Container(
-          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
           child: ListView(
             children: <Widget>[
 
               Container(
-                padding: EdgeInsets.fromLTRB(0.0,25,0.0,0.0),
+                padding: EdgeInsets.fromLTRB(30.0,25,30.0,0.0),
                 child : Text(
                   "Local Spend Tracker",
                   textAlign: TextAlign.center,
@@ -88,7 +87,7 @@ class MorePageState extends State<MorePage> {
               ),
 
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(30.0, 25.0, 30.0, 0.0),
                 child: Container(
                   height: 65.0,
                   child: RaisedButton(
@@ -98,22 +97,56 @@ class MorePageState extends State<MorePage> {
                         context: context,
                         applicationIcon: new Icon(Icons.receipt),
                         applicationName: "Local Spend Tracker",
-                        children: <Widget> [
-                          Text("Pear Trading is a commerce company designed to register and monitor money circulating in the local economy."),
-                          Text("\nContact at test@example.com or +44 01524 64544"),
-
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0,20,0,0),
-                            child: InkWell(
-                                child: Text
-                                  ('Developed by Shadowcat Systems',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                onTap: () => launch('https://shadow.cat/')
+                        children: <Widget>
+                        [
+                          Text("Pear Trading is a commerce company designed to register and monitor money circulating in the local economy.\n"),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            height: 35,
+                            child: RaisedButton(
+                              onPressed: () => {},
+                              child: Text("Contact us",
+                                  style:
+                                  TextStyle(color: Colors.white, fontSize: 18.0)),
+                              color: Colors.green,
                             ),
                           ),
+
+                          Container(
+                            height: 35,
+                            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                            child: RaisedButton(
+                              child: Text
+                                ('Pear Trading',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0
+                                ),
+                              ),
+                              color: Colors.lightGreen,
+                              onPressed: () => launch('http://www.peartrade.org')
+                            ),
+                          ),
+
+                          Container(
+                            height: 35,
+                            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                            child: Material(
+                              child: OutlineButton(
+                                child: Text
+                                  ('Shadowcat Systems',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18.0                    /// I don't know what to do with this button
+                                  ),
+                                ),
+                                onPressed: () => launch('https://shadow.cat/'),
+                              ),
+                              color: Colors.lightGreenAccent,
+                              shadowColor: Colors.transparent,
+                            ),
+                          ),
+
                         ],
                       );
 
@@ -127,7 +160,7 @@ class MorePageState extends State<MorePage> {
               ),
 
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
                 child: Container(
                   height: 65.0,
                   child: RaisedButton(
@@ -150,7 +183,7 @@ class MorePageState extends State<MorePage> {
               ),
 
 //              Padding(
-//                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+//                padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
 //                child: Container(
 //                  height: 65.0,
 //                  child: RaisedButton(

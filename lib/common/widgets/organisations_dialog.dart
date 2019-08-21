@@ -82,7 +82,6 @@ class FindOrganisations {
   }
 
   Future<Organisation> dialog(context) {
-    var focusNode = new FocusNode();
 
     bool _searchEnabled = false;
     bool _orgsFetched = false;
@@ -106,15 +105,10 @@ class FindOrganisations {
       barrierDismissible: true,
 
       builder: (BuildContext context) {
-        FocusScope.of(context).requestFocus(focusNode);
 
         return StatefulBuilder(
           builder: (context, setState) {
-            return
-//              AnimatedContainer(
-//            duration: Duration(seconds: 1),
-//                child :
-                SimpleDialog(
+            return SimpleDialog(
                   children: <Widget>[
                     Column(
                       children: [
@@ -126,7 +120,7 @@ class FindOrganisations {
                               width: 150,
                               height: 50,
                               child: TextField(
-                                focusNode: focusNode,
+                                autofocus: true,
                                 controller: searchBarText,
                                 decoration: InputDecoration(
                                   hintText: "Payee Name",
@@ -157,13 +151,13 @@ class FindOrganisations {
 
                               child: RaisedButton(
                                 onPressed: _searchEnabled ? (() {
-                                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                                    var result = _submitSearch(searchBarText.text);
-                                    result.then((_) {
-                                      setState(() {
-                                        _orgsFetched = true;
-                                      });
+                                  SystemChannels.textInput.invokeMethod('TextInput.hide');
+                                  var result = _submitSearch(searchBarText.text);
+                                  result.then((_) {
+                                    setState(() {
+                                      _orgsFetched = true;
                                     });
+                                  });
                                 }) : null,
 
                                 child: Icon(Icons.search, color: Colors.white),

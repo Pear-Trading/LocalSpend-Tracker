@@ -5,18 +5,20 @@ class AnimatedBackground extends StatelessWidget {
   final List<Color> animateColors;
   final Color lastColor;
   final Alignment begin, end;
+  final int duration;
 
   AnimatedBackground(
     this.animateColors,
     this.lastColor,
     this.begin,
     this.end,
+    this.duration,
   );
 
   @override
   Widget build(BuildContext context) {
     final tween = MultiTrackTween([
-      Track("color1").add(Duration(seconds: 4),
+      Track("color1").add(Duration(seconds: this.duration),
           ColorTween(begin: this.animateColors[0], end: this.animateColors[1])),
     ]);
 

@@ -104,7 +104,7 @@ class LoginPageState extends State<LoginPage> {
       child: PlatformScaffold(
         body: Stack(
           children: [
-            AnimatedBackground([Colors.blue[50], Colors.lightBlue[50]], Colors.white, Alignment.topRight, Alignment.bottomLeft),
+            AnimatedBackground([Colors.lightBlue[50], Colors.lightBlue[50]], Colors.white, Alignment.topRight, Alignment.bottomLeft, 3),
 
             Container(
               margin: EdgeInsets.fromLTRB(60,30,60,0),
@@ -175,7 +175,7 @@ class LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(2),
                       child : Stack(
                         children : [
-                          AnimatedBackground([Colors.blue, Colors.lightBlue[300]], Colors.lightBlue, Alignment.topRight, Alignment.bottomLeft),
+                          AnimatedBackground([Colors.blue, Colors.lightBlue[300]], Colors.lightBlue, Alignment.bottomRight, Alignment.topLeft, 3),
                           Material(
                             type: MaterialType.transparency,
                             child : InkWell(

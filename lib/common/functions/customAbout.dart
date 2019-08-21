@@ -264,9 +264,13 @@ class AboutDialog extends StatelessWidget {
     body.add(Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
+
         child: ListBody(
           children: <Widget>[
-            Text(name, style: Theme.of(context).textTheme.title),
+            Container(
+              padding: EdgeInsets.only(top: 10),
+              child: Text(name, style: Theme.of(context).textTheme.title),
+            ),
             Text(version, style: Theme.of(context).textTheme.body1),
             Text(applicationLegalese ?? '', style: Theme.of(context).textTheme.caption),
           ],

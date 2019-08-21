@@ -98,6 +98,10 @@ class ReceiptPage2State extends State<ReceiptPage2> {
   @override
   Widget build(BuildContext context) {
 
+    var _widgetHeight = MediaQuery.of(context).size.height * 0.06 < 40.0 ? 40.0 : MediaQuery.of(context).size.height * 0.06;
+
+    debugPrint(_widgetHeight.toString());
+
     if (_categories.length == 0) {
       Future<List<String>> _futureCats = getCats();
       _categories.add("Fetching categories...");
@@ -136,7 +140,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           // doesn't fit the screen properly and looks weird
 
           Container(
-            padding: const EdgeInsets.fromLTRB(15, 17, 0, 0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.025,MediaQuery.of(context).size.height * 0.025,0,0.0),
             child : Text(
               "Receipt Details",
               style: TextStyle(
@@ -167,7 +171,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 40.0,
+                    height: _widgetHeight,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
@@ -232,7 +236,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 40.0,
+                    height: _widgetHeight,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
@@ -269,7 +273,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           Container(
             padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
             child: Tooltip(
-              message: "Transaction recrudescence",
+              message: "Repeating?",
               child: Row(
                 children: <Widget> [
                   Container(
@@ -286,7 +290,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 40.0,
+                    height: _widgetHeight,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
@@ -343,7 +347,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  height: 40.0,
+                  height: _widgetHeight,
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: Tooltip(
                     message: "Category of transaction",
@@ -402,7 +406,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                   ),
 
                   Container(
-                    height: 40.0,
+                    height: _widgetHeight,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: Checkbox(
                       value: transaction.isEssential,
@@ -437,7 +441,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 40.0,
+                    height: _widgetHeight,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextField(
                       style: TextStyle(
@@ -457,18 +461,18 @@ class ReceiptPage2State extends State<ReceiptPage2> {
           ), // Amount picker
 
           Padding(
-            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,15,MediaQuery.of(context).size.width * 0.05,0.0),
+            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05,MediaQuery.of(context).size.height * 0.03,MediaQuery.of(context).size.width * 0.05,15.0),
             child: Tooltip(
               message: "Submit receipt",
               child: Container(
-                height: 75.0,
+                height: _widgetHeight * 1.7,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: Opacity(
                     opacity: 1,
                     child: Stack(
                       children: [
-                        AnimatedBackground([Colors.blue, Colors.lightBlue[300]], Colors.lightBlue, Alignment.topLeft, Alignment.bottomRight),
+                        AnimatedBackground([Colors.blue, Colors.lightBlue[300]], Colors.lightBlue, Alignment.topLeft, Alignment.bottomRight, 4),
                         Material(
                           type: MaterialType.transparency,
                           child: InkWell(
