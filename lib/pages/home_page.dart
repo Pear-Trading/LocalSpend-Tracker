@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_spend/pages/receipt_page_2.dart';
 import 'package:local_spend/pages/more_page.dart';
 import 'package:local_spend/pages/stats_page.dart';
+import 'package:local_spend/pages/map_page.dart';
 
 class HomePage extends StatelessWidget {
   static String _title = 'Text here';
@@ -24,11 +25,13 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageState extends State<HomePageWidget> {
   int _selectedIndex = 0;
+
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     ReceiptPage2(),
     StatsPage(),
+    MapPage(),
     MorePage()
   ];
 
@@ -40,6 +43,8 @@ class _HomePageState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var _itemText = TextStyle(color: Colors.grey[400]);
+
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -55,11 +60,16 @@ class _HomePageState extends State<HomePageWidget> {
             title: Text('Statistics'),
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            title: Text('Locations'),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
             title: Text('More'),
           ),
         ],
         currentIndex: _selectedIndex,
+        unselectedItemColor: Colors.grey[400],
         selectedItemColor: Colors.blue[400],
         onTap: _onItemTapped,
       ),

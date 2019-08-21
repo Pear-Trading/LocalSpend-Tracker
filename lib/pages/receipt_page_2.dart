@@ -100,8 +100,6 @@ class ReceiptPage2State extends State<ReceiptPage2> {
 
     var _widgetHeight = MediaQuery.of(context).size.height * 0.06 < 40.0 ? 40.0 : MediaQuery.of(context).size.height * 0.06;
 
-    debugPrint(_widgetHeight.toString());
-
     if (_categories.length == 0) {
       Future<List<String>> _futureCats = getCats();
       _categories.add("Fetching categories...");
