@@ -41,14 +41,15 @@ class _SplashScreenState extends State<SplashScreen> {
                     alignment: FractionalOffset(0.5, 0.3),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/launch_image.png')),
+                        image: AssetImage('assets/images/launch_image.png'),
+                      ),
                     ),
                   ),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
                   child: Text(
-                    "© Copyright Statement 2019",
+                    "© Copyright Pear Trading 2019",
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.black,
