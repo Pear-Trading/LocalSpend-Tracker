@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_spend/pages/customerGraphs.dart';
 import 'package:local_spend/pages/orgGraphs.dart';
 
-const URL = "https://flutter.io/";
+const url = "https://flutter.io/";
 const demonstration = false;
 
 class StatsPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class StatsPageState extends State<StatsPage> {
     super.dispose();
   }
 
-  _saveCurrentRoute(String lastRoute) async {
+  void _saveCurrentRoute(String lastRoute) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setString('LastPageRoute', lastRoute);
   }
@@ -43,7 +43,8 @@ class StatsPageState extends State<StatsPage> {
     if (userType == "-") {
       _getUserType().then((value) {
         print(value);
-        userType = '${value[0].toUpperCase()}${value.substring(1)}'; // capitalises first letter
+        userType =
+            '${value[0].toUpperCase()}${value.substring(1)}'; // capitalises first letter
         setState(() {});
       });
     }
@@ -62,10 +63,7 @@ class StatsPageState extends State<StatsPage> {
                 color: Colors.white,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4)
-            ),
-
+            Padding(padding: EdgeInsets.symmetric(horizontal: 4)),
             Text(
               userType,
               style: TextStyle(
@@ -75,14 +73,16 @@ class StatsPageState extends State<StatsPage> {
             ),
           ],
         ),
-          centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.black),
-        ),
-
-
-      body : Container(
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      body: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-        child: (userType == "-" ? null : (userType.toLowerCase() == "customer" ? CustomerGraphs() : OrgGraphs())),
+        child: (userType == "-"
+            ? null
+            : (userType.toLowerCase() == "customer"
+                ? CustomerGraphs()
+                : OrgGraphs())),
       ),
     );
   }

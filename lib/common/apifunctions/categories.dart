@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:local_spend/common/functions/get_token.dart';
-import 'package:flutter/material.dart';
 
 Future<List<String>> getCategories() async {
   const url = "https://dev.localspend.co.uk/api/search/category";
@@ -13,10 +12,10 @@ Future<List<String>> getCategories() async {
   });
 
   Map<String, String> body = {
-    "session_key":token,
+    "session_key": token,
   };
 
-  final response = await http.post (
+  final response = await http.post(
     url,
     body: json.encode(body),
   );
@@ -36,9 +35,8 @@ Future<List<String>> getCategories() async {
 
 //    print(categoriesJSON['11']); // prints "Banana"
 
-    int i = 1;  // starts on 1. that was annoying to debug!
+    int i = 1; // starts on 1. that was annoying to debug!
     while (true) {
-
       if (categoriesJSON[i.toString()] != null) {
 //        print("Iteration " + i.toString());
 //        print(categoriesJSON[i.toString()]);
@@ -61,7 +59,7 @@ Future<List<String>> getCategories() async {
 
 //    print(categories[10].name.toString());  // prints "Banana"
 
-    return categories;  // categories is List<Category>
+    return categories; // categories is List<Category>
     // Category is defined at the top^^
   } else {
     // not successful

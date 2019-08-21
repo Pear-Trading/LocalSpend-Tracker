@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 final TextEditingController _feedbackController = TextEditingController();
 
-void feedback(
-    BuildContext context) {
+void feedback(BuildContext context) {
   // flutter defined function
   showDialog(
     context: context,
@@ -15,13 +14,11 @@ void feedback(
           children: <Widget>[
             Text("We would love to hear your thoughts."),
             Text("\nThis section needs to be fixed."),
-
             Container(
               margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               width: 200,
               height: 70,
-
-              child : new TextField(
+              child: new TextField(
                 controller: _feedbackController,
                 decoration: InputDecoration(
                   hintText: 'Enter your feedback here',
@@ -41,7 +38,7 @@ void feedback(
             ),
             new Container(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child : new FlatButton(
+              child: new FlatButton(
                 child: new Text("Submit"),
                 onPressed: () {
                   submit(_feedbackController.text);

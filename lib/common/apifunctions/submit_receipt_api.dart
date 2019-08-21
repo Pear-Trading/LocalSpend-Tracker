@@ -28,7 +28,7 @@ Future<LoginModel> submitReceiptAPI(
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
   Map<String, String> body = {
-    'transaction_type' : "3",
+    'transaction_type': "3",
     'transaction_value': receipt.amount,
     'purchase_time': receipt.time,
     'category': receipt.category,
@@ -38,7 +38,6 @@ Future<LoginModel> submitReceiptAPI(
     'street_name': receipt.street,
     'postcode': receipt.postcode,
     'town': receipt.town,
-
     'session_key': preferences.get('LastToken'),
   };
 
@@ -61,12 +60,10 @@ Future<LoginModel> submitReceiptAPI(
         context,
         responseJson[0] == "" ? responseJson[0] : "Upload Successful",
         "Transaction successfully submitted to server",
-        "OK"
-    );
+        "OK");
     return LoginModel.fromJson(responseJson);
   } else {
     final responseJson = json.decode(response.body);
-
 
     showDialogSingleButton(
         context,

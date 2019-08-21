@@ -56,10 +56,9 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
 
     return ListView(
       children: <Widget>[
-
         Container(
-          padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-          child : Text(
+          padding: EdgeInsets.fromLTRB(0.0, 17, 0.0, 0.0),
+          child: Text(
             "Last Week's Total Spend",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -69,19 +68,21 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
             ),
           ),
         ),
-
         Tooltip(
           message: "Graph of total spend last week",
-          child : Container(
+          child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             height: 200,
-            child: totalLastWeekGraph.graph != null ? new charts.TimeSeriesChart(totalLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            child: totalLastWeekGraph.graph != null
+                ? new charts.TimeSeriesChart(totalLastWeekGraph.graph)
+                : Center(
+                    child: Text(
+                        "Loading graph...")), //List<Series<dynamic, DateTime>>
           ),
         ),
-
         Container(
-          padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-          child : Text(
+          padding: EdgeInsets.fromLTRB(0.0, 17, 0.0, 0.0),
+          child: Text(
             "Last Week's Average Spend",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -91,19 +92,21 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
             ),
           ),
         ),
-
         Tooltip(
           message: "Graph of average spend last week",
-          child : Container(
+          child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             height: 200,
-            child: avgSpendLastWeekGraph.graph != null ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            child: avgSpendLastWeekGraph.graph != null
+                ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph)
+                : Center(
+                    child: Text(
+                        "Loading graph...")), //List<Series<dynamic, DateTime>>
           ),
         ),
-
         Container(
-          padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-          child : Text(
+          padding: EdgeInsets.fromLTRB(0.0, 17, 0.0, 0.0),
+          child: Text(
             "Last Month's Total Spend",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -113,19 +116,21 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
             ),
           ),
         ),
-
         Tooltip(
           message: "Graph of total spend last month",
-          child : Container(
+          child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             height: 200,
-            child: totalLastMonthGraph.graph != null ? new charts.TimeSeriesChart(totalLastMonthGraph.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            child: totalLastMonthGraph.graph != null
+                ? new charts.TimeSeriesChart(totalLastMonthGraph.graph)
+                : Center(
+                    child: Text(
+                        "Loading graph...")), //List<Series<dynamic, DateTime>>
           ),
         ),
-
         Container(
-          padding: EdgeInsets.fromLTRB(0.0,17,0.0,0.0),
-          child : Text(
+          padding: EdgeInsets.fromLTRB(0.0, 17, 0.0, 0.0),
+          child: Text(
             "Last Month's Average Spend",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -135,16 +140,18 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
             ),
           ),
         ),
-
         Tooltip(
           message: "Graph of average spend last month",
-          child : Container(
+          child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             height: 200,
-            child: avgSpendLastMonth.graph != null ? new charts.TimeSeriesChart(avgSpendLastMonth.graph) : Center(child: Text("Loading graph...")), //List<Series<dynamic, DateTime>>
+            child: avgSpendLastMonth.graph != null
+                ? new charts.TimeSeriesChart(avgSpendLastMonth.graph)
+                : Center(
+                    child: Text(
+                        "Loading graph...")), //List<Series<dynamic, DateTime>>
           ),
         ),
-
       ],
     );
   }

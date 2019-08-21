@@ -4,8 +4,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class NumericComboLineBarChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
 
   NumericComboLineBarChart(this.seriesList, {this.animate});
 
@@ -18,6 +16,8 @@ class NumericComboLineBarChart extends StatelessWidget {
     );
   }
 
+  final List<charts.Series> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class NumericComboLineBarChart extends StatelessWidget {
         // Custom renderer configuration for the bar series.
         customSeriesRenderers: [
           new charts.BarRendererConfig(
-            // ID used to link series to this renderer.
+              // ID used to link series to this renderer.
               customRendererId: 'customBar')
         ]);
   }
@@ -65,7 +65,7 @@ class NumericComboLineBarChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         data: desktopSalesData,
       )
-      // Configure our custom bar renderer for this series.
+        // Configure our custom bar renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
@@ -74,7 +74,7 @@ class NumericComboLineBarChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         data: tableSalesData,
       )
-      // Configure our custom bar renderer for this series.
+        // Configure our custom bar renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
@@ -88,8 +88,8 @@ class NumericComboLineBarChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.sales);
+
   final int year;
   final int sales;
-
-  LinearSales(this.year, this.sales);
 }

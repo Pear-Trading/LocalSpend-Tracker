@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class AnimatedBackground extends StatelessWidget {
-  final List<Color> animateColors;
-  final Color lastColor;
-  final Alignment begin, end;
-  final int duration;
 
   AnimatedBackground(
     this.animateColors,
@@ -14,6 +10,11 @@ class AnimatedBackground extends StatelessWidget {
     this.end,
     this.duration,
   );
+
+  final List<Color> animateColors;
+  final Color lastColor;
+  final Alignment begin, end;
+  final int duration;
 
   @override
   Widget build(BuildContext context) {

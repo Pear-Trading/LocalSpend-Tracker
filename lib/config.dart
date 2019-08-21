@@ -5,13 +5,13 @@ part 'config.g.dart';
 
 @JsonSerializable(createToJson: false)
 class Config {
-  final String env;
-  final bool production;
-  final String apiKey;
-
   Config({this.env, this.production, this.apiKey});
 
   factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
+
+  final String env;
+  final bool production;
+  final String apiKey;
 }
 
 class ConfigWrapper extends StatelessWidget {
@@ -24,7 +24,7 @@ class ConfigWrapper extends StatelessWidget {
 
   static Config of(BuildContext context) {
     final _InheritedConfig inheritedConfig =
-    context.inheritFromWidgetOfExactType(_InheritedConfig);
+        context.inheritFromWidgetOfExactType(_InheritedConfig);
     return inheritedConfig.config;
   }
 

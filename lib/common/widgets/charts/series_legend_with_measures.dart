@@ -11,9 +11,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 ///
 /// Also shows the option to provide a custom measure formatter.
 class LegendWithMeasures extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-
   LegendWithMeasures(this.seriesList, {this.animate});
 
   factory LegendWithMeasures.withSampleData() {
@@ -24,6 +21,8 @@ class LegendWithMeasures extends StatelessWidget {
     );
   }
 
+  final List<charts.Series> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +121,8 @@ class LegendWithMeasures extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
+
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

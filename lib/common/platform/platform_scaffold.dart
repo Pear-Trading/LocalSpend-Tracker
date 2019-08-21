@@ -4,6 +4,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlatformScaffold extends StatelessWidget {
+
+  PlatformScaffold(
+      {this.key,
+        this.appBar,
+        this.body,
+        this.floatingActionButton,
+        this.floatingActionButtonLocation,
+        this.floatingActionButtonAnimator,
+        this.persistentFooterButtons,
+        this.drawer,
+        this.endDrawer,
+        this.bottomNavigationBar,
+        this.backgroundColor,
+        this.resizeToAvoidBottomPadding = true,
+        this.primary = true})
+      : assert(primary != null),
+        super(key: key);
+
+  @override
   final Key key;
   final PreferredSizeWidget appBar;
   final Widget body;
@@ -17,23 +36,6 @@ class PlatformScaffold extends StatelessWidget {
   final Color backgroundColor;
   final bool resizeToAvoidBottomPadding;
   final bool primary;
-
-  PlatformScaffold(
-      {this.key,
-      this.appBar,
-      this.body,
-      this.floatingActionButton,
-      this.floatingActionButtonLocation,
-      this.floatingActionButtonAnimator,
-      this.persistentFooterButtons,
-      this.drawer,
-      this.endDrawer,
-      this.bottomNavigationBar,
-      this.backgroundColor,
-      this.resizeToAvoidBottomPadding: true,
-      this.primary: true})
-      : assert(primary != null),
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:local_spend/common/platform/platform_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:local_spend/common/functions/customAbout.dart' as custom;
 import 'package:local_spend/common/functions/showDialogTwoButtons.dart';
 
-const URL = "https://flutter.io/";
+const url = "https://flutter.io/";
 const demonstration = false;
 
 class MorePage extends StatefulWidget {
@@ -18,7 +17,7 @@ class MorePage extends StatefulWidget {
 }
 
 class MorePageState extends State<MorePage> {
-  FocusNode focusNode;  // added so focus can move automatically
+  FocusNode focusNode; // added so focus can move automatically
 
   DateTime date;
 
@@ -37,7 +36,7 @@ class MorePageState extends State<MorePage> {
     focusNode.dispose(); //disposes focus node when form disposed
   }
 
-  _saveCurrentRoute(String lastRoute) async {
+  void _saveCurrentRoute(String lastRoute) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setString('LastPageRoute', lastRoute);
   }
@@ -52,9 +51,9 @@ class MorePageState extends State<MorePage> {
         } else {
           Navigator.of(context).pushReplacementNamed('/LoginPage');
         }
+        return null;
       },
       child: PlatformScaffold(
-
         appBar: AppBar(
           backgroundColor: Colors.blue[400],
           title: Text(
@@ -68,14 +67,12 @@ class MorePageState extends State<MorePage> {
           centerTitle: true,
           iconTheme: IconThemeData(color: Colors.black),
         ),
-
         body: Container(
           child: ListView(
             children: <Widget>[
-
               Container(
-                padding: EdgeInsets.fromLTRB(30.0,25,30.0,0.0),
-                child : Text(
+                padding: EdgeInsets.fromLTRB(30.0, 25, 30.0, 0.0),
+                child: Text(
                   "Local Spend Tracker",
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -92,53 +89,49 @@ class MorePageState extends State<MorePage> {
                   height: 65.0,
                   child: RaisedButton(
                     onPressed: () {
-
                       custom.showAboutDialog(
                         context: context,
                         applicationIcon: new Icon(Icons.receipt),
                         applicationName: "Local Spend Tracker",
-                        children: <Widget>
-                        [
-                          Text("Pear Trading is a commerce company designed to register and monitor money circulating in the local economy.\n"),
+                        children: <Widget>[
+                          Text(
+                              "Pear Trading is a commerce company designed to register and monitor money circulating in the local economy.\n"),
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             height: 35,
                             child: RaisedButton(
                               onPressed: () => {},
                               child: Text("Contact us",
-                                  style:
-                                  TextStyle(color: Colors.white, fontSize: 18.0)),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18.0)),
                               color: Colors.green,
                             ),
                           ),
-
                           Container(
                             height: 35,
                             margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
                             child: RaisedButton(
-                              child: Text
-                                ('Pear Trading',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0
+                                child: Text(
+                                  'Pear Trading',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18.0),
                                 ),
-                              ),
-                              color: Colors.lightGreen,
-                              onPressed: () => launch('http://www.peartrade.org')
-                            ),
+                                color: Colors.lightGreen,
+                                onPressed: () =>
+                                    launch('http://www.peartrade.org')),
                           ),
-
                           Container(
                             height: 35,
                             margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
                             child: Material(
                               child: OutlineButton(
-                                child: Text
-                                  ('Shadowcat Systems',
+                                child: Text(
+                                  'Shadowcat Systems',
                                   style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0                    /// I don't know what to do with this button
-                                  ),
+                                      color: Colors.black, fontSize: 18.0
+
+                                      /// I don't know what to do with this button
+                                      ),
                                 ),
                                 onPressed: () => launch('https://shadow.cat/'),
                               ),
@@ -146,14 +139,11 @@ class MorePageState extends State<MorePage> {
                               shadowColor: Colors.transparent,
                             ),
                           ),
-
                         ],
                       );
-
                     },
                     child: Text("ABOUT",
-                        style:
-                        TextStyle(color: Colors.white, fontSize: 22.0)),
+                        style: TextStyle(color: Colors.white, fontSize: 22.0)),
                     color: Colors.blue,
                   ),
                 ),
@@ -166,17 +156,15 @@ class MorePageState extends State<MorePage> {
                   child: RaisedButton(
                     onPressed: () {
                       showDialogTwoButtons(
-                        context,
-                        "Logout",
-                        "Are you sure you want to log out?",
-                        "Cancel",
-                        "Logout",
-                        logout
-                      );
+                          context,
+                          "Logout",
+                          "Are you sure you want to log out?",
+                          "Cancel",
+                          "Logout",
+                          logout);
                     },
                     child: Text("LOGOUT",
-                        style:
-                        TextStyle(color: Colors.white, fontSize: 22.0)),
+                        style: TextStyle(color: Colors.white, fontSize: 22.0)),
                     color: Colors.red,
                   ),
                 ),
@@ -197,7 +185,6 @@ class MorePageState extends State<MorePage> {
 //                  ),
 //                ),
 //              ),
-
             ],
           ),
         ),

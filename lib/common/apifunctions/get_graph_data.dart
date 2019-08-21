@@ -5,13 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class GraphData {
-  var chartType;
-  List<charts.Series<dynamic, DateTime>> graph;
-
   GraphData(
     this.chartType,
   );
 
+  var chartType;
+  List<charts.Series<dynamic, DateTime>> graph;
+
   List<TimeSeriesSpend> cachedData;
   bool loaded = false;
 
@@ -49,7 +49,8 @@ class GraphData {
       List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
       for (int i = 0; i < labels.length; i++) {
-        timeSeriesSpendList.add(new TimeSeriesSpend(data[i]*1.00, DateTime.parse(labels[i])));
+        timeSeriesSpendList.add(
+            new TimeSeriesSpend(data[i] * 1.00, DateTime.parse(labels[i])));
 //        print(timeSeriesSpendList[i].time.toString() + " : " + timeSeriesSpendList[i].spend.toString());
       }
 
@@ -131,7 +132,8 @@ class GraphData {
       List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
       for (int i = 0; i < labels.length; i++) {
-        timeSeriesSpendList.add(new TimeSeriesSpend(data[i]*1.00, DateTime.parse(labels[i])));
+        timeSeriesSpendList.add(
+            new TimeSeriesSpend(data[i] * 1.00, DateTime.parse(labels[i])));
 //        print(timeSeriesSpendList[i].time.toString() + " : " + timeSeriesSpendList[i].spend.toString());
       }
 
@@ -154,18 +156,16 @@ class GraphData {
       return null;
     }
   }
-
-
 }
 
 class OrgGraphData {
-  var chartType;
-  List<charts.Series<dynamic, DateTime>> graph;
-
   OrgGraphData(
     this.chartType,
   );
 
+  var chartType;
+  List<charts.Series<dynamic, DateTime>> graph;
+
   List<TimeSeriesSpend> cachedData;
   bool loaded = false;
 
@@ -203,7 +203,8 @@ class OrgGraphData {
       List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
       for (int i = 0; i < labels.length; i++) {
-        timeSeriesSpendList.add(new TimeSeriesSpend(data[i]*1.00, DateTime.parse(labels[i])));
+        timeSeriesSpendList.add(
+            new TimeSeriesSpend(data[i] * 1.00, DateTime.parse(labels[i])));
 //        print(timeSeriesSpendList[i].time.toString() + " : " + timeSeriesSpendList[i].spend.toString());
       }
 
@@ -285,7 +286,8 @@ class OrgGraphData {
       List<TimeSeriesSpend> timeSeriesSpendList = new List<TimeSeriesSpend>();
 
       for (int i = 0; i < labels.length; i++) {
-        timeSeriesSpendList.add(new TimeSeriesSpend(data[i]*1.00, DateTime.parse(labels[i])));
+        timeSeriesSpendList.add(
+            new TimeSeriesSpend(data[i] * 1.00, DateTime.parse(labels[i])));
 //        print(timeSeriesSpendList[i].time.toString() + " : " + timeSeriesSpendList[i].spend.toString());
       }
 
@@ -308,14 +310,11 @@ class OrgGraphData {
       return null;
     }
   }
-
-
 }
 
 class TimeSeriesSpend {
+  TimeSeriesSpend(this.spend, this.time);
+
   final DateTime time;
   final double spend;
-
-  TimeSeriesSpend(this.spend, this.time);
 }
-

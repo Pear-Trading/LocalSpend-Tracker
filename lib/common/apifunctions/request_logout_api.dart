@@ -17,7 +17,7 @@ Future<LoginModel> requestLogoutAPI(BuildContext context) async {
   });
 
   Map<String, String> body = {
-    "Token":token,
+    "Token": token,
   };
 
   final response = await http.post(

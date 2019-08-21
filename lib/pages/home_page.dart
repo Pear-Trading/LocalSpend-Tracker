@@ -5,7 +5,7 @@ import 'package:local_spend/pages/stats_page.dart';
 import 'package:local_spend/pages/map_page.dart';
 
 class HomePage extends StatelessWidget {
-  static String _title = 'Text here';
+  static String _title = 'SpendTracker';
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,11 @@ class _HomePageState extends State<HomePageWidget> {
   int _selectedIndex = 0;
 
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     ReceiptPage2(),
     StatsPage(),
-    MapPage(),
+    MapSample(),
     MorePage()
   ];
 
@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var _itemText = TextStyle(color: Colors.grey[400]);
 
     return Scaffold(
       body: Center(

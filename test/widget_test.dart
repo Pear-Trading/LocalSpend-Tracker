@@ -11,7 +11,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:local_spend/main.dart';
 
 void main() {
-
   testWidgets('GO button repetition test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());

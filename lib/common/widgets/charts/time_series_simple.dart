@@ -3,9 +3,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class SimpleTimeSeriesChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-
   SimpleTimeSeriesChart(this.seriesList, {this.animate});
 
   /// Creates a [TimeSeriesChart] with sample data and no transition.
@@ -17,6 +14,8 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     );
   }
 
+  final List<charts.Series> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +52,8 @@ class SimpleTimeSeriesChart extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
+  TimeSeriesSales(this.time, this.sales);
+
   final DateTime time;
   final int sales;
-
-  TimeSeriesSales(this.time, this.sales);
 }

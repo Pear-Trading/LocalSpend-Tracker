@@ -12,7 +12,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final int splashDuration = 1;
 
-  startTime() async {
+  Future<Timer> startTime() async {
     return Timer(Duration(seconds: splashDuration), () {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
       Navigator.of(context).pushReplacementNamed('/LoginPage');
@@ -41,8 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     alignment: FractionalOffset(0.5, 0.3),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/launch_image.png')
-                      ),
+                          image: AssetImage('assets/images/launch_image.png')),
                     ),
                   ),
                 ),

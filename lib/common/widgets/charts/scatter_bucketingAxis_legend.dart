@@ -8,8 +8,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class BucketingAxisScatterPlotChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
 
   BucketingAxisScatterPlotChart(this.seriesList, {this.animate});
 
@@ -22,6 +20,8 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
     );
   }
 
+  final List<charts.Series> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
           id: 'Cheese',
           colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.blue.shadeDefault,
+              charts.MaterialPalette.blue.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
@@ -85,7 +85,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
           id: 'Carrots',
           colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.red.shadeDefault,
+              charts.MaterialPalette.red.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
@@ -93,7 +93,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
           id: 'Cucumbers',
           colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.green.shadeDefault,
+              charts.MaterialPalette.green.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
@@ -101,7 +101,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
           id: 'Crayons',
           colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.purple.shadeDefault,
+              charts.MaterialPalette.purple.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
@@ -109,7 +109,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
           id: 'Celery',
           colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.indigo.shadeDefault,
+              charts.MaterialPalette.indigo.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
@@ -117,7 +117,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
           id: 'Cauliflower',
           colorFn: (LinearSales sales, _) =>
-          charts.MaterialPalette.gray.shadeDefault,
+              charts.MaterialPalette.gray.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
@@ -128,9 +128,9 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.revenueShare, this.radius);
+
   final int year;
   final double revenueShare;
   final double radius;
-
-  LinearSales(this.year, this.revenueShare, this.radius);
 }

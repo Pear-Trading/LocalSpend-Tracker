@@ -103,7 +103,8 @@ class AboutListTile extends StatelessWidget {
     return ListTile(
       leading: icon,
       title: child ??
-          Text(MaterialLocalizations.of(context).aboutListTileTitle(applicationName ?? _defaultApplicationName(context))),
+          Text(MaterialLocalizations.of(context).aboutListTileTitle(
+              applicationName ?? _defaultApplicationName(context))),
       onTap: () {
         showAboutDialog(
           context: context,
@@ -178,13 +179,14 @@ void showLicensePage({
   String applicationLegalese,
 }) {
   assert(context != null);
-  Navigator.push(context, MaterialPageRoute<void>(
-      builder: (BuildContext context) => LicensePage(
-        applicationName: applicationName,
-        applicationVersion: applicationVersion,
-        applicationLegalese: applicationLegalese,
-      )
-  ));
+  Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+          builder: (BuildContext context) => LicensePage(
+                applicationName: applicationName,
+                applicationVersion: applicationVersion,
+                applicationLegalese: applicationLegalese,
+              )));
 }
 
 /// An about box. This is a dialog box with the application's icon, name,
@@ -256,15 +258,22 @@ class AboutDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
     final String name = applicationName ?? _defaultApplicationName(context);
-    final String version = applicationVersion ?? _defaultApplicationVersion(context);
+    final String version =
+        applicationVersion ?? _defaultApplicationVersion(context);
     final Widget icon = applicationIcon ?? _defaultApplicationIcon(context);
     List<Widget> body = <Widget>[];
-    if (icon != null)
-      body.add(IconTheme(data: const IconThemeData(size: 45.0), child: icon));
+    if (icon != null) {
+      body.add(
+        IconTheme(
+            data: const IconThemeData(size: 45.0),
+            child: icon
+        ),
+      );
+    }
+
     body.add(Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
-
         child: ListBody(
           children: <Widget>[
             Container(
@@ -272,7 +281,8 @@ class AboutDialog extends StatelessWidget {
               child: Text(name, style: Theme.of(context).textTheme.title),
             ),
             Text(version, style: Theme.of(context).textTheme.body1),
-            Text(applicationLegalese ?? '', style: Theme.of(context).textTheme.caption),
+            Text(applicationLegalese ?? '',
+                style: Theme.of(context).textTheme.caption),
           ],
         ),
       ),
@@ -283,15 +293,15 @@ class AboutDialog extends StatelessWidget {
         children: body,
       ),
     ];
-    if (children != null)
-      body.addAll(children);
+    if (children != null) body.addAll(children);
     return AlertDialog(
       content: SingleChildScrollView(
         child: ListBody(children: body),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text(MaterialLocalizations.of(context).viewLicensesButtonLabel),
+          child:
+              Text(MaterialLocalizations.of(context).viewLicensesButtonLabel),
           onPressed: () {
             showLicensePage(
               context: context,
@@ -376,7 +386,7 @@ class _LicensePageState extends State<LicensePage> {
     int debugFlowId = -1;
     assert(() {
       final dev.Flow flow = dev.Flow.begin();
-      dev.Timeline.timeSync('_initLicenses()', () { }, flow: flow);
+      dev.Timeline.timeSync('_initLicenses()', () {}, flow: flow);
       debugFlowId = flow.id;
       return true;
     }());
@@ -385,11 +395,12 @@ class _LicensePageState extends State<LicensePage> {
         return;
       }
       assert(() {
-        dev.Timeline.timeSync('_initLicenses()', () { }, flow: dev.Flow.step(debugFlowId));
+        dev.Timeline.timeSync('_initLicenses()', () {},
+            flow: dev.Flow.step(debugFlowId));
         return true;
       }());
       final List<LicenseParagraph> paragraphs =
-      await SchedulerBinding.instance.scheduleTask<List<LicenseParagraph>>(
+          await SchedulerBinding.instance.scheduleTask<List<LicenseParagraph>>(
         license.paragraphs.toList,
         Priority.animation,
         debugLabel: 'License',
@@ -404,8 +415,7 @@ class _LicensePageState extends State<LicensePage> {
         ));
         _licenses.add(Container(
           decoration: const BoxDecoration(
-              border: Border(bottom: BorderSide(width: 0.0))
-          ),
+              border: Border(bottom: BorderSide(width: 0.0))),
           child: Text(
             license.packages.join(', '),
             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -425,7 +435,8 @@ class _LicensePageState extends State<LicensePage> {
           } else {
             assert(paragraph.indent >= 0);
             _licenses.add(Padding(
-              padding: EdgeInsetsDirectional.only(top: 8.0, start: 16.0 * paragraph.indent),
+              padding: EdgeInsetsDirectional.only(
+                  top: 8.0, start: 16.0 * paragraph.indent),
               child: Text(paragraph.text),
             ));
           }
@@ -436,7 +447,8 @@ class _LicensePageState extends State<LicensePage> {
       _loaded = true;
     });
     assert(() {
-      dev.Timeline.timeSync('Build scheduled', () { }, flow: dev.Flow.end(debugFlowId));
+      dev.Timeline.timeSync('Build scheduled', () {},
+          flow: dev.Flow.end(debugFlowId));
       return true;
     }());
   }
@@ -444,16 +456,27 @@ class _LicensePageState extends State<LicensePage> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
-    final String name = widget.applicationName ?? _defaultApplicationName(context);
-    final String version = widget.applicationVersion ?? _defaultApplicationVersion(context);
-    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    final String name =
+        widget.applicationName ?? _defaultApplicationName(context);
+    final String version =
+        widget.applicationVersion ?? _defaultApplicationVersion(context);
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
     final List<Widget> contents = <Widget>[
-      Text(name, style: Theme.of(context).textTheme.headline, textAlign: TextAlign.center),
-      Text(version, style: Theme.of(context).textTheme.body1, textAlign: TextAlign.center),
+      Text(name,
+          style: Theme.of(context).textTheme.headline,
+          textAlign: TextAlign.center),
+      Text(version,
+          style: Theme.of(context).textTheme.body1,
+          textAlign: TextAlign.center),
       Container(height: 18.0),
-      Text(widget.applicationLegalese ?? '', style: Theme.of(context).textTheme.caption, textAlign: TextAlign.center),
+      Text(widget.applicationLegalese ?? '',
+          style: Theme.of(context).textTheme.caption,
+          textAlign: TextAlign.center),
       Container(height: 18.0),
-      Text('Powered by Flutter', style: Theme.of(context).textTheme.body1, textAlign: TextAlign.center),
+      Text('Powered by Flutter',
+          style: Theme.of(context).textTheme.body1,
+          textAlign: TextAlign.center),
       Container(height: 24.0),
     ];
     contents.addAll(_licenses);
@@ -480,7 +503,8 @@ class _LicensePageState extends State<LicensePage> {
             bottom: false,
             child: Scrollbar(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
                 children: contents,
               ),
             ),
@@ -499,7 +523,8 @@ String _defaultApplicationName(BuildContext context) {
   // can provide an explicit applicationName to the widgets defined in this
   // file, instead of relying on the default.
   final Title ancestorTitle = context.ancestorWidgetOfExactType(Title);
-  return ancestorTitle?.title ?? Platform.resolvedExecutable.split(Platform.pathSeparator).last;
+  return ancestorTitle?.title ??
+      Platform.resolvedExecutable.split(Platform.pathSeparator).last;
 }
 
 String _defaultApplicationVersion(BuildContext context) {

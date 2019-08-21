@@ -3,9 +3,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class DonutPieChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-
   DonutPieChart(this.seriesList, {this.animate});
 
   /// Creates a [PieChart] with sample data and no transition.
@@ -16,6 +13,8 @@ class DonutPieChart extends StatelessWidget {
     );
   }
 
+  final List<charts.Series> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +45,10 @@ class DonutPieChart extends StatelessWidget {
   }
 }
 
-
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.sales);
+
   final int year;
   final int sales;
-
-  LinearSales(this.year, this.sales);
 }

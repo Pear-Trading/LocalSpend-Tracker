@@ -1,39 +1,32 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:local_spend/common/functions/get_token.dart';
 
 class Organisation {
-  var id = 0;
-  var name = "";
-  var postcode = "";
-  var streetName = "";  //street_name
-  var town = "";
-
   Organisation(
     this.id,
     this.name,
     this.postcode,
     this.streetName,
     this.town,
-    );
+  );
+
+  var id = 0;
+  var name = "";
+  var postcode = "";
+  var streetName = ""; //street_name
+  var town = "";
 }
 
 class Organisations {
-
   List<Organisation> getTestData() {
     var numItems = 10;
     var itemsList = new List<Organisation>();
 
     for (int i = 0; i < numItems; i++) {
-      itemsList.add(new Organisation(
-        i,
-        "Payee " + (i + 1).toString(),
-        "tee hee hee",
-        "yeet street",
-        "Robloxia"
-      ));
+      itemsList.add(new Organisation(i, "Payee " + (i + 1).toString(),
+          "tee hee hee", "yeet street", "Robloxia"));
     }
 
     return itemsList;
@@ -72,11 +65,11 @@ class Organisations {
     });
 
     Map<String, String> body = {
-      "search_name":search,
-      "session_key":token,
+      "search_name": search,
+      "session_key": token,
     };
 
-    final response = await http.post (
+    final response = await http.post(
       url,
       body: json.encode(body),
     );
@@ -88,6 +81,5 @@ class Organisations {
       // not successful
       return null;
     }
-
   }
 }

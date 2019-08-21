@@ -6,7 +6,6 @@ class PopupListView {
     return showDialog<dynamic>(
       context: context,
       barrierDismissible: true,
-
       builder: (BuildContext context) {
         return SimpleDialog(
           title: Text(title),
@@ -16,7 +15,8 @@ class PopupListView {
     );
   }
 
-  List<Widget> getDialogOptions(context, List<String> options /*, Function onPressed*/) {
+  List<Widget> getDialogOptions(
+      context, List<String> options /*, Function onPressed*/) {
     var dialogOptionsList = new List<SimpleDialogOption>();
 
     for (var i = 0; i < options.length; i++) {

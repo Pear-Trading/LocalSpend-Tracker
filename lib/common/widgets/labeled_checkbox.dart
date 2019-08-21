@@ -28,11 +28,8 @@ class LabeledCheckboxWithIcon extends StatelessWidget {
       onTap: () {
         onChanged(!value);
       },
-
-       
       child: Padding(
         padding: padding,
-
         child: Row(
 //          crossAxisAlignment: CrossAxisAlignment.center, //doesn't do anything
 
@@ -40,16 +37,18 @@ class LabeledCheckboxWithIcon extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(0),
               width: iconSize,
-
-              child : Icon(
+              child: Icon(
                 icon,
-  //                size: iconSize,
+                //                size: iconSize,
                 color: iconColor,
               ),
             ),
-
-            Expanded(child: Text(label, style: textStyle, textAlign: TextAlign.center,)),
-
+            Expanded(
+                child: Text(
+              label,
+              style: textStyle,
+              textAlign: TextAlign.center,
+            )),
             CustomCheckbox(
               //custom checkbox removes padding so the form looks nice
 
@@ -89,11 +88,9 @@ class LabeledCheckbox extends StatelessWidget {
       },
       child: Padding(
         padding: padding,
-
         child: Row(
           children: <Widget>[
             Expanded(child: Text(label, style: textStyle)),
-
             CustomCheckbox(
               //custom checkbox removes padding so the form looks nice
 
@@ -109,7 +106,6 @@ class LabeledCheckbox extends StatelessWidget {
     );
   }
 }
-
 
 /*
 //USAGE:

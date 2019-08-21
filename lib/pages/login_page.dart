@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:local_spend/common/widgets/labeled_checkbox.dart';
 import 'package:local_spend/common/widgets/animatedGradientButton.dart';
 
-const URL = "https://flutter.io/";
+const url = "https://flutter.io/";
 
 class LoginPage extends StatefulWidget {
   @override
@@ -20,12 +20,15 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   bool _isLoggingIn = false;
-  final TextEditingController _emailController = TextEditingController(/*text: 'test@example.com'*/); // remove
-  final TextEditingController _passwordController = TextEditingController(/*text: 'abc123'*/);        // remove
-  bool _saveLoginDetails = true;  // I am extremely sorry for the placement of this variable
-                                  // it will be fixed soon I promise
+  final TextEditingController _emailController =
+      TextEditingController(/*text: 'test@example.com'*/); // remove
+  final TextEditingController _passwordController =
+      TextEditingController(/*text: 'abc123'*/); // remove
+  bool _saveLoginDetails =
+      true; // I am extremely sorry for the placement of this variable
+  // it will be fixed soon I promise
 
-  FocusNode focusNode;  // added so focus can move automatically
+  FocusNode focusNode; // added so focus can move automatically
 
   Future launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -34,7 +37,7 @@ class LoginPageState extends State<LoginPage> {
       showDialogSingleButton(
           context,
           "Unable to reach your website.",
-          "Currently unable to reach the website $URL. Please try again at a later time.",
+          "Currently unable to reach the website $url. Please try again at a later time.",
           "OK");
     }
   }
@@ -55,7 +58,7 @@ class LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  _fillLoginDetails() async {
+  void _fillLoginDetails() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     var username = await preferences.get('username');
@@ -65,14 +68,14 @@ class LoginPageState extends State<LoginPage> {
     _passwordController.text = await password;
   }
 
-  _saveCurrentRoute(String lastRoute) async {
+  void _saveCurrentRoute(String lastRoute) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setString('LastPageRoute', lastRoute);
   }
 
-  login(String username, String password) async {
+  void login(String username, String password) async {
     _isLoggingIn = true;
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    await SystemChannels.textInput.invokeMethod('TextInput.hide');
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     if (_saveLoginDetails) {
@@ -85,7 +88,7 @@ class LoginPageState extends State<LoginPage> {
       print("details cleared");
     }
 
-    requestLoginAPI(context, username, password).then((value) {
+    await requestLoginAPI(context, username, password).then((value) {
       _isLoggingIn = false;
     });
   }
@@ -100,24 +103,25 @@ class LoginPageState extends State<LoginPage> {
         } else {
           Navigator.of(context).pushReplacementNamed('/HomePage');
         }
+        return null;
       },
       child: PlatformScaffold(
         body: Stack(
           children: [
-            AnimatedBackground([Colors.lightBlue[50], Colors.lightBlue[50]], Colors.white, Alignment.topRight, Alignment.bottomLeft, 3),
-
+            AnimatedBackground([Colors.lightBlue[50], Colors.lightBlue[50]],
+                Colors.white, Alignment.topRight, Alignment.bottomLeft, 3),
             Container(
-              margin: EdgeInsets.fromLTRB(60,30,60,0),
+              margin: EdgeInsets.fromLTRB(60, 30, 60, 0),
               child: Column(
                 children: <Widget>[
                   Expanded(
                     child: AnimatedContainer(
                       duration: Duration(seconds: 2),
-                      margin: EdgeInsets.fromLTRB(15,0,15,0),
+                      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('assets/images/launch_image.png')
-                        ),
+                            image:
+                                AssetImage('assets/images/launch_image.png')),
                       ),
                     ),
                   ),
@@ -159,49 +163,57 @@ class LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       onSubmitted: (_) {
-                        login( _emailController.text,
-                            _passwordController.text);
+                        login(_emailController.text, _passwordController.text);
                       },
                     ),
                   ),
-
-                Container(
-                  margin: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
-                  width: 100,
-                  height: 50,
-                  child: Opacity(
-                    opacity: _isLoggingIn ? 0.5 : 1,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(2),
-                      child : Stack(
-                        children : [
-                          AnimatedBackground([Colors.blue, Colors.lightBlue[300]], Colors.lightBlue, Alignment.bottomRight, Alignment.topLeft, 3),
-                          Material(
-                            type: MaterialType.transparency,
-                            child : InkWell(
-                              onTap: _isLoggingIn ? null : () => login( _emailController.text, _passwordController.text),
-
-                              child: new Center(
-                                child: new Text(
-                                    'GO', style: new TextStyle(fontSize: 18, color: Colors.white),),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 30.0),
+                    width: 100,
+                    height: 50,
+                    child: Opacity(
+                      opacity: _isLoggingIn ? 0.5 : 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2),
+                        child: Stack(
+                          children: [
+                            AnimatedBackground(
+                                [Colors.blue, Colors.lightBlue[300]],
+                                Colors.lightBlue,
+                                Alignment.bottomRight,
+                                Alignment.topLeft,
+                                3),
+                            Material(
+                              type: MaterialType.transparency,
+                              child: InkWell(
+                                onTap: _isLoggingIn
+                                    ? null
+                                    : () => login(_emailController.text,
+                                        _passwordController.text),
+                                child: new Center(
+                                  child: new Text(
+                                    'GO',
+                                    style: new TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
-
                     child: LabeledCheckbox(
-                      label : "SAVE LOGIN",
-                      textStyle: TextStyle(fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
-                      padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                      value : _saveLoginDetails,
-
+                      label: "SAVE LOGIN",
+                      textStyle: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold),
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      value: _saveLoginDetails,
                       onChanged: (bool newValue) {
                         setState(() {
                           _saveLoginDetails = newValue;

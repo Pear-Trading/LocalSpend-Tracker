@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:local_spend/common/widgets/charts/time_series_simple.dart';
 
 class TimeSeries extends StatelessWidget {
-
-  final String chartDataName;
-
   TimeSeries({
     this.chartDataName,
   });
+
+  final String chartDataName;
 
   @override
   Widget build(BuildContext context) {

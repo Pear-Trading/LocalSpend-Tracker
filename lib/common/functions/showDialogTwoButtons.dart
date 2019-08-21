@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-void showDialogTwoButtons(
-    BuildContext context, String title, String message, String buttonLabel1, String buttonLabel2, Function action) {
+void showDialogTwoButtons(BuildContext context, String title, String message,
+    String buttonLabel1, String buttonLabel2, Function action) {
   // flutter defined function
   showDialog(
     context: context,

@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class GroupedBarChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-
   GroupedBarChart(this.seriesList, {this.animate});
 
   factory GroupedBarChart.withSampleData() {
@@ -16,6 +13,8 @@ class GroupedBarChart extends StatelessWidget {
     );
   }
 
+  final List<charts.Series> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +73,8 @@ class GroupedBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
+
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

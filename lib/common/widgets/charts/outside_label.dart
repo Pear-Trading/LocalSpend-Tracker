@@ -3,9 +3,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class PieOutsideLabelChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-
   PieOutsideLabelChart(this.seriesList, {this.animate});
 
   /// Creates a [PieChart] with sample data and no transition.
@@ -17,6 +14,8 @@ class PieOutsideLabelChart extends StatelessWidget {
     );
   }
 
+  final List<charts.Series> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +61,8 @@ class PieOutsideLabelChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.sales);
+
   final int year;
   final int sales;
-
-  LinearSales(this.year, this.sales);
 }
