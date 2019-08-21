@@ -114,8 +114,7 @@ class _OrgGraphsState extends State<OrgGraphs> {
             child: customersLastMonth.graph != null
                 ? new charts.TimeSeriesChart(customersLastMonth.graph)
                 : Center(
-                child: Text(
-                    "Loading graph...")), //List<Series<dynamic, DateTime>>
+                child: CircularProgressIndicator()), //List<Series<dynamic, DateTime>>
           ),
         ),
 
@@ -139,8 +138,9 @@ class _OrgGraphsState extends State<OrgGraphs> {
             child: salesLastMonth.graph != null
                 ? new charts.TimeSeriesChart(salesLastMonth.graph)
                 : Center(
-                child: Text(
-                    "Loading graph...")), //List<Series<dynamic, DateTime>>
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+                )), //List<Series<dynamic, DateTime>>
           ),
         ),
 
@@ -164,8 +164,10 @@ class _OrgGraphsState extends State<OrgGraphs> {
             child: purchasesLastMonth.graph != null
                 ? new charts.TimeSeriesChart(purchasesLastMonth.graph)
                 : Center(
-                child: Text(
-                    "Loading graph...")), //List<Series<dynamic, DateTime>>
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
+                  )
+                ), //List<Series<dynamic, DateTime>>
           ),
         ),
 
