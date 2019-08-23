@@ -96,6 +96,12 @@ class ReceiptPage2State extends State<ReceiptPage2> {
   List<String> _categories = new List<String>();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     var _widgetHeight = MediaQuery.of(context).size.height * 0.06 < 40.0
         ? 40.0
@@ -105,8 +111,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
       Future<List<String>> _futureCats = getCats();
       _categories.add("Fetching categories...");
       _futureCats.then((value) {
-        _categories = null;
         _categories = value;
+        setState(() {});
       });
     }
 
