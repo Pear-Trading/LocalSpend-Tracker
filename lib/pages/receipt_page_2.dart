@@ -112,6 +112,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
       _categories.add("Fetching categories...");
       _futureCats.then((value) {
         _categories = value;
+        _categories.insert(0, "Uncategorised");
         setState(() {});
       });
     }
@@ -406,8 +407,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                 height: MediaQuery.of(context)
                                         .copyWith()
                                         .size
-                                        .height /
-                                    3,
+                                        .height / 3,
                                 child: CupertinoPicker(
                                   backgroundColor: Colors.white,
                                   children: _categories
