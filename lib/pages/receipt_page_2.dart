@@ -111,7 +111,6 @@ class ReceiptPage2State extends State<ReceiptPage2> {
       Future<List<String>> _futureCats = getCats();
       _categories.add("Fetching categories...");
       _futureCats.then((value) {
-        print("Categories: " + value.toString());
         _categories = value;
         setState(() {});
       });
