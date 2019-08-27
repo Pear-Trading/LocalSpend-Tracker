@@ -327,6 +327,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
+                        transaction.recurring = _sampleRecurringOptions[0];
+                        setState(() {});
                         showModalBottomSheet(
                             context: context,
                             builder: (BuildContext builder) {
@@ -395,6 +397,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     message: "Category of transaction",
                     child: RaisedButton(
                       onPressed: () {
+                        transaction.category = _categories[0];
+                        setState(() {});
                         showModalBottomSheet(
                             context: context,
                             builder: (BuildContext builder) {
