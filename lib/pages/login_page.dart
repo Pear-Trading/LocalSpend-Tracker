@@ -80,8 +80,8 @@ class LoginPageState extends State<LoginPage> {
       await preferences.setString('username', username);
       await preferences.setString('password', password);
     } else {
-      await preferences.setString('username', ""); // this does work...
-      await preferences.setString('password', ""); // ...but this doesn't seem to have any effect..?
+      await preferences.setString('username', "");
+      await preferences.setString('password', "");
     }
 
     await requestLoginAPI(context, username, password).then((value) {
