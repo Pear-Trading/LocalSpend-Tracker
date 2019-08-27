@@ -21,12 +21,10 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   bool _isLoggingIn = false;
   final TextEditingController _emailController =
-      TextEditingController(/*text: 'test@example.com'*/); // remove
+      TextEditingController();
   final TextEditingController _passwordController =
-      TextEditingController(/*text: 'abc123'*/); // remove
-  bool _saveLoginDetails =
-      true; // I am extremely sorry for the placement of this variable
-  // it will be fixed soon I promise
+      TextEditingController();
+  bool _saveLoginDetails = true;
 
   FocusNode focusNode; // added so focus can move automatically
 
@@ -81,11 +79,9 @@ class LoginPageState extends State<LoginPage> {
     if (_saveLoginDetails) {
       await preferences.setString('username', username);
       await preferences.setString('password', password);
-      print("details saved");
     } else {
-      await preferences.setString('username', "");
-      await preferences.setString('password', "");
-      print("details cleared");
+      await preferences.setString('username', ""); // this does work...
+      await preferences.setString('password', ""); // ...but this doesn't seem to have any effect..?
     }
 
     await requestLoginAPI(context, username, password).then((value) {

@@ -10,6 +10,8 @@ const demonstration = false;
 class StatsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
+    print("TODO: The 'stats' page should be loaded on login and cached rather than reloading on every opening of the page.");
+    print("Create new List<GraphData> in instantiated MyApp() and pass that or load it from this class' child with (graphs = super.graphList) or something.");
     return new StatsPageState();
   }
 }

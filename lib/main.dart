@@ -6,14 +6,31 @@ import 'package:local_spend/pages/receipt_page_2.dart';
 import 'package:local_spend/pages/spash_screen.dart';
 import 'package:local_spend/pages/more_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:local_spend/common/apifunctions/get_graph_data.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+void loadGraphs() {
+
+}
+
+class GraphWithTitle {
+  GraphWithTitle({
+    this.graph,
+    this.title
+  });
+
+  GraphData graph;
+  String title;
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var graphList = List<GraphWithTitle>();
+
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
