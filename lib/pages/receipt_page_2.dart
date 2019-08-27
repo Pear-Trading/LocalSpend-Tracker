@@ -107,7 +107,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
         ? 40.0
         : MediaQuery.of(context).size.height * 0.06;
 
-    if (_categories.isNotEmpty) {
+    if (_categories.isEmpty) {
       Future<List<String>> _futureCats = getCats();
       _categories.add("Fetching categories...");
       _futureCats.then((value) {
