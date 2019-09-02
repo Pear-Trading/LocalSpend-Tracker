@@ -59,13 +59,8 @@ Future<Locations> getLocations(gmaps.LatLng ne, gmaps.LatLng sw) async {
   const pearLocationsURL = 'https://dev.localspend.co.uk/api/v1/supplier/location';
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
-  Map<String, String> body;
-
-  body = {
-    'session_key': preferences.get('LastToken'),
-  };
-
   Map<String, Map<String, double>> mapData = {
+  'session_key': preferences.get('LastToken'),
     'north_east': {
       'latitude':  ne.latitude,
       'longitude': ne.longitude
@@ -78,7 +73,7 @@ Future<Locations> getLocations(gmaps.LatLng ne, gmaps.LatLng sw) async {
 
   final response = await http.post(
     pearLocationsURL,
-    body: json.encode(body),
+    body: json.encode(mapData),
   );
 
   if (response.statusCode == 200) {

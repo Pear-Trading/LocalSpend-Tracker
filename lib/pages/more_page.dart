@@ -94,33 +94,48 @@ class MorePageState extends State<MorePage> {
                         applicationIcon: new Icon(Icons.receipt),
                         applicationName: "Local Spend Tracker",
                         children: <Widget>[
-                          Text(
-                              "Pear Trading is a commerce company designed to register and monitor money circulating in the local economy.\n"),
+                          Text("Pear Trading is a commerce company designed to register and monitor money circulating in the local economy.\n"),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            margin: EdgeInsets.symmetric(horizontal: 10),
                             height: 35,
                             child: RaisedButton(
-                              onPressed: () => {},
-//                                launch(- something -),
-                              child: Text("Contact us",
+                              onPressed: () => launch('http://www.peartrade.org'),
+                              child: Text("Pear Trading",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18.0)),
                               color: Colors.green,
                             ),
                           ),
+
                           Container(
-                            height: 35,
-                            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                            child: RaisedButton(
-                                child: Text(
-                                  'Pear Trading',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18.0),
+                            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                            height: 40.0,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(3),
+                                onTap: () => launch('https://shadow.cat'),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                        child: Text("Developed by"),
+                                        alignment: Alignment.centerLeft),
+                                    Container(
+                                      margin: EdgeInsets.all(0),
+                                      child : Text(
+                                        "Shadowcat Systems",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                color: Colors.lightGreen,
-                                onPressed: () =>
-                                    launch('http://www.peartrade.org')),
+                              ),
+                            ),
                           ),
+
                         ],
                       );
                     },
@@ -148,33 +163,6 @@ class MorePageState extends State<MorePage> {
                     child: Text("LOGOUT",
                         style: TextStyle(color: Colors.white, fontSize: 22.0)),
                     color: Colors.red,
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
-                child: Container(
-                  height: 75.0,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(3),
-                      onTap: () => launch('https://shadow.cat'),
-                      child: Column(
-                        children: [
-                          Align(
-                              child: Text("Developed by"),
-                              alignment: Alignment.centerLeft),
-                          FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Image(
-                              image: ExactAssetImage('assets/images/text.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               ),
