@@ -372,8 +372,7 @@ class _RenderCheckbox extends RenderToggleable {
         final double tShrink = (t - 0.5) * 2.0;
         if (_oldValue == null || value == null) {
           _drawDash(canvas, origin, tShrink, paint);
-        }
-        else {
+        } else {
           _drawCheck(canvas, origin, tShrink, paint);
         }
       }
@@ -388,16 +387,14 @@ class _RenderCheckbox extends RenderToggleable {
         final double tShrink = 1.0 - tNormalized * 2.0;
         if (_oldValue == true) {
           _drawCheck(canvas, origin, tShrink, paint);
-        }
-        else {
+        } else {
           _drawDash(canvas, origin, tShrink, paint);
         }
       } else {
         final double tExpand = (tNormalized - 0.5) * 2.0;
         if (value == true) {
           _drawCheck(canvas, origin, tExpand, paint);
-        }
-        else {
+        } else {
           _drawDash(canvas, origin, tExpand, paint);
         }
       }

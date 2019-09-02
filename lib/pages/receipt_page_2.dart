@@ -92,7 +92,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     submitReceiptAPI(context, receipt);
   }
 
-  List<String> _sampleRecurringOptions = new List<String>(7);
+  List<String> _recurringOptions = new List<String>(7);
   List<String> _categories = new List<String>();
 
   @override
@@ -100,12 +100,14 @@ class ReceiptPage2State extends State<ReceiptPage2> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     var _widgetHeight = MediaQuery.of(context).size.height * 0.06 < 40.0
         ? 40.0
         : MediaQuery.of(context).size.height * 0.06;
+
+    var _fontSize = _widgetHeight * 0.45;
+    var _fontSizeButton = _widgetHeight * 0.5;
 
     if (_categories.isEmpty) {
       Future<List<String>> _futureCats = getCats();
@@ -117,13 +119,13 @@ class ReceiptPage2State extends State<ReceiptPage2> {
       });
     }
 
-    _sampleRecurringOptions[0] = "None";
-    _sampleRecurringOptions[1] = "Daily";
-    _sampleRecurringOptions[2] = "Weekly";
-    _sampleRecurringOptions[3] = "Fortnightly";
-    _sampleRecurringOptions[4] = "Monthly";
-    _sampleRecurringOptions[5] = "Quarterly";
-    _sampleRecurringOptions[6] = "Yearly";
+    _recurringOptions[0] = "None";
+    _recurringOptions[1] = "Daily";
+    _recurringOptions[2] = "Weekly";
+    _recurringOptions[3] = "Fortnightly";
+    _recurringOptions[4] = "Monthly";
+    _recurringOptions[5] = "Quarterly";
+    _recurringOptions[6] = "Yearly";
     // these will be difficult to fetch from server as they are coded into the site's HTML rather than fetched
 
     return PlatformScaffold(
@@ -175,7 +177,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child: Text(
                       "Date/Time",
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: _fontSize,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -233,7 +235,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                     : '${new DateFormat.MMMd().format(transaction.date)}' +
                                         " at " +
                                         '${new DateFormat.Hm().format(transaction.date)}',
-                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: _fontSizeButton),
                       ),
                       color: Colors.blue,
                     ),
@@ -257,7 +260,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child: Text(
                       "Payee",
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: _fontSize,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -291,7 +294,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                         .substring(0, 12) +
                                     "..."
                                 : transaction.organisation.name,
-                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: _fontSizeButton),
                       ),
                       color: Colors.blue,
                     ),
@@ -315,7 +319,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child: Text(
                       "Recurring",
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: _fontSize,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -328,7 +332,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: RaisedButton(
                       onPressed: () {
-                        transaction.recurring = _sampleRecurringOptions[0];
+                        transaction.recurring = _recurringOptions[0];
                         setState(() {});
                         showModalBottomSheet(
                             context: context,
@@ -341,13 +345,13 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                     3,
                                 child: CupertinoPicker(
                                   backgroundColor: Colors.white,
-                                  children: _sampleRecurringOptions
+                                  children: _recurringOptions
                                       .map((thisOption) => Text(thisOption,
                                           style: TextStyle(fontSize: 30)))
                                       .toList(),
                                   onSelectedItemChanged: ((newValue) {
                                     transaction.recurring =
-                                        _sampleRecurringOptions[newValue];
+                                        _recurringOptions[newValue];
                                     setState(() {});
                                   }),
                                   magnification: 1.1,
@@ -361,7 +365,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                         transaction.recurring == null
                             ? 'None'
                             : transaction.recurring,
-                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: _fontSizeButton),
                       ),
                       color: Colors.blue,
                     ),
@@ -383,7 +388,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                   child: Text(
                     "Category",
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: _fontSize,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -407,7 +412,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                                 height: MediaQuery.of(context)
                                         .copyWith()
                                         .size
-                                        .height / 3,
+                                        .height /
+                                    3,
                                 child: CupertinoPicker(
                                   backgroundColor: Colors.white,
                                   children: _categories
@@ -432,7 +438,8 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                         transaction.category == null
                             ? 'None'
                             : transaction.category,
-                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: _fontSizeButton),
                       ),
                       color: Colors.blue,
                     ),
@@ -456,7 +463,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child: Text(
                       "Essential",
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: _fontSize,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -492,7 +499,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     child: Text(
                       "Amount",
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: _fontSize,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -505,7 +512,7 @@ class ReceiptPage2State extends State<ReceiptPage2> {
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextField(
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: _fontSize,
                       ),
                       textAlign: TextAlign.center,
                       controller: transaction.amount,

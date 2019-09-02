@@ -4,21 +4,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlatformScaffold extends StatelessWidget {
-
   PlatformScaffold(
       {this.key,
-        this.appBar,
-        this.body,
-        this.floatingActionButton,
-        this.floatingActionButtonLocation,
-        this.floatingActionButtonAnimator,
-        this.persistentFooterButtons,
-        this.drawer,
-        this.endDrawer,
-        this.bottomNavigationBar,
-        this.backgroundColor,
-        this.resizeToAvoidBottomPadding = true,
-        this.primary = true})
+      this.appBar,
+      this.body,
+      this.floatingActionButton,
+      this.floatingActionButtonLocation,
+      this.floatingActionButtonAnimator,
+      this.persistentFooterButtons,
+      this.drawer,
+      this.endDrawer,
+      this.bottomNavigationBar,
+      this.backgroundColor,
+      this.resizeToAvoidBottomPadding = true,
+      this.primary = true})
       : assert(primary != null),
         super(key: key);
 

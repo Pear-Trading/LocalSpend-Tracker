@@ -264,10 +264,7 @@ class AboutDialog extends StatelessWidget {
     List<Widget> body = <Widget>[];
     if (icon != null) {
       body.add(
-        IconTheme(
-            data: const IconThemeData(size: 45.0),
-            child: icon
-        ),
+        IconTheme(data: const IconThemeData(size: 45.0), child: icon),
       );
     }
 
@@ -277,7 +274,6 @@ class AboutDialog extends StatelessWidget {
         child: ListBody(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(top: 10),
               child: Text(name, style: Theme.of(context).textTheme.title),
             ),
             Text(version, style: Theme.of(context).textTheme.body1),

@@ -4,13 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-
 /// Customer graph types: https://dev.localspend.co.uk/api/v1/customer/graphs
 /// - total_last_week
 /// - avg_spend_last_week
 /// - total_last_month
 /// - avg_spend_last_month
-
 
 /// Organisations' graphs types: to fetch, POST to https://dev.localspend.co.uk/api/stats/[name] as {"session_key":"[boop beep]"}
 /// - organisations_all :     organisation
@@ -28,16 +26,13 @@ import 'package:charts_flutter/flutter.dart' as charts;
 /// HTTP POST request sample:
 /// {"graph":"total_last_week","session_key":"blahblahblah"}
 
-
-
 class OrganisationGraph {
-  OrganisationGraph(
-    this.chartType,
-    {this.graphsType = ""}
-  );
+  OrganisationGraph(this.chartType, {this.graphsType = ""});
 
-  String graphsType = ""; // type of graph, eg customers_last_7_days, sales_last_30_days, purchases_last_30_days etc
-  String chartType; // type of chart, eg organisations_all, pies, snippets or graphs
+  String graphsType =
+      ""; // type of graph, eg customers_last_7_days, sales_last_30_days, purchases_last_30_days etc
+  String
+      chartType; // type of chart, eg organisations_all, pies, snippets or graphs
 
   List<charts.Series<TimeSeriesCustomersOrSales, DateTime>> graph;
 
@@ -53,7 +48,7 @@ class OrganisationGraph {
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           domainFn: (TimeSeriesCustomersOrSales spend, _) => spend.time,
           measureFn: (TimeSeriesCustomersOrSales spend, _) =>
-          spend.numberOfStuff,
+              spend.numberOfStuff,
           data: cachedData,
         )
       ];
@@ -94,13 +89,12 @@ class OrganisationGraph {
         final List<dynamic> labels = responseJson['graph']['labels'];
         final List<dynamic> data = responseJson['graph']['data'];
 
-        List<TimeSeriesCustomersOrSales> graphDataList = new List<
-            TimeSeriesCustomersOrSales>();
+        List<TimeSeriesCustomersOrSales> graphDataList =
+            new List<TimeSeriesCustomersOrSales>();
 
         for (int i = 0; i < labels.length; i++) {
-          graphDataList.add(
-              new TimeSeriesCustomersOrSales(
-                  data[i] * 1.00, DateTime.parse(labels[i])));
+          graphDataList.add(new TimeSeriesCustomersOrSales(
+              data[i] * 1.00, DateTime.parse(labels[i])));
         }
 
         this.cachedData = graphDataList;
@@ -112,7 +106,7 @@ class OrganisationGraph {
             colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
             domainFn: (TimeSeriesCustomersOrSales spend, _) => spend.time,
             measureFn: (TimeSeriesCustomersOrSales spend, _) =>
-            spend.numberOfStuff,
+                spend.numberOfStuff,
             data: graphDataList,
           )
         ];
@@ -125,9 +119,7 @@ class OrganisationGraph {
     } catch (error) {
       print(error.toString());
     }
-
   }
-
 }
 
 class GraphData {
@@ -194,7 +186,6 @@ class GraphData {
         )
       ];
       return this.graph;
-
     } else {
       final errorMessage = json.decode(response.body)['message'];
       print("Error: " + errorMessage);

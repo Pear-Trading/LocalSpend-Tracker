@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePageWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     ReceiptPage2(),
     StatsPage(),
-    MapSample(),
+    MapPage(),
     MorePage()
   ];
 
@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

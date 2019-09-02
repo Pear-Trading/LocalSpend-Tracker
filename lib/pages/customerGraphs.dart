@@ -76,10 +76,10 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
             child: totalLastWeekGraph.graph != null
                 ? new charts.TimeSeriesChart(totalLastWeekGraph.graph)
                 : Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
-                  )
-            ), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
+                    child: CircularProgressIndicator(
+                    valueColor:
+                        new AlwaysStoppedAnimation<Color>(Colors.orange),
+                  )), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
           ),
         ),
         Container(
@@ -103,9 +103,8 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
                 ? new charts.TimeSeriesChart(avgSpendLastWeekGraph.graph)
                 : Center(
                     child: CircularProgressIndicator(
-                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                    )
-            ), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  )), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
           ),
         ),
         Container(
@@ -128,10 +127,9 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
             child: totalLastMonthGraph.graph != null
                 ? new charts.TimeSeriesChart(totalLastMonthGraph.graph)
                 : Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
-                )
-            ), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
+                    child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+                  )), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
           ),
         ),
         Container(
@@ -154,10 +152,9 @@ class _CustomerGraphsState extends State<CustomerGraphs> {
             child: avgSpendLastMonth.graph != null
                 ? new charts.TimeSeriesChart(avgSpendLastMonth.graph)
                 : Center(
-                  child: CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
-                  )
-            ), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
+                  )), //List<Series<dynamic, DateTime>>es<dynamic, DateTime>>
           ),
         ),
       ],

@@ -12,15 +12,10 @@ void main() {
   runApp(MyApp());
 }
 
-void loadGraphs() {
-
-}
+void loadGraphs() {}
 
 class GraphWithTitle {
-  GraphWithTitle({
-    this.graph,
-    this.title
-  });
+  GraphWithTitle({this.graph, this.title});
 
   GraphData graph;
   String title;
@@ -29,7 +24,7 @@ class GraphWithTitle {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var graphList = List<GraphWithTitle>();
+    // TODO: load graphs on app login and send to graph widgets
 
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -45,7 +40,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         "/HomePage": (BuildContext context) => HomePage(),
         "/LoginPage": (BuildContext context) => LoginPage(),
-        '/MapPage': (BuildContext context) => MapSample(),
+        '/MapPage': (BuildContext context) => MapPage(),
         "/ReceiptPage": (BuildContext context) => ReceiptPage2(),
         "/MorePage": (BuildContext context) => MorePage(),
       },

@@ -27,10 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var drawer = Drawer();
-
     return PlatformScaffold(
-        drawer: drawer,
         body: Container(
             decoration: BoxDecoration(color: Colors.white),
             child: Column(
@@ -38,7 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.all(15),
-                    alignment: FractionalOffset(0.5, 0.3),
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/launch_image.png'),

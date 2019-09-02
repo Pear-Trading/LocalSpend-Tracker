@@ -12,7 +12,6 @@ class OrgGraphs extends StatefulWidget {
 }
 
 class _OrgGraphsState extends State<OrgGraphs> {
-
   /// Organisations' graphs types: to fetch, POST to https://dev.localspend.co.uk/api/stats/[graph_type] as {"session_key":"[boop beep]"}
   /// - organisations_all :     organisation
   /// - pies :                  organisation/pies
@@ -30,9 +29,12 @@ class _OrgGraphsState extends State<OrgGraphs> {
   /// {"graph":"total_last_week","session_key":"blahblahblah"}
 
 //  OrganisationGraph customersLastWeek = new OrganisationGraph("graphs", graphsType: "customers_last_7_days");
-  OrganisationGraph customersLastMonth = new OrganisationGraph("graphs", graphsType: "customers_last_30_days");
-  OrganisationGraph salesLastMonth = new OrganisationGraph("graphs", graphsType: "sales_last_30_days");
-  OrganisationGraph purchasesLastMonth = new OrganisationGraph("graphs", graphsType: "purchases_last_30_days"); //purchases_last_30_days
+  OrganisationGraph customersLastMonth =
+      new OrganisationGraph("graphs", graphsType: "customers_last_30_days");
+  OrganisationGraph salesLastMonth =
+      new OrganisationGraph("graphs", graphsType: "sales_last_30_days");
+  OrganisationGraph purchasesLastMonth = new OrganisationGraph("graphs",
+      graphsType: "purchases_last_30_days"); //purchases_last_30_days
 
   @override
   void initState() {
@@ -114,7 +116,8 @@ class _OrgGraphsState extends State<OrgGraphs> {
             child: customersLastMonth.graph != null
                 ? new charts.TimeSeriesChart(customersLastMonth.graph)
                 : Center(
-                child: CircularProgressIndicator()), //List<Series<dynamic, DateTime>>
+                    child:
+                        CircularProgressIndicator()), //List<Series<dynamic, DateTime>>
           ),
         ),
 
@@ -138,9 +141,9 @@ class _OrgGraphsState extends State<OrgGraphs> {
             child: salesLastMonth.graph != null
                 ? new charts.TimeSeriesChart(salesLastMonth.graph)
                 : Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
-                )), //List<Series<dynamic, DateTime>>
+                    child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+                  )), //List<Series<dynamic, DateTime>>
           ),
         ),
 
@@ -164,13 +167,11 @@ class _OrgGraphsState extends State<OrgGraphs> {
             child: purchasesLastMonth.graph != null
                 ? new charts.TimeSeriesChart(purchasesLastMonth.graph)
                 : Center(
-                  child: CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
-                  )
-                ), //List<Series<dynamic, DateTime>>
+                  )), //List<Series<dynamic, DateTime>>
           ),
         ),
-
       ],
     );
   }

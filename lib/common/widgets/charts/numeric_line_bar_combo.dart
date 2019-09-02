@@ -4,7 +4,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class NumericComboLineBarChart extends StatelessWidget {
-
   NumericComboLineBarChart(this.seriesList, {this.animate});
 
   /// Creates a [LineChart] with sample data and no transition.

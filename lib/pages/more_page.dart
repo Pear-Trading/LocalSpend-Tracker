@@ -101,6 +101,7 @@ class MorePageState extends State<MorePage> {
                             height: 35,
                             child: RaisedButton(
                               onPressed: () => {},
+//                                launch(- something -),
                               child: Text("Contact us",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18.0)),
@@ -119,25 +120,6 @@ class MorePageState extends State<MorePage> {
                                 color: Colors.lightGreen,
                                 onPressed: () =>
                                     launch('http://www.peartrade.org')),
-                          ),
-                          Container(
-                            height: 35,
-                            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                            child: Material(
-                              child: OutlineButton(
-                                child: Text(
-                                  'Shadowcat Systems',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.0
-
-                                      /// I don't know what to do with this button
-                                      ),
-                                ),
-                                onPressed: () => launch('https://shadow.cat/'),
-                              ),
-                              color: Colors.lightGreenAccent,
-                              shadowColor: Colors.transparent,
-                            ),
                           ),
                         ],
                       );
@@ -166,6 +148,33 @@ class MorePageState extends State<MorePage> {
                     child: Text("LOGOUT",
                         style: TextStyle(color: Colors.white, fontSize: 22.0)),
                     color: Colors.red,
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
+                child: Container(
+                  height: 75.0,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(3),
+                      onTap: () => launch('https://shadow.cat'),
+                      child: Column(
+                        children: [
+                          Align(
+                              child: Text("Developed by"),
+                              alignment: Alignment.centerLeft),
+                          FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: Image(
+                              image: ExactAssetImage('assets/images/text.png'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),

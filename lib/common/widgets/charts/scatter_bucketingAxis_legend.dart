@@ -8,7 +8,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class BucketingAxisScatterPlotChart extends StatelessWidget {
-
   BucketingAxisScatterPlotChart(this.seriesList, {this.animate});
 
   /// Creates a [ScatterPlotChart] with sample data and no transition.
