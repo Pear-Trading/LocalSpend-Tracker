@@ -9,7 +9,7 @@ Follow these steps to get the project up-and-running:
 
 1. Install [Flutter](https://flutter.dev/docs/get-started/install)
 1. Set up [your editor](https://flutter.dev/docs/get-started/editor)
-  1. If this is your first Flutter project, install the [Flutter SDK](https://flutter.dev/docs/get-started/test-drive)
+    1. If this is your first Flutter project, install the [Flutter SDK](https://flutter.dev/docs/get-started/test-drive)
 1. Add the line `flutter.sdk=⟨ path to Flutter SDK ⟩` to the file `androud/local.properties`
 
 ## Further Reading
