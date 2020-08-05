@@ -1,0 +1,5 @@
+{
+  "env": "PROD",
+  "production": true,
+  "apiUrl": "https://www.localspend.co.uk/api"
+}

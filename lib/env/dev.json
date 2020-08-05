@@ -1,0 +1,5 @@
+{
+  "env": "DEV",
+  "production": false,
+  "apiUrl": "https://dev.localspend.co.uk/api"
+}
