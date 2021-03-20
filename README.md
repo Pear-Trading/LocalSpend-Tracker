@@ -19,7 +19,7 @@ This repository contains the mobile application for the LocalSpend system. See a
 * [Documentation](#documentation)
 * [Acknowledgments](#acknowledgements)
 * [License](#license)
-* [Contacr](#contact)
+* [Contact](#contact)
 
 ## Technology Stack
 
@@ -97,5 +97,3 @@ This project is released under the [MIT license](https://mit-license.org/).
 
 [mkeating]: mailto:m.keating@shadowcat.co.uk
 [mhallam]: mailto:info@lancasteresta.org
-
-
