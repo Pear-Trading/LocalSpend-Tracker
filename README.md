@@ -1,47 +1,101 @@
-# LocalSpend Mobile App.
+# LocalSpend (Mobile App.)
 
-This repo. contains the mobile application for use with the LocalSpend system, 
-using Flutter.
+Looking to discover if the value of spending local can be measured, understood and shown.
 
-## Getting Started
+This repository contains the mobile application for the LocalSpend system. See also:
 
-Follow these steps to get the project up-and-running:
+* the [Web application](https://github.com/Pear-Trading/Foodloop-Web); and
+* the [server](https://github.com/Pear-Trading/Foodloop-Server).
 
-1. Install [Flutter](https://flutter.dev/docs/get-started/install)
-1. Set up [your editor](https://flutter.dev/docs/get-started/editor)
-    1. If this is your first Flutter project, install the [Flutter SDK](https://flutter.dev/docs/get-started/test-drive)
-1. Add the line `flutter.sdk=⟨ path to Flutter SDK ⟩` to the file `androud/local.properties`
+## Table of Contents
 
-## Building
+* [Tech Stack](#tech-stack)
+* [Features](#features)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Testing](#testing)
+* [Code Formatting](#code-formatting)
+* [Documentation](#documentation)
+* [Acknowledgments](#acknowledgements)
+* [License](#license)
+* [Contacr](#contact)
 
-To build an apk from dev, use:
-```
-flutter build apk -t lib/main_dev.dart
-```
+## Technology Stack
 
-## Debugging
+The mobile app. is written in [Dart](https://dart.dev/).
 
-```
-// debug
+| Technology  | Description         						| Link                |
+|-------------|---------------------------------|---------------------|
+| Flutter 		| Cross-platform mobile framework	| [Link][flutter]     |
+
+[flutter]: https://flutter.dev/
+
+## Features
+
+This mobile app. provides:
+
+- user authentication; and
+- transaction logging.
+
+## Installation
+
+1. Install [Flutter](https://flutter.dev/docs/get-started/install);
+1. if this is your first Flutter project, install the [Flutter SDK](https://flutter.dev/docs/get-started/test-drive);
+1. set up [your editor](https://flutter.dev/docs/get-started/editor):
+    - we recommend using [Android Studio](https://developer.android.com/studio).
+1. add the line `flutter.sdk=⟨ path to Flutter SDK ⟩` to the file `android/local.properties`.
+
+## Configuration
+
+App. configuration settings are found in `pubspec.yaml`.
+
+Build settings are found in the `android/` directory, in the `build.gradle`, `gradle.properties` and `settings.gradle` files.
+
+## Usage
+
+### Development
+
+To activate debugging, add the following import statement:
+
+```dart
 import 'package:flutter/foundation.dart';
-debugPrint('$foo');
 ```
 
-## Further Reading
+After that, you can generate debugging output using `debugPrint()`.
 
-A few resources to get you started if this is your first Flutter project:
+### Production
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+Run `flutter build apk -t lib/main_dev.dart` to generate an APK file.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## Testing
 
-https://github.com/putraxor/flutter-login-ui
-https://github.com/pbirdsall/medium_splash_tokenauth
+TODO
 
-Related repos:
+## Code Formatting
 
-- [`Pear-Trading/FoodLoop-Web`](https://github.com/Pear-Trading/FoodLoop-Web)
-- [`Pear-Trading/Foodloop-Server`](https://github.com/Pear-Trading/Foodloop-Server)
+TODO
+
+## Documentation
+
+TODO
+
+## Acknowledgements
+
+LocalLoop is the result of collaboration between the [Small Green Consultancy](http://www.smallgreenconsultancy.co.uk/), [Shadowcat Systems](https://shadow.cat/), [Independent Lancaster](http://www.independent-lancaster.co.uk/) and the [Ethical Small Traders Association](http://www.lancasteresta.org/).
+
+## License
+
+This project is released under the [MIT license](https://mit-license.org/).
+
+## Contact
+
+| Name           | Link(s)           |
+|----------------|-------------------|
+| Mark Keating   | [Email][mkeating] |
+| Michael Hallam | [Email][mhallam]  |
+
+[mkeating]: mailto:m.keating@shadowcat.co.uk
+[mhallam]: mailto:info@lancasteresta.org
+
+
